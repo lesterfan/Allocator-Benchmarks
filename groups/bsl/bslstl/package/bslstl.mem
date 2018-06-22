@@ -51,3 +51,5 @@ bslstl_unorderedmultiset
 bslstl_unorderedset
 bslstl_unorderedsetkeyconfiguration
 bslstl_vector
+bslstl_lesterstring
+bslstl_lestervector

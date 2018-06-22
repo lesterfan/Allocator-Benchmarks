@@ -6,36 +6,23 @@ BSLS_IDENT_RCSID(bdlma_multipoolallocator_cpp,"$Id$ $CSID$")
 
 #include <bdlma_bufferedsequentialallocator.h>  // for testing only
 
-#include <bsls_performancehint.h>
-
 namespace BloombergLP {
 namespace bdlma {
 
-                     // ------------------------
-                     // class MultipoolAllocator
-                     // ------------------------
+                         // ------------------------
+                         // class MultipoolAllocator
+                         // ------------------------
 
 // CREATORS
 MultipoolAllocator::~MultipoolAllocator()
 {
 }
 
-// MANIPULATORS
-void MultipoolAllocator::reserveCapacity(size_type size, size_type numObjects)
-{
-    if (BSLS_PERFORMANCEHINT_PREDICT_UNLIKELY(0 == size)) {
-        BSLS_PERFORMANCEHINT_UNLIKELY_HINT;
-        return;                                                       // RETURN
-    }
-
-    d_multipool.reserveCapacity(size, numObjects);
-}
-
 }  // close package namespace
 }  // close enterprise namespace
 
 // ----------------------------------------------------------------------------
-// Copyright 2012 Bloomberg Finance L.P.
+// Copyright 2016 Bloomberg Finance L.P.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.

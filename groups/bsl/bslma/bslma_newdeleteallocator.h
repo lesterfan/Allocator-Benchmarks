@@ -7,12 +7,18 @@
 #endif
 BSLS_IDENT("$Id: $")
 
+#include <bslma_allocator_database.h>
+
+// #include <bslma_allocator_database.h>
+
 //@PURPOSE: Provide singleton new/delete adaptor to 'bslma::Allocator' protocol.
 //
 //@CLASSES:
 //  bslma::NewDeleteAllocator: support new/delete-style allocation/deallocation
 //
 //@SEE_ALSO: bslma_default, bslma_testallocator
+//
+//@AUTHOR: John Lakos (jlakos)
 //
 //@DESCRIPTION: This component provides a concrete allocation mechanism,
 // 'bslma::NewDeleteAllocator', that implements the 'bslma::Allocator' protocol
@@ -289,7 +295,7 @@ class NewDeleteAllocator : public Allocator {
         // Also note that if a 'NewDeleteAllocator' object is supplied, it is
         // owned by the class and must NOT be deleted.  Finally note that this
         // method should generally not be called directly by typical clients
-        // (see 'bdema_default' for more information).
+        // (see 'bslma_default' for more information).
 
     // CREATORS
     NewDeleteAllocator();
@@ -328,7 +334,7 @@ class NewDeleteAllocator : public Allocator {
 };
 
 // ============================================================================
-//                      INLINE FUNCTION DEFINITIONS
+//                          INLINE DEFINITIONS
 // ============================================================================
 
                         // ------------------------
@@ -350,12 +356,6 @@ NewDeleteAllocator::NewDeleteAllocator()
 
 // MANIPULATORS
 inline
-void *NewDeleteAllocator::allocate(size_type size)
-{
-    return 0 == size ? 0 : ::operator new(size);
-}
-
-inline
 void NewDeleteAllocator::deallocate(void *address)
 {
     // While the C++ standard guarantees that calling delete(0) is safe
@@ -364,12 +364,21 @@ void NewDeleteAllocator::deallocate(void *address)
     // programs.
 
     if (address) {
+        bslma::AllocatorDatabase::delete_sequence(address);
         ::operator delete(address);
     }
 }
 
 }  // close package namespace
 
+#ifndef BDE_OPENSOURCE_PUBLICATION  // BACKWARD_COMPATIBILITY
+// ============================================================================
+//                           BACKWARD COMPATIBILITY
+// ============================================================================
+
+typedef bslma::NewDeleteAllocator bslma_NewDeleteAllocator;
+    // This alias is defined for backward compatibility.
+#endif  // BDE_OPENSOURCE_PUBLICATION -- BACKWARD_COMPATIBILITY
 
 }  // close enterprise namespace
 

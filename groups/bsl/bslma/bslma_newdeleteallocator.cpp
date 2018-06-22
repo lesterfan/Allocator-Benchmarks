@@ -94,6 +94,18 @@ NewDeleteAllocator::~NewDeleteAllocator()
 {
 }
 
+// MANIPULATORS
+void *NewDeleteAllocator::allocate(size_type size)
+{
+    if (size == 0) return 0;
+
+    void* result = ::operator new(size);
+    bslma::AllocatorDatabase::add_sequence(result, size, this);
+    return result;
+    
+    // Changed : return 0 == size ? 0 : ::operator new(size);
+}
+
 }  // close package namespace
 
 }  // close enterprise namespace

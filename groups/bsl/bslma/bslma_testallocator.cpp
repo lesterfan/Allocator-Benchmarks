@@ -13,6 +13,8 @@ BSLS_IDENT("$Id$ $CSID$")
 #include <bsls_platform.h>
 #include <bsls_bsltestutil.h>
 
+#include <bslma_allocator_database.h>
+
 #include <cstdio>   // print messages
 #include <cstdlib>  // 'abort'
 #include <cstring>  // 'memset'
@@ -254,6 +256,7 @@ Link *addLink(bslma::TestAllocator_List *allocatedList,
     BSLS_ASSERT(allocatedList);
 
     Link *link = (Link *)basicAllocator->allocate(sizeof(Link));
+    bslma::AllocatorDatabase::add_sequence(link, sizeof(Link), basicAllocator);
 
     // Ensure 'allocate' returned memory.
 
@@ -331,6 +334,8 @@ TestAllocator::TestAllocator(Allocator *basicAllocator)
 
     d_list_p = (TestAllocator_List *)d_allocator_p->allocate(
                                                    sizeof(TestAllocator_List));
+    bslma::AllocatorDatabase::add_sequence(d_list_p, sizeof(TestAllocator_List), this);
+
     d_list_p->d_head_p = 0;
     d_list_p->d_tail_p = 0;
 }
@@ -363,6 +368,8 @@ TestAllocator::TestAllocator(bool verboseFlag, Allocator *basicAllocator)
 
     d_list_p = (TestAllocator_List *)d_allocator_p->allocate(
                                                    sizeof(TestAllocator_List));
+    bslma::AllocatorDatabase::add_sequence(d_list_p, sizeof(TestAllocator_List), this);
+
     d_list_p->d_head_p = 0;
     d_list_p->d_tail_p = 0;
 }
@@ -395,6 +402,8 @@ TestAllocator::TestAllocator(const char *name, Allocator *basicAllocator)
 
     d_list_p = (TestAllocator_List *)d_allocator_p->allocate(
                                                    sizeof(TestAllocator_List));
+    bslma::AllocatorDatabase::add_sequence(d_list_p, sizeof(TestAllocator_List), this);
+
     d_list_p->d_head_p = 0;
     d_list_p->d_tail_p = 0;
 }
@@ -429,6 +438,8 @@ TestAllocator::TestAllocator(const char *name,
 
     d_list_p = (TestAllocator_List *)d_allocator_p->allocate(
                                                    sizeof(TestAllocator_List));
+    bslma::AllocatorDatabase::add_sequence(d_list_p, sizeof(TestAllocator_List), this);
+
     d_list_p->d_head_p = 0;
     d_list_p->d_tail_p = 0;
 }
@@ -447,10 +458,12 @@ TestAllocator::~TestAllocator()
         Link *linkToFree = link_p;
         link_p = link_p->d_next_p;
         d_allocator_p->deallocate(linkToFree);
+        bslma::AllocatorDatabase::delete_sequence(linkToFree);
     }
     d_list_p->d_head_p = 0;
     d_list_p->d_tail_p = 0;
     d_allocator_p->deallocate(d_list_p);
+    bslma::AllocatorDatabase::delete_sequence(d_list_p);
 
     if (!isQuiet()) {
         if (numBytesInUse() || numBlocksInUse()) {
@@ -494,6 +507,8 @@ void *TestAllocator::allocate(size_type size)
 
     Align *align = (Align *)d_allocator_p->allocate(
                                           sizeof(Align) + size + PADDING_SIZE);
+	bslma::AllocatorDatabase::add_sequence(align, sizeof(Align) + size + PADDING_SIZE, this);
+	
     if (!align) {
         // We cannot satisfy this request.  Throw 'std::bad_alloc'.
 
@@ -644,8 +659,10 @@ void TestAllocator::deallocate(void *address)
     // Now check for corrupted memory block and cross allocation.
 
     if (!miscError && !overrunBy && !underrunBy) {
-        d_allocator_p->deallocate(removeLink(d_list_p,
-                                             align->d_object.d_address_p));
+		void* deallocate_address = removeLink(d_list_p,
+                                             align->d_object.d_address_p);
+        d_allocator_p->deallocate(deallocate_address);
+		bslma::AllocatorDatabase::delete_sequence(deallocate_address);
     }
     else {
         if (miscError) {
@@ -709,6 +726,7 @@ void TestAllocator::deallocate(void *address)
 
     std::memset(address, static_cast<int>(SCRIBBLED_MEMORY), size);
     d_allocator_p->deallocate(align);
+    bslma::AllocatorDatabase::delete_sequence(align);
 }
 
 // ACCESSORS
@@ -759,13 +777,13 @@ int TestAllocator::status() const
     const bsls::Types::Int64 numErrors = numMismatches() + numBoundsErrors();
 
     if (numErrors > 0) {
-        return static_cast<int>(numErrors);
+        return static_cast<int>(numErrors);                           // RETURN
     }
     else if (numBlocksInUse() || numBytesInUse()) {
-        return BSLMA_MEMORY_LEAK;
+        return BSLMA_MEMORY_LEAK;                                     // RETURN
     }
     else {
-        return BSLMA_SUCCESS;
+        return BSLMA_SUCCESS;                                         // RETURN
     }
 }
 

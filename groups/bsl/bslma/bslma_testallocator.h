@@ -18,6 +18,8 @@ BSLS_IDENT("$Id: $")
 //
 //@SEE_ALSO: bslma_newdeleteallocator, bslma_mallocfreeallocator
 //
+//@AUTHOR: John Lakos (jlakos)
+//
 //@DESCRIPTION: This component provides an instrumented allocator,
 // 'bslma::TestAllocator', that implements the 'bslma::Allocator' protocol and
 // can be used to track various aspects of memory allocated from it.  Available
@@ -72,7 +74,7 @@ BSLS_IDENT("$Id: $")
 // mode is set for the purpose of testing the test allocator itself).  A
 // 'bslma::TestAllocator' also supports a buffer overrun / underrun feature --
 // each allocation has "pads", areas of extra memory before and after the
-// segment which are initialized to a particular value and checked upon
+// segment that are initialized to a particular value and checked upon
 // deallocation to see if they have been modified.  If they have, a message is
 // printed and the allocator aborts, unless it is in quiet mode.
 //
@@ -121,10 +123,10 @@ BSLS_IDENT("$Id: $")
 ///Exception Test Macros
 ///---------------------
 // This component also provides a pair of macros:
-//..
-//: o BSLMA_TESTALLOCATOR_EXCEPTION_TEST_BEGIN(BSLMA_TESTALLOCATOR)
-//: o BSLMA_TESTALLOCATOR_EXCEPTION_TEST_END
-//..
+//
+//: o 'BSLMA_TESTALLOCATOR_EXCEPTION_TEST_BEGIN(BSLMA_TESTALLOCATOR)'
+//: o 'BSLMA_TESTALLOCATOR_EXCEPTION_TEST_END'
+//
 // These macros can be used for testing exception-safety of classes and their
 // methods when memory allocation is needed.  A reference to an object of type
 // 'bslma::TestAllocator' must be supplied as an argument to the '_BEGIN'
@@ -341,8 +343,8 @@ class TestAllocator : public Allocator {
 
                         // Control Points
 
-    const char *d_name_p;                // optionally specified name of
-                                         // this test allocator object (or 0)
+    const char *d_name_p;                // optionally specified name of this
+                                         // test allocator object (or 0)
 
     bsls::AtomicInt
                 d_noAbortFlag;           // whether or not to suppress
@@ -638,6 +640,50 @@ class TestAllocator : public Allocator {
         // number of such errors that have occurred as a positive number; if
         // either '0 < numBlocksInUse()' or '0 < numBytesInUse()', return an
         // arbitrary negative number; else return 0.
+
+#ifndef BDE_OPENSOURCE_PUBLICATION  // DEPRECATED
+    void *lastAllocateAddress() const;
+        // Return the allocated memory address of the most recent memory
+        // request.  Return 0 if the request was invalid (e.g., allocate non-
+        // positive number of bytes).
+        //
+        // DEPRECATED: use 'lastAllocatedAddress' instead.
+
+    size_type lastAllocateNumBytes() const;
+        // Return the number of bytes of the most recent memory request.  Note
+        // that this number is always recorded regardless of the validity of
+        // the request.
+        //
+        // DEPRECATED: use 'lastAllocatedNumBytes' instead.
+
+    void *lastDeallocateAddress() const;
+        // Return the memory address of the last memory deallocation request.
+        // Note that the address is always recorded regardless of the validity
+        // of the request.
+        //
+        // DEPRECATED: use 'lastDeallocatedAddress' instead.
+
+    size_type lastDeallocateNumBytes() const;
+        // Return the number of bytes of the most recent memory deallocation
+        // request.  Return 0 if the request was invalid (e.g., deallocating
+        // memory not allocated through this allocator).
+        //
+        // DEPRECATED: use 'lastDeallocatedNumBytes' instead.
+
+    bsls::Types::Int64 numAllocation() const;
+        // Return the cumulative number of allocation requests.  Note that this
+        // number is incremented for every 'allocate' invocation, regardless of
+        // the validity of the request.
+        //
+        // DEPRECATED: use 'numAllocations' instead.
+
+    bsls::Types::Int64 numDeallocation() const;
+        // Return the cumulative number of deallocation requests.  Note that
+        // this number is incremented for every 'deallocate' invocation,
+        // regardless of the validity of the request.
+        //
+        // DEPRECATED: use 'numDeallocations' instead.
+#endif  // BDE_OPENSOURCE_PUBLICATION
 };
 
 }  // close package namespace
@@ -645,15 +691,6 @@ class TestAllocator : public Allocator {
                // ==============================================
                // macro BSLMA_TESTALLOCATOR_EXCEPTION_TEST_BEGIN
                // ==============================================
-
-// The following is a workaround for an intermittent Visual Studio 2005
-// exception-handling failure.
-
-#if defined(BSLS_PLATFORM_CMP_MSVC) && BSLS_PLATFORM_CMP_VER_MAJOR < 1500
-#define BSLMA_EXCEPTION_TEST_WORKAROUND try {} catch (...) {}
-#else
-#define BSLMA_EXCEPTION_TEST_WORKAROUND
-#endif
 
 #ifdef BDE_BUILD_TARGET_EXC
 
@@ -687,7 +724,7 @@ class TestAllocator_Proxy: public TestAllocator_ProxyBase {
 
   public:
     // CREATORS
-    TestAllocator_Proxy(BSLMA_ALLOC_TYPE *allocator)
+    explicit TestAllocator_Proxy(BSLMA_ALLOC_TYPE *allocator)
     : d_allocator_p(allocator)
     {
     }
@@ -717,7 +754,6 @@ TestAllocator_getProxy(BSLMA_ALLOC_TYPE *allocator)
 
 #ifndef BSLMA_TESTALLOCATOR_EXCEPTION_TEST_BEGIN
 #define BSLMA_TESTALLOCATOR_EXCEPTION_TEST_BEGIN(BSLMA_TESTALLOCATOR) {     \
-    BSLMA_EXCEPTION_TEST_WORKAROUND                                         \
     {                                                                       \
         static int firstTime = 1;                                           \
         if (veryVerbose && firstTime) {                                     \
@@ -729,8 +765,9 @@ TestAllocator_getProxy(BSLMA_ALLOC_TYPE *allocator)
         std::puts("\t\tBegin bslma exception test.");                       \
     }                                                                       \
     int bslmaExceptionCounter = 0;                                          \
-    const bslma::TestAllocator_ProxyBase& bslmaExceptionTestAllocator =     \
-                       bslma::TestAllocator_getProxy(&BSLMA_TESTALLOCATOR); \
+    const BloombergLP::bslma::TestAllocator_ProxyBase&                      \
+        bslmaExceptionTestAllocator =                                       \
+          BloombergLP::bslma::TestAllocator_getProxy(&BSLMA_TESTALLOCATOR); \
     bslmaExceptionTestAllocator.setAllocationLimit(bslmaExceptionCounter);  \
     do {                                                                    \
         try {
@@ -759,7 +796,7 @@ TestAllocator_getProxy(BSLMA_ALLOC_TYPE *allocator)
 
 #ifndef BSLMA_TESTALLOCATOR_EXCEPTION_TEST_END
 #define BSLMA_TESTALLOCATOR_EXCEPTION_TEST_END                              \
-        } catch (bslma::TestAllocatorException& e) {                        \
+        } catch (BloombergLP::bslma::TestAllocatorException& e) {           \
             if (veryVeryVerbose) {                                          \
                 std::printf("\t*** BSLMA_EXCEPTION: "                       \
                             "alloc limit = %d, last alloc size = %d ***\n", \
@@ -776,7 +813,6 @@ TestAllocator_getProxy(BSLMA_ALLOC_TYPE *allocator)
     if (veryVeryVerbose) {                                                  \
         std::puts("\t\tEnd bslma exception test.");                         \
     }                                                                       \
-    BSLMA_EXCEPTION_TEST_WORKAROUND                                         \
 }
 
 #endif  // BSLMA_TESTALLOCATOR_EXCEPTION_TEST_END
@@ -792,7 +828,7 @@ TestAllocator_getProxy(BSLMA_ALLOC_TYPE *allocator)
 namespace bslma {
 
 // ============================================================================
-//                      INLINE FUNCTION DEFINITIONS
+//                          INLINE DEFINITIONS
 // ============================================================================
 
                         // -------------------
@@ -886,12 +922,6 @@ bsls::Types::Int64 TestAllocator::numAllocations() const
 }
 
 inline
-bsls::Types::Int64 TestAllocator::numBoundsErrors() const
-{
-    return d_numBoundsErrors.loadRelaxed();
-}
-
-inline
 bsls::Types::Int64 TestAllocator::numBlocksInUse() const
 {
     return d_numBlocksInUse.loadRelaxed();
@@ -907,6 +937,12 @@ inline
 bsls::Types::Int64 TestAllocator::numBlocksTotal() const
 {
     return d_numBlocksTotal.loadRelaxed();
+}
+
+inline
+bsls::Types::Int64 TestAllocator::numBoundsErrors() const
+{
+    return d_numBoundsErrors.loadRelaxed();
 }
 
 inline
@@ -939,7 +975,71 @@ bsls::Types::Int64 TestAllocator::numMismatches() const
     return d_numMismatches.loadRelaxed();
 }
 
+#ifndef BDE_OPENSOURCE_PUBLICATION  // DEPRECATED
+inline
+void *TestAllocator::lastAllocateAddress() const
+{
+    return lastAllocatedAddress();
+}
+
+inline
+TestAllocator::size_type
+TestAllocator::lastAllocateNumBytes() const
+{
+    return lastAllocatedNumBytes();
+}
+
+inline
+void *TestAllocator::lastDeallocateAddress() const
+{
+    return lastDeallocatedAddress();
+}
+
+inline
+TestAllocator::size_type
+TestAllocator::lastDeallocateNumBytes() const
+{
+    return lastDeallocatedNumBytes();
+}
+
+inline
+bsls::Types::Int64 TestAllocator::numAllocation() const
+{
+    return numAllocations();
+}
+
+inline
+bsls::Types::Int64 TestAllocator::numDeallocation() const
+{
+    return numDeallocations();
+}
+
+#endif  // BDE_OPENSOURCE_PUBLICATION
+
 }  // close package namespace
+
+#ifndef BDE_OPENSOURCE_PUBLICATION  // BACKWARD_COMPATIBILITY
+// ============================================================================
+//                           BACKWARD COMPATIBILITY
+// ============================================================================
+
+typedef bslma::TestAllocator bslma_TestAllocator;
+    // This alias is defined for backward compatibility.
+
+// The following two macros can be deleted when they are no longer referenced
+// in any .t.cpp files.
+
+#ifndef BEGIN_BSLMA_EXCEPTION_TEST
+#define BEGIN_BSLMA_EXCEPTION_TEST                                     \
+              BSLMA_TESTALLOCATOR_EXCEPTION_TEST_BEGIN(testAllocator)
+#endif
+
+#ifndef END_BSLMA_EXCEPTION_TEST
+#define END_BSLMA_EXCEPTION_TEST BSLMA_TESTALLOCATOR_EXCEPTION_TEST_END
+#endif
+
+#endif  // BDE_OPENSOURCE_PUBLICATION -- BACKWARD_COMPATIBILITY
+
 }  // close enterprise namespace
 
 #endif
