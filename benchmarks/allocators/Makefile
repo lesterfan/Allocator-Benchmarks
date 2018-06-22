@@ -9,11 +9,11 @@
 # They may be overridden on the command line, e.g. for gcc 5.1 on 4 cores:
 # $ make CXX=g++ CC=gcc BDEWAF=$HOME/bde-tools/bin/waf STDLIB= PARALLEL=-j4
 
-CXX = clang++-3.6 #g++ 
-CC = clang-3.6 #gcc 
-AR = llvm-ar-3.6
-RANLIB = llvm-ranlib-3.6
-BDEWAF = waf
+CXX = /opt/bb/bin/g++ #g++
+CC = /opt/bb/bin/gcc #gcc
+AR = /usr/bin/ar  #llvm-ar-3.6
+RANLIB = /usr/bin/ranlib #llvm-ranlib-3.6
+BDEWAF = /bb/bde/bbshr/bde-oss-tools/bin/waf #waf
 
 OPTIM = -O3 -DBSLS_ASSERT_LEVEL_NONE
 LTO =
@@ -29,7 +29,7 @@ BSLLIB = $(BSLSRC)/build/groups/bsl
 BDLLIB = $(BSLSRC)/build/groups/bdl
 
 # comment this out for gcc-5:
-STDLIB = -stdlib=libc++ # TODO: Clang
+# STDLIB = -stdlib=libc++ # TODO: Clang
 # If libc++ was built from source (not installed from a system package),
 # then libc++abi may not have been linked into libc++. In this situation, the
 # linker must be explicitly told to include it in the link, by uncommenting
