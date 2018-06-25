@@ -14,6 +14,8 @@ BSLS_IDENT("$Id: $")
 //
 //@SEE_ALSO: bdlt_date
 //
+//@AUTHOR: Chen He (che2)
+//
 //@DESCRIPTION: This component provides a 'struct', 'bdlt::DateUtil', that
 // serves as a namespace for utility functions that operate on 'bdlt::Date'
 // objects.
@@ -32,6 +34,7 @@ BSLS_IDENT("$Id: $")
 //
 //  'nthDayOfWeekInMonth'         o Find a specified day of the week in a
 //  'lastDayOfWeekInMonth'          specified year and month.
+//  'lastDayInMonth'
 //
 //  'addMonthsEom'                o Add a specified number of months to a date
 //  'addMonthsNoEom'                using either the end-of-month or the
@@ -54,7 +57,7 @@ BSLS_IDENT("$Id: $")
 // 20140201.
 //
 // Note that the year is not restricted to values on or after 1000, so, for
-// example, 10102 (or 00010102) represents the date January 2, 0002.
+// example, 10102 (or 00010102) represents the date January 2, 0001.
 //
 ///End-of-Month Adjustment Conventions
 ///-----------------------------------
@@ -67,24 +70,22 @@ BSLS_IDENT("$Id: $")
 // non-end-of-month convention does not perform this adjustment.
 //
 // For example, if we add 3 months to February 28, 2013 using the
-// non-end-of-month convention, then the resulting date will be May 28,
-// 2013.  If we do the same operation except using the end-of-month convention,
-// then the resulting date will be May 31, 2013.
+// non-end-of-month convention, then the resulting date will be May 28, 2013.
+// If we do the same operation except using the end-of-month convention, then
+// the resulting date will be May 31, 2013.
 //
 // More formal definitions of the two conventions are provided below:
-//..
-//: o The End-of-Month Convention
+//
+//: The End-of-Month Convention:
+//:     If the original date to be adjusted is the last day of a month, or if
+//:     the day of the month of the original date does not exist in the
+//:     resulting date, then adjust the resulting date to be the last day of
+//:     the month.
 //:
-//:   If the original date to be adjusted is the last day of a month, or if the
-//:   day of the month of the original date does not exist in the resulting
-//:   date, then adjust the resulting date to be the last day of the month.
-//:
-//: o The Non-End-of-Month Convention
-//:
-//:   If the day of the month of the original date does not exist in the
-//:   resulting date, then adjust the resulting date to be the last day of the
-//:   month.
-//..
+//: The Non-End-of-Month Convention:
+//:     If the day of the month of the original date does not exist in the
+//:     resulting date, then adjust the resulting date to be the last day of
+//:     the month.
 //
 ///Usage
 ///-----
@@ -92,7 +93,7 @@ BSLS_IDENT("$Id: $")
 //
 ///Example 1: Schedule Generation
 /// - - - - - - - - - - - - - - -
-// Suppose that given a starting date in the 'YYYYMMDD' format, we want to
+// Suppose that given a starting date in the "YYYYMMDD" format, we want to
 // generate a schedule for an event that occurs on the same day of the month
 // for 12 months.
 //
@@ -105,10 +106,10 @@ BSLS_IDENT("$Id: $")
 //  int rc = bdlt::DateUtil::convertFromYYYYMMDD(&date, startingDateYYYYMMDD);
 //  assert(0 == rc);
 //..
-// Now, we use the 'addMonthsEom' function to generate the schedule.  Note
-// that 'addMonthsEom' adjusts the resulting date to be the last day of the
-// month if the original date is the last day of the month, while
-// 'addMonthsNoEom' does not make this adjustment.
+// Now, we use the 'addMonthsEom' function to generate the schedule.  Note that
+// 'addMonthsEom' adjusts the resulting date to be the last day of the month if
+// the original date is the last day of the month, while 'addMonthsNoEom' does
+// not make this adjustment.
 //..
 //  bsl::vector<bdlt::Date> schedule;
 //  schedule.push_back(date);
@@ -166,9 +167,9 @@ BSLS_IDENT("$Id: $")
 namespace BloombergLP {
 namespace bdlt {
 
-                         // ===============
-                         // struct DateUtil
-                         // ===============
+                             // ===============
+                             // struct DateUtil
+                             // ===============
 
 struct DateUtil {
     // This 'struct' provides a namespace for utility functions that provide
@@ -269,9 +270,21 @@ struct DateUtil {
         // Return the integer value in the "YYYYMMDD" format that represents
         // the specified 'date'.
 
+    static Date earliestDayOfWeekInMonth(int             year,
+                                         int             month,
+                                         DayOfWeek::Enum dayOfWeek);
+        // Return the earliest date in the specified 'month' of the specified
+        // 'year' that falls on the specified 'dayOfWeek'.  The behavior is
+        // undefined unless '1 <= year <= 9999' and '1 <= month <= 12'.
+
     static bool isValidYYYYMMDD(int yyyymmddValue);
         // Return 'true' if the specified 'yyyymmddValue' represents a valid
         // 'Date' value in the "YYYYMMDD" format, and 'false' otherwise.
+
+    static Date lastDayInMonth(int year, int month);
+        // Return the latest date in the specified 'month' of the specified
+        // 'year'.  The behavior is undefined unless '1 <= year <= 9999' and
+        // '1 <= month <= 12'.
 
     static Date lastDayOfWeekInMonth(int             year,
                                      int             month,
@@ -297,15 +310,20 @@ struct DateUtil {
                                     int             n);
         // Return the date in the specified 'month' of the specified 'year'
         // corresponding to the specified 'n'th occurrence of the specified
-        // 'dayOfWeek'.  If 'n == 5', and a result can not be found in 'month',
-        // then return the date of the first 'dayOfWeek' in the following
-        // month.  The behavior is undefined unless '1 <= year <= 9999',
-        // '1 <= month <= 12', '1 <= n <= 5', and the resulting date is no
-        // later than 9999/12/31.
+        // 'dayOfWeek'.  If 'n < 0', return the date corresponding to the
+        // '-n'th occurrence of the 'dayOfWeek' counting from the end of the
+        // 'month' towards the first of the 'month'.  If '5 == n' and a result
+        // cannot be found in 'month', then return the date of the first
+        // 'dayOfWeek' in the following month.  If '-5 == n' and a result
+        // cannot be found in 'month', then return the date of the last
+        // 'dayOfWeek' in the previous month.  The behavior is undefined unless
+        // '1 <= year <= 9999', '1 <= month <= 12', 'n != 0', '-5 <= n <= 5',
+        // and the resulting date is neither earlier than 0001/01/01 nor later
+        // than 9999/12/31.
         //
         // For example:
         //..
-        //  nthDayOfWeekInMonth(2004, 11, DayOfWeek::k_THURSDAY, 4);
+        //  nthDayOfWeekInMonth(2004, 11, DayOfWeek::e_THURSDAY, 4);
         //..
         // returns November 25, 2004, the fourth Thursday in November, 2004.
 
@@ -322,12 +340,12 @@ struct DateUtil {
 };
 
 // ============================================================================
-//                            INLINE DEFINITIONS
+//                             INLINE DEFINITIONS
 // ============================================================================
 
-                              // ---------------
-                              // struct DateUtil
-                              // ---------------
+                             // ---------------
+                             // struct DateUtil
+                             // ---------------
 
 // CLASS METHODS
 inline
@@ -349,7 +367,7 @@ Date DateUtil::addYears(const Date& original, int numYears, bool eomFlag)
 inline
 Date DateUtil::addYearsEom(const Date& original, int numYears)
 {
-    BSLS_ASSERT_SAFE(1    <= original.year() + numYears);
+    BSLS_ASSERT_SAFE(   1 <= original.year() + numYears);
     BSLS_ASSERT_SAFE(9999 >= original.year() + numYears);
 
     if (2 == original.month() && 28 <= original.day()) {
@@ -361,7 +379,7 @@ Date DateUtil::addYearsEom(const Date& original, int numYears)
 inline
 Date DateUtil::addYearsNoEom(const Date& original, int numYears)
 {
-    BSLS_ASSERT_SAFE(1    <= original.year() + numYears);
+    BSLS_ASSERT_SAFE(   1 <= original.year() + numYears);
     BSLS_ASSERT_SAFE(9999 >= original.year() + numYears);
 
     const int newYear = original.year() + numYears;
@@ -371,6 +389,7 @@ Date DateUtil::addYearsNoEom(const Date& original, int numYears)
                     original.month(),
                     SerialDateImpUtil::isLeapYear(newYear) ? 29 : 28);
                                                                       // RETURN
+
     }
     return Date(newYear, original.month(), original.day());
 }
@@ -416,13 +435,24 @@ bool DateUtil::isValidYYYYMMDD(int yyyymmddValue)
                                                   day);
 }
 
+inline
+Date DateUtil::lastDayInMonth(int year, int month)
+{
+    BSLS_ASSERT_SAFE(1 <= year);   BSLS_ASSERT_SAFE(year  <= 9999);
+    BSLS_ASSERT_SAFE(1 <= month);  BSLS_ASSERT_SAFE(month <= 12);
+
+    return Date(year,
+                month,
+                SerialDateImpUtil::lastDayOfMonth(year, month));
+}
+
 }  // close package namespace
 }  // close enterprise namespace
 
 #endif
 
 // ----------------------------------------------------------------------------
-// Copyright 2014 Bloomberg Finance L.P.
+// Copyright 2016 Bloomberg Finance L.P.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.

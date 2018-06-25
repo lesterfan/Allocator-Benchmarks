@@ -14,6 +14,8 @@ BSLS_IDENT("$Id: $")
 //
 //@SEE_ALSO: bsls_timeinterval, bsls_systemtime, bsls_currenttime
 //
+//@AUTHOR: Khalid Shafiq (kshafiq), Steven Breitstein (sbreitstein)
+//
 //@DESCRIPTION: This component provides a 'struct', 'bdlt::LocalTimeOffset', in
 // which are defined a series of static methods for using a callback function
 // to retrieve the local time offset (the difference between the currently
@@ -36,7 +38,7 @@ BSLS_IDENT("$Id: $")
 // This section illustrates intended use of this component.
 //
 ///Example 1: Basic 'bdlt::LocalTimeOffset' Usage
-///- - - - - - - - - - - - - - - - - - - - - - -
+/// - - - - - - - - - - - - - - - - - - - - - - -
 // This example demonstrates how to use 'bdlt::LocalTimeOffset'.
 //
 // First, obtain the current UTC time - ignoring milliseconds - using
@@ -205,6 +207,10 @@ BSLS_IDENT("$Id: $")
 #include <bsls_timeinterval.h>
 #endif
 
+#ifndef INCLUDED_BSLS_TYPES
+#include <bsls_types.h>
+#endif
+
 namespace BloombergLP {
 namespace bdlt {
 
@@ -290,8 +296,11 @@ LocalTimeOffset::LocalTimeOffsetCallback
     BSLS_ASSERT_SAFE(callback);
 
     LocalTimeOffsetCallback previousCallback = localTimeOffsetCallback();
-    bsls::AtomicOperations::setPtrRelease(&s_localTimeOffsetCallback_p,
-                                          reinterpret_cast<void *>(callback));
+    bsls::AtomicOperations::setPtrRelease(
+        &s_localTimeOffsetCallback_p,
+        reinterpret_cast<void *>(
+            reinterpret_cast<bsls::Types::IntPtr>(callback)));
+
     return previousCallback;
 }
 
@@ -302,7 +311,9 @@ LocalTimeOffset::LocalTimeOffsetCallback
                                      LocalTimeOffset::localTimeOffsetCallback()
 {
     return reinterpret_cast<LocalTimeOffsetCallback>(
-          bsls::AtomicOperations::getPtrAcquire(&s_localTimeOffsetCallback_p));
+        reinterpret_cast<bsls::Types::IntPtr>(
+            bsls::AtomicOperations::getPtrAcquire(
+                &s_localTimeOffsetCallback_p)));
 }
 
 }  // close package namespace

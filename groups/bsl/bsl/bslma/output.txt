@@ -1,0 +1,77 @@
+TEST ../../groups/bsl/bslma/bslma_testallocator.t.cpp CASE 1
+Ran : add_sequence(0x107bf40, 16, 0x7ffc03932770); ret = 0
+Ran : add_sequence(0x107c2c0, 16, 0x7ffc03932210); ret = 0
+Ran : add_sequence(0x107c640, 16, 0x7ffc039322e0); ret = 0
+> addr1 = a.allocate(1);
+global new called, count = 1: 0x107ca20
+global new called, count = 2: 0x107cae0
+global new called, count = 3: 0x107cb30
+global new called, count = 4: 0x107cd40
+Ran : add_sequence(0x107c9c0, 81, 0x7ffc039322e0); ret = 0
+global new called, count = 5: 0x107cda0
+global new called, count = 6: 0x107ce60
+global new called, count = 7: 0x107ceb0
+global new called, count = 8: 0x107d0c0
+Ran : add_sequence(0x107cd80, 24, 0x61be18); ret = 0
+> addr1 = 0x107ca00
+> addr2 = a.allocate(20);
+global new called, count = 9: 0x107d170
+global new called, count = 10: 0x107d230
+global new called, count = 11: 0x107d280
+global new called, count = 12: 0x107d490
+Ran : add_sequence(0x107d100, 100, 0x7ffc039322e0); ret = 0
+global new called, count = 13: 0x107d4f0
+global new called, count = 14: 0x107d5b0
+global new called, count = 15: 0x107d600
+global new called, count = 16: 0x107d810
+Ran : add_sequence(0x107d4d0, 24, 0x61be18); ret = 0
+> addr2 = 0x107d140
+> a.deallocate(addr2);
+global delete freeing: 0x107d810
+global delete freeing: 0x107d600
+global delete freeing: 0x107d5b0
+global delete freeing: 0x107d4f0
+Ran : delete_sequence(0x107d4d0); ret = 0
+global delete freeing: 0x107d490
+global delete freeing: 0x107d280
+global delete freeing: 0x107d230
+global delete freeing: 0x107d170
+Ran : delete_sequence(0x107d100); ret = 0
+> addr3 = a.allocate(300);
+global new called, count = 17: 0x107d4f0
+global new called, count = 18: 0x107d230
+global new called, count = 19: 0x107d280
+global new called, count = 20: 0x107d490
+Ran : add_sequence(0x107d600, 380, 0x7ffc039322e0); ret = 0
+global new called, count = 21: 0x107d170
+global new called, count = 22: 0x107d5b0
+global new called, count = 23: 0x107d850
+global new called, count = 24: 0x107d810
+Ran : add_sequence(0x107d4d0, 24, 0x61be18); ret = 0
+> addr3 = 0x107d640
+> a.deallocate(addr3);
+global delete freeing: 0x107d810
+global delete freeing: 0x107d850
+global delete freeing: 0x107d5b0
+global delete freeing: 0x107d170
+Ran : delete_sequence(0x107d4d0); ret = 0
+global delete freeing: 0x107d490
+global delete freeing: 0x107d280
+global delete freeing: 0x107d230
+global delete freeing: 0x107d4f0
+Ran : delete_sequence(0x107d600); ret = 0
+> a.deallocate(addr1);
+global delete freeing: 0x107d0c0
+global delete freeing: 0x107ceb0
+global delete freeing: 0x107ce60
+global delete freeing: 0x107cda0
+Ran : delete_sequence(0x107cd80); ret = 0
+global delete freeing: 0x107cd40
+global delete freeing: 0x107cb30
+global delete freeing: 0x107cae0
+global delete freeing: 0x107ca20
+Ran : delete_sequence(0x107c9c0); ret = 0
+> a.allocate(0);
+> a.deallocate(0);
+Ran : delete_sequence(0x107c640); ret = 0
+Ran : delete_sequence(0x107bf40); ret = 0

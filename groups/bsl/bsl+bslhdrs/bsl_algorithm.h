@@ -11,11 +11,17 @@ BSLS_IDENT("$Id: $")
 //
 //@SEE_ALSO: package bsl+stdhdrs
 //
+//@AUTHOR: Arthur Chiu (achiu21)
+//
 //@DESCRIPTION: Provide types, in the 'bsl' namespace, equivalent to those
 // defined in the corresponding C++ standard header.  Include the native
 // compiler-provided standard header, and also directly include Bloomberg's
 // implementation of the C++ standard type (if one exists).  Finally, place the
 // included symbols from the 'std' namespace (if any) into the 'bsl' namespace.
+
+#ifndef INCLUDED_BSLS_LIBRARYFEATURES
+#include <bsls_libraryfeatures.h>
+#endif
 
 #ifndef INCLUDED_BSLS_NATIVESTD
 #include <bsls_nativestd.h>
@@ -103,7 +109,52 @@ namespace bsl {
     using native_std::unique_copy;
     using native_std::upper_bound;
 
-}  // close namespace bsl
+#ifdef BSLS_LIBRARYFEATURES_HAS_CPP11_BASELINE_LIBRARY
+    using native_std::all_of;
+    using native_std::any_of;
+    using native_std::copy_if;
+
+    // 'copy_n' is implemented separately in 'bslstp_exalgorithm' for backwards
+    // compatibility with the previous STLport definition (which differs from
+    // the platform implementation).
+    //
+    // using native_std::(copy_n);
+
+    using native_std::find_if_not;
+    using native_std::is_heap;
+    using native_std::is_heap_until;
+    using native_std::is_partitioned;
+    using native_std::is_permutation;
+    using native_std::is_sorted;
+    using native_std::is_sorted_until;
+    using native_std::minmax;
+    using native_std::minmax_element;
+    using native_std::move;
+    using native_std::move_backward;
+    using native_std::none_of;
+    using native_std::partition_copy;
+    using native_std::partition_point;
+    using native_std::shuffle;
+#endif  // BSLS_LIBRARYFEATURES_HAS_CPP11_BASELINE_LIBRARY
+
+#ifndef BDE_OMIT_INTERNAL_DEPRECATED
+    // Import additional names expected by existing code, but not mandated by
+    // the standard header.
+    using native_std::advance;
+    using native_std::bad_alloc;
+    using native_std::bidirectional_iterator_tag;
+    using native_std::forward_iterator_tag;
+    using native_std::get_temporary_buffer;
+    using native_std::input_iterator_tag;
+    using native_std::iterator;
+    using native_std::new_handler;
+    using native_std::nothrow;
+    using native_std::nothrow_t;
+    using native_std::output_iterator_tag;
+    using native_std::random_access_iterator_tag;
+    using native_std::return_temporary_buffer;
+#endif  // BDE_OMIT_INTERNAL_DEPRECATED
+}  // close package namespace
 
 // Include Bloomberg's implementation, unless compilation is configured to
 // override native types in the 'std' namespace with Bloomberg's
@@ -113,6 +164,12 @@ namespace bsl {
 #ifndef BSL_OVERRIDES_STD
 #include <bslstl_algorithmworkaround.h>
 #endif
+
+#ifndef BDE_OPENSOURCE_PUBLICATION // STP
+#ifndef BSL_OVERRIDES_STD
+// Changed : #include <bslstp_exalgorithm.h>
+#endif
+#endif  // BDE_OPENSOURCE_PUBLICATION -- STP
 
 #endif
 

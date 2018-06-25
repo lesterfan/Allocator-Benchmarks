@@ -142,12 +142,12 @@ BSLS_IDENT("$Id: $")
 #include <bdlt_datetime.h>
 #endif
 
-#ifndef INCLUDED_BDLT_EPOCHUTIL
-#include <bdlt_epochutil.h>
+#ifndef INCLUDED_BDLT_DATETIMETZ
+#include <bdlt_datetimetz.h>
 #endif
 
-#ifndef INCLUDED_BDLT_INTERVALCONVERSIONUTIL
-#include <bdlt_intervalconversionutil.h>
+#ifndef INCLUDED_BDLT_EPOCHUTIL
+#include <bdlt_epochutil.h>
 #endif
 
 #ifndef INCLUDED_BDLT_LOCALTIMEOFFSET
@@ -166,12 +166,24 @@ BSLS_IDENT("$Id: $")
 #include <bsls_timeinterval.h>
 #endif
 
+#ifndef INCLUDED_BSLS_TYPES
+#include <bsls_types.h>
+#endif
+
+#ifndef BDE_DONT_ALLOW_TRANSITIVE_INCLUDES
+
+#ifndef INCLUDED_BDLT_INTERVALCONVERSIONUTIL
+#include <bdlt_intervalconversionutil.h>
+#endif
+
+#endif // BDE_DONT_ALLOW_TRANSITIVE_INCLUDES
+
 namespace BloombergLP {
 namespace bdlt {
 
-                             // ==================
-                             // struct CurrentTime
-                             // ==================
+                            // ==================
+                            // struct CurrentTime
+                            // ==================
 
 struct CurrentTime {
     // This 'struct' provides a namespace for current-time-retrieval procedures
@@ -209,6 +221,9 @@ struct CurrentTime {
         // Coordinated Universal Time (UTC) as provided by the installed
         // callback function.
 
+    static DatetimeTz asDatetimeTz();
+        // Return the 'DatetimeTz' value representing the current time.
+
                         // ** callback functions **
 
     static CurrentTimeCallback currentTimeCallback();
@@ -234,7 +249,7 @@ struct CurrentTime {
 };
 
 // ============================================================================
-//                          INLINE DEFINITIONS
+//                             INLINE DEFINITIONS
 // ============================================================================
 
                             // -----------------
@@ -264,8 +279,7 @@ bsls::TimeInterval CurrentTime::now()
 inline
 Datetime CurrentTime::utc()
 {
-    return EpochUtil::epoch() +
-           IntervalConversionUtil::convertToDatetimeInterval(now());
+    return EpochUtil::epoch() + now();
 }
 
                         // ** callback functions **
@@ -274,7 +288,8 @@ inline
 CurrentTime::CurrentTimeCallback CurrentTime::currentTimeCallback()
 {
     return reinterpret_cast<CurrentTimeCallback>(
-              bsls::AtomicOperations::getPtrAcquire(&s_currenttimeCallback_p));
+        reinterpret_cast<bsls::Types::IntPtr>(
+            bsls::AtomicOperations::getPtrAcquire(&s_currenttimeCallback_p)));
 }
 
 inline
@@ -284,8 +299,12 @@ CurrentTime::setCurrentTimeCallback(CurrentTimeCallback callback)
     BSLS_ASSERT_OPT(callback);
 
     CurrentTimeCallback previousCallback = currentTimeCallback();
-    bsls::AtomicOperations::setPtrRelease(&s_currenttimeCallback_p,
-                                          reinterpret_cast<void *>(callback));
+
+    bsls::AtomicOperations::setPtrRelease(
+        &s_currenttimeCallback_p,
+        reinterpret_cast<void *>(
+            reinterpret_cast<bsls::Types::IntPtr>(callback)));
+
     return previousCallback;
 }
 
@@ -295,7 +314,7 @@ CurrentTime::setCurrentTimeCallback(CurrentTimeCallback callback)
 #endif
 
 // ----------------------------------------------------------------------------
-// Copyright 2014 Bloomberg Finance L.P.
+// Copyright 2016 Bloomberg Finance L.P.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.

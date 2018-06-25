@@ -4,8 +4,9 @@
 #include <bdlt_date.h>
 #include <bdlt_datetime.h>
 
-#include <bdls_testutil.h>
+#include <bslim_testutil.h>
 
+#include <bslma_default.h>
 #include <bslma_testallocator.h>
 
 #include <bsls_assert.h>
@@ -20,7 +21,7 @@
 #include <bslx_testoutstream.h>
 #include <bslx_versionfunctions.h>
 
-#include <bsl_cstdlib.h>     // atoi()
+#include <bsl_cstdlib.h>     // 'atoi'
 #include <bsl_iomanip.h>
 #include <bsl_iostream.h>
 #include <bsl_sstream.h>
@@ -76,9 +77,16 @@ using namespace bsl;
 // [ 6] bool operator==(const DateTz& lhs, const DateTz& rhs);
 // [ 6] bool operator!=(const DateTz& lhs, const DateTz& rhs);
 // [ 5] bsl::ostream& operator<<(bsl::ostream&, const DateTz&);
+// [16] void hashAppend(HASHALG&, const DateTz&);
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+// DEPRECATED
+// [10] static int maxSupportedBdexVersion();
+// [14] Datetime gmtStartTime() const;
+// [15] bool validateAndSetDateTz(const Date& localDate, int offset);
+#endif
 // ----------------------------------------------------------------------------
 // [ 1] BREATHING TEST
-// [16] USAGE EXAMPLE
+// [17] USAGE EXAMPLE
 // [ 8] Reserved for 'swap' testing.
 
 // ============================================================================
@@ -107,23 +115,23 @@ void aSsErT(bool condition, const char *message, int line)
 //               STANDARD BDE TEST DRIVER MACRO ABBREVIATIONS
 // ----------------------------------------------------------------------------
 
-#define ASSERT       BDLS_TESTUTIL_ASSERT
-#define ASSERTV      BDLS_TESTUTIL_ASSERTV
+#define ASSERT       BSLIM_TESTUTIL_ASSERT
+#define ASSERTV      BSLIM_TESTUTIL_ASSERTV
 
-#define LOOP_ASSERT  BDLS_TESTUTIL_LOOP_ASSERT
-#define LOOP0_ASSERT BDLS_TESTUTIL_LOOP0_ASSERT
-#define LOOP1_ASSERT BDLS_TESTUTIL_LOOP1_ASSERT
-#define LOOP2_ASSERT BDLS_TESTUTIL_LOOP2_ASSERT
-#define LOOP3_ASSERT BDLS_TESTUTIL_LOOP3_ASSERT
-#define LOOP4_ASSERT BDLS_TESTUTIL_LOOP4_ASSERT
-#define LOOP5_ASSERT BDLS_TESTUTIL_LOOP5_ASSERT
-#define LOOP6_ASSERT BDLS_TESTUTIL_LOOP6_ASSERT
+#define LOOP_ASSERT  BSLIM_TESTUTIL_LOOP_ASSERT
+#define LOOP0_ASSERT BSLIM_TESTUTIL_LOOP0_ASSERT
+#define LOOP1_ASSERT BSLIM_TESTUTIL_LOOP1_ASSERT
+#define LOOP2_ASSERT BSLIM_TESTUTIL_LOOP2_ASSERT
+#define LOOP3_ASSERT BSLIM_TESTUTIL_LOOP3_ASSERT
+#define LOOP4_ASSERT BSLIM_TESTUTIL_LOOP4_ASSERT
+#define LOOP5_ASSERT BSLIM_TESTUTIL_LOOP5_ASSERT
+#define LOOP6_ASSERT BSLIM_TESTUTIL_LOOP6_ASSERT
 
-#define Q            BDLS_TESTUTIL_Q   // Quote identifier literally.
-#define P            BDLS_TESTUTIL_P   // Print identifier and value.
-#define P_           BDLS_TESTUTIL_P_  // P(X) without '\n'.
-#define T_           BDLS_TESTUTIL_T_  // Print a tab (w/o newline).
-#define L_           BDLS_TESTUTIL_L_  // current Line number
+#define Q            BSLIM_TESTUTIL_Q   // Quote identifier literally.
+#define P            BSLIM_TESTUTIL_P   // Print identifier and value.
+#define P_           BSLIM_TESTUTIL_P_  // P(X) without '\n'.
+#define T_           BSLIM_TESTUTIL_T_  // Print a tab (w/o newline).
+#define L_           BSLIM_TESTUTIL_L_  // current Line number
 
 // ============================================================================
 //                  NEGATIVE-TEST MACRO ABBREVIATIONS
@@ -160,8 +168,18 @@ int main(int argc, char *argv[])
 
     cout << "TEST " << __FILE__ << " CASE " << test << endl;
 
+    // CONCERN: In no case does memory come from the global allocator.
+
+    bslma::TestAllocator globalAllocator("global", veryVeryVeryVerbose);
+    bslma::Default::setGlobalAllocator(&globalAllocator);
+
+    // CONCERN: In no case does memory come from the default allocator.
+
+    bslma::TestAllocator defaultAllocator("default", veryVeryVeryVerbose);
+    bslma::Default::setDefaultAllocator(&defaultAllocator);
+
     switch (test) { case 0:
-      case 16: {
+      case 17: {
         // --------------------------------------------------------------------
         // USAGE EXAMPLE
         //   Extracted from component header file.
@@ -223,11 +241,292 @@ int main(int argc, char *argv[])
     ASSERT(dateTz2.utcStartTime() < dateTz3.utcStartTime());
 //..
       } break;
+      case 16: {
+        // --------------------------------------------------------------------
+        // TESTING: hashAppend
+        //
+        // Concerns:
+        //: 1 Hope that different inputs hash differently
+        //: 2 Verify that equal inputs hash identically
+        //: 3 Works for const and non-const values
+        //
+        // Plan:
+        //: 1 Use a table specifying a set of distinct objects, verify that
+        //:   hashes of equivalent objects match and hashes on unequal objects
+        //:   do not.
+        //
+        // Testing:
+        //    void hashAppend(HASHALG& hashAlg, const Calendar&);
+        // --------------------------------------------------------------------
+        if (verbose)
+            cout << "\nTESTING 'hashAppend'"
+                 << "\n====================\n";
+
+        typedef ::BloombergLP::bslh::Hash<> Hasher;
+        typedef Hasher::result_type         HashType;
+        Hasher                              hasher;
+
+        if (verbose) cout <<
+            "\nCompare hashes of pairs of values (u, v) in S X S." << endl;
+        {
+            static const struct {
+                int d_line;    // line number
+                int d_year;    // year of date
+                int d_month;   // month of date
+                int d_day;     // day of month of date
+                int d_offset;  // timezone offset
+            } DATA[] = {
+                //LINE  YEAR  MO  DAY  OFFSET
+                //----  ----  --  ---  ------
+                { L_,     1,  1,   1,       0 },
+                { L_,     1,  1,   2,       0 },
+                { L_,     1,  2,   1,       0 },
+                { L_,     2,  1,   1,    1439 },
+                { L_,     1,  1,   1,      -1 },
+                { L_,     1,  1,   2,       1 },
+                { L_,     1,  2,   1,   -1439 },
+                { L_,     2,  1,   1,    1438 },
+
+                { L_,  9998, 12,  31,       0 },
+                { L_,  9999, 11,  30,       0 },
+                { L_,  9999, 12,  30,       0 },
+                { L_,  9999, 12,  31,       0 },
+                { L_,  9998, 12,  31,       1 },
+                { L_,  9999, 11,  30,   -1439 },
+                { L_,  9999, 12,  30,      -1 },
+                { L_,  9999, 12,  31,    -143 },
+            };
+            const int NUM_DATA = sizeof DATA / sizeof *DATA;
+
+            for (int i = 0; i < NUM_DATA; ++i) {
+                const int U_LINE   = DATA[i].d_line;
+                const int U_YEAR   = DATA[i].d_year;
+                const int U_MONTH  = DATA[i].d_month;
+                const int U_DAY    = DATA[i].d_day;
+                const int U_OFFSET = DATA[i].d_offset;
+
+                if (veryVerbose) {
+                    T_ P(U_LINE) P_(U_YEAR) P_(U_MONTH) P_(U_DAY) P(U_OFFSET);
+                }
+
+                const bdlt::Date U_DATE(U_YEAR, U_MONTH, U_DAY);
+                const Obj U(U_DATE, U_OFFSET);
+
+                for (int j = 0; j < NUM_DATA; ++j) {
+                    const int V_LINE   = DATA[j].d_line;
+                    const int V_YEAR   = DATA[j].d_year;
+                    const int V_MONTH  = DATA[j].d_month;
+                    const int V_DAY    = DATA[j].d_day;
+                    const int V_OFFSET = DATA[j].d_offset;
+
+                    if (veryVerbose) {
+                        T_ T_ P_(V_LINE) P_(V_YEAR);
+                        P_(V_MONTH) P_(V_DAY) P(V_OFFSET);
+                    }
+
+                    const bdlt::Date V_DATE(V_YEAR, V_MONTH, V_DAY);
+                    const Obj V(V_DATE, V_OFFSET);
+
+                    HashType hU = hasher(U);
+                    HashType hV = hasher(V);
+
+                    if (veryVeryVerbose) { T_ T_ T_ P_(i) P_(j) P_(hU) P(hV) }
+                    ASSERTV(U_LINE, V_LINE, (i == j) == (hU == hV));
+                }
+            }
+        }
+      } break;
       case 15: {
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+        // --------------------------------------------------------------------
+        // 'validateAndSetDateTz' METHOD
+        //
+        // Concerns:
+        //: 1 'validateAndSetDateTz' sets the date and offset of a 'DateTz'
+        //:   object to the specified values only if they are valid.
+        //
+        // Plan:
+        //: 1 Using the table-driven technique, specify a set of valid and
+        //:   invalid object values.  For each value verify that
+        //:   'validateAndSetDateTz' behaves correctly.  (C-1)
+        //
+        // Testing:
+        //   bool validateAndSetDateTz(const Date& localDate, int offset);
+        // --------------------------------------------------------------------
+
+        // Set the assert handler to mute error coming from construction of an
+        // invalid date.
+
+        if (verbose)
+            cout << endl << "'validateAndSetDateTz' METHOD"
+                 << endl << "============================="
+                 << endl;
+
+        enum { MAX_TIMEZONE = 24 * 60 - 1,
+               MTZ = MAX_TIMEZONE };
+
+        struct {
+            int d_line;     // line number
+            int d_year;     // year of date
+            int d_month;    // month of date
+            int d_day;      // day of month of date
+            int d_offset;   // timezone offset
+        } DATA[] = {
+            //LINE   YEAR   MO  DAY     OFF
+            //----   ----   --  ---     ---
+            { L_,   1776,   7,   4,      0 },  // valid
+            { L_,   1776,   7,   4,   4*60 },  // valid
+            { L_,   1776,   7,   4,  -4*60 },  // valid
+            { L_,   1776,   7,   4,    MTZ },  // valid
+            { L_,   1776,   7,   4,   -MTZ },  // valid
+            { L_,   1776,   7,   4,  24*60 },  // invalid
+            { L_,   1776,   7,   4, -24*60 },  // invalid
+            { L_,   1776,   7,   4,  99*60 },  // invalid
+            { L_,   1776,   7,   4, -99*60 },  // invalid
+            { L_,      1,   1,   1,      0 },  // valid
+            { L_,      1,   1,   1,    MTZ },  // valid
+            { L_,      1,   1,   1,   -MTZ },  // valid
+            { L_,      1,   1,   1,  24*60 },  // invalid
+            { L_,      1,   1,   1, -24*60 },  // invalid
+            { L_,      1,   1,   1,  99*60 },  // invalid
+            { L_,      1,   1,   1, -99*60 }   // invalid
+        };
+
+        const int NUM_DATA = sizeof DATA / sizeof *DATA;
+
+        for (int di = 0; di < NUM_DATA; ++di) {
+            const int LINE     = DATA[di].d_line;
+            const int YEAR     = DATA[di].d_year;
+            const int MONTH    = DATA[di].d_month;
+            const int DAY      = DATA[di].d_day;
+            const int OFFSET   = DATA[di].d_offset;
+
+            if(veryVerbose) {
+                T_ P_(LINE) P_(YEAR) P_(MONTH) P_(DAY) P(OFFSET)
+            }
+
+            const bdlt::Date SRC_DATE(YEAR, MONTH, DAY);
+            const int IS_VALID = bdlt::DateTz::isValid(SRC_DATE, OFFSET);
+
+            const bdlt::Date DEST_DATE(2003,  3, 18);
+            bdlt::DateTz t(DEST_DATE, 5*60);
+
+            int sts = t.validateAndSetDateTz(SRC_DATE, OFFSET);
+            ASSERTV(LINE, IS_VALID == !sts);
+
+            if (IS_VALID) {
+                ASSERTV(LINE, t.localDate().year()  == YEAR);
+                ASSERTV(LINE, t.localDate().month() == MONTH);
+                ASSERTV(LINE, t.localDate().day()   == DAY);
+                ASSERTV(LINE, t.offset() == OFFSET);
+            }
+            else {
+                // verify t was unchanged.
+
+                ASSERTV(LINE, t.localDate().year()  == 2003);
+                ASSERTV(LINE, t.localDate().month() == 3);
+                ASSERTV(LINE, t.localDate().day()   == 18);
+                ASSERTV(LINE, t.offset() == 5*60);
+            }
+        }
+#else
         // Deprecated test case.  Do not remove.
+#endif  // BDE_OPENSOURCE_PUBLICATION -- pending deprecation
       } break;
       case 14: {
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+        // --------------------------------------------------------------------
+        // 'gmtStartTime' METHOD
+        //    Test the deprecated 'gmtStartTime' method, which has been
+        //    superseded by the 'utcStartTime' method.  Note that this is the
+        //    last test case because the method is defined in a
+        //    'BDE_OPENSOURCE_PUBLICATION' block and will not appear in the
+        //    open source distribution of the component.
+        //
+        // Concerns:
+        //: 1 The deprecated 'gmtStartTime' computes the correct UTC start
+        //:   time of the local date accordingly to its timezone.
+        //
+        // Plan:
+        //: 1 Using the table-driven technique, specify a set of possible
+        //:   dates, their associated offsets, and their starting UTC
+        //:   times. Verify that 'utcStartTime' computation corresponds to the
+        //:   tabulated data and that it also holds that
+        //:   'utcStartTime() == localDate() - offset()'.  (C-1)
+        //
+        // Testing:
+        //   Datetime gmtStartTime() const;
+        // --------------------------------------------------------------------
+
+        if (verbose) cout << endl
+                          << "'gmtStartTime' METHOD" << endl
+                          << "=====================" << endl;
+        struct {
+            int d_line;       // line number
+            int d_year;       // year of date
+            int d_month;      // month of date
+            int d_day;        // day of month of date
+            int d_offset;     // timezone offset
+            int d_gmtYear;    // expected GMT year
+            int d_gmtMonth;   // expected GMT month
+            int d_gmtDay;     // expected GMT day
+            int d_gmtHour;    // expected GMT hour
+            int d_gmtMinute;  // expected GMT minute
+        } DATA[] = {
+            //LINE YR MO D      OFF  G_Y G_M G_D G_H G_M
+            //---- -- -- --     ---  --- --- --- --- ---
+            { L_,  1, 1, 1,      0,   1,  1,  1,  0,   0 },
+            { L_,  1, 1, 1,     -1,   1,  1,  1,  0,   1 },
+            { L_,  1, 1, 2,      1,   1,  1,  1, 23,  59 },
+            { L_,  1, 1, 2,      1,   1,  1,  1, 23,  59 },
+            { L_,  1, 1, 2,    121,   1,  1,  1, 21,  59 },
+            { L_,  1, 1, 2,   -121,   1,  1,  2,  2,   1 },
+            { L_,  1, 1, 2,   1439,   1,  1,  1,  0,   1 },
+            { L_,  1, 1, 2,  -1439,   1,  1,  2, 23,  59 },
+        };
+
+        const int NUM_DATA = sizeof DATA / sizeof *DATA;
+
+        for (int i = 0; i < NUM_DATA; ++i) {
+            const int LINE       = DATA[i].d_line;
+            const int YEAR       = DATA[i].d_year;
+            const int MONTH      = DATA[i].d_month;
+            const int DAY        = DATA[i].d_day;
+            const int OFFSET     = DATA[i].d_offset;
+            const int GMT_YEAR   = DATA[i].d_gmtYear;
+            const int GMT_MONTH  = DATA[i].d_gmtMonth;
+            const int GMT_DAY    = DATA[i].d_gmtDay;
+            const int GMT_HOUR   = DATA[i].d_gmtHour;
+            const int GMT_MINUTE = DATA[i].d_gmtMinute;
+
+            if(veryVerbose) {
+                T_ P_(LINE) P_(YEAR) P_(MONTH) P_(DAY) P_(OFFSET) P_(GMT_YEAR)
+                          P_(GMT_MONTH) P_(GMT_DAY) P_(GMT_HOUR) P(GMT_MINUTE)
+            }
+
+            const bdlt::Date TEMP_DATE(YEAR, MONTH, DAY);
+            Obj x; const Obj& X = x;
+            x.setDateTz(TEMP_DATE, OFFSET);
+
+            const bdlt::Datetime EXP1(GMT_YEAR,
+                                      GMT_MONTH,
+                                      GMT_DAY,
+                                      GMT_HOUR,
+                                      GMT_MINUTE);
+
+            bdlt::Datetime exp2(bdlt::Datetime(X.localDate()));
+            const bdlt::Datetime& EXP2 = exp2;
+            exp2.addMinutes(-X.offset());
+
+            if (veryVerbose) {
+                T_  cout << "GMT START TIME: " << X.gmtStartTime() << endl;
+            }
+            ASSERTV(LINE, EXP1 == X.gmtStartTime());
+            ASSERTV(LINE, EXP2 == X.gmtStartTime());
+        }
+#else
         // Deprecated test case.  Do not remove.
+#endif  // BDE_OPENSOURCE_PUBLICATION -- pending deprecation
       } break;
       case 13: {
         // --------------------------------------------------------------------
@@ -634,6 +933,9 @@ int main(int argc, char *argv[])
         //   static int maxSupportedBdexVersion(int versionSelector);
         //   STREAM& bdexStreamIn(STREAM& stream, int version);
         //   STREAM& bdexStreamOut(STREAM& stream, int version) const;
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+        //   static int maxSupportedBdexVersion();
+#endif // BDE_OPENSOURCE_PUBLICATION -- pending deprecation
         // --------------------------------------------------------------------
 
         if (verbose) cout << endl
@@ -694,7 +996,7 @@ int main(int argc, char *argv[])
             ASSERT(&out == &rvOut);
 
             const char *const OD  = out.data();
-            const int         LOD = out.length();
+            const int         LOD = static_cast<int>(out.length());
 
             In in(OD, LOD);
             ASSERT(in);
@@ -735,7 +1037,7 @@ int main(int argc, char *argv[])
                 Out& rvOut = bdexStreamOut(out, X, VERSION);
                 LOOP_ASSERT(i, &out == &rvOut);
                 const char *const OD  = out.data();
-                const int         LOD = out.length();
+                const int         LOD = static_cast<int>(out.length());
 
                 // Verify that each new value overwrites every old value and
                 // that the input stream is emptied, but remains valid.
@@ -771,7 +1073,7 @@ int main(int argc, char *argv[])
         {
             Out               out(VERSION_SELECTOR, &allocator);
             const char *const OD  = out.data();
-            const int         LOD = out.length();
+            const int         LOD = static_cast<int>(out.length());
             ASSERT(0 == LOD);
 
             for (int i = 0; i < NUM_VALUES; ++i) {
@@ -817,7 +1119,7 @@ int main(int argc, char *argv[])
             ASSERT(&out == &rvOut);
 
             const char *const OD  = out.data();
-            const int         LOD = out.length();
+            const int         LOD = static_cast<int>(out.length());
             ASSERT(0 < LOD);
 
             for (int i = 0; i < NUM_VALUES; ++i) {
@@ -866,15 +1168,15 @@ int main(int argc, char *argv[])
 
             Out& rvOut1 = bdexStreamOut(out, X1, VERSION);
             ASSERT(&out == &rvOut1);
-            const int         LOD1 = out.length();
+            const int         LOD1 = static_cast<int>(out.length());
 
             Out& rvOut2 = bdexStreamOut(out, X2, VERSION);
             ASSERT(&out == &rvOut2);
-            const int         LOD2 = out.length();
+            const int         LOD2 = static_cast<int>(out.length());
 
             Out& rvOut3 = bdexStreamOut(out, X3, VERSION);
             ASSERT(&out == &rvOut3);
-            const int         LOD3 = out.length();
+            const int         LOD3 = static_cast<int>(out.length());
             const char *const OD3  = out.data();
 
             for (int i = 0; i < LOD3; ++i) {
@@ -970,7 +1272,7 @@ int main(int argc, char *argv[])
             out.putInt32(SERIAL_Y);
 
             const char *const OD  = out.data();
-            const int         LOD = out.length();
+            const int         LOD = static_cast<int>(out.length());
 
             Obj mT(X);  const Obj& T = mT;
             ASSERT(X == T);
@@ -1001,7 +1303,7 @@ int main(int argc, char *argv[])
             out.putInt32(SERIAL_Y);
 
             const char *const OD  = out.data();
-            const int         LOD = out.length();
+            const int         LOD = static_cast<int>(out.length());
 
             Obj mT(X);  const Obj& T = mT;
             ASSERT(X == T);
@@ -1029,7 +1331,7 @@ int main(int argc, char *argv[])
             out.putInt32(SERIAL_Y);
 
             const char *const OD  = out.data();
-            const int         LOD = out.length();
+            const int         LOD = static_cast<int>(out.length());
 
             Obj mT(X);  const Obj& T = mT;
             ASSERT(X == T);
@@ -1059,7 +1361,7 @@ int main(int argc, char *argv[])
             out.putInt32(-1440);
 
             const char *const OD  = out.data();
-            const int         LOD = out.length();
+            const int         LOD = static_cast<int>(out.length());
 
             Obj mT(X);  const Obj& T = mT;
             ASSERT(X == T);
@@ -1089,7 +1391,7 @@ int main(int argc, char *argv[])
             out.putInt32(1440);
 
             const char *const OD  = out.data();
-            const int         LOD = out.length();
+            const int         LOD = static_cast<int>(out.length());
 
             Obj mT(X);  const Obj& T = mT;
             ASSERT(X == T);
@@ -1111,11 +1413,11 @@ int main(int argc, char *argv[])
         }
         {
             static const struct {
-                int         d_lineNum;      // source line number
-                int         d_offset;       // specification offset
-                int         d_version;      // version to stream with
-                int         d_length;       // expect output length
-                const char *d_fmt_p;        // expected output format
+                int          d_lineNum;      // source line number
+                int          d_offset;       // specification offset
+                int          d_version;      // version to stream with
+                bsl::size_t  d_length;       // expect output length
+                const char  *d_fmt_p;        // expected output format
             } DATA[] = {
                 //LINE  OFFSET  VER  LEN  FORMAT
                 //----  ------  ---  ---  ------------------------------
@@ -1129,7 +1431,7 @@ int main(int argc, char *argv[])
                 const int         LINE        = DATA[i].d_lineNum;
                 const int         OFFSET      = DATA[i].d_offset;
                 const int         VERSION     = DATA[i].d_version;
-                const int         LEN         = DATA[i].d_length;
+                const bsl::size_t LEN         = DATA[i].d_length;
                 const char *const FMT         = DATA[i].d_fmt_p;
 
                 // Test using class methods.
@@ -1148,7 +1450,7 @@ int main(int argc, char *argv[])
                     if (verbose && memcmp(out.data(), FMT, LEN)) {
                         const char *hex = "0123456789abcdef";
                         P_(LINE);
-                        for (int j = 0; j < out.length(); ++j) {
+                        for (bsl::size_t j = 0; j < out.length(); ++j) {
                             cout << "\\x"
                                  << hex[static_cast<unsigned char>
                                             ((*(out.data() + j) >> 4) & 0x0f)]
@@ -1186,7 +1488,7 @@ int main(int argc, char *argv[])
                     if (verbose && memcmp(out.data(), FMT, LEN)) {
                         const char *hex = "0123456789abcdef";
                         P_(LINE);
-                        for (int j = 0; j < out.length(); ++j) {
+                        for (bsl::size_t j = 0; j < out.length(); ++j) {
                             cout << "\\x"
                                  << hex[static_cast<unsigned char>
                                             ((*(out.data() + j) >> 4) & 0x0f)]
@@ -1208,6 +1510,17 @@ int main(int argc, char *argv[])
             }
         }
 
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+
+        if (verbose) {
+            cout << "\nTesting deprecated methods." << endl;
+        }
+        {
+            ASSERT(Obj::maxSupportedBdexVersion()
+                                           == Obj::maxSupportedBdexVersion(0));
+        }
+
+#endif // BDE_OPENSOURCE_PUBLICATION -- pending deprecation
       } break;
       case 9: {
         // --------------------------------------------------------------------
@@ -2118,6 +2431,16 @@ int main(int argc, char *argv[])
         testStatus = -1;
       }
     }
+
+    // CONCERN: In no case does memory come from the global allocator.
+
+    LOOP_ASSERT(globalAllocator.numBlocksTotal(),
+                0 == globalAllocator.numBlocksTotal());
+
+    // CONCERN: In no case does memory come from the default allocator.
+
+    LOOP_ASSERT(defaultAllocator.numBlocksTotal(),
+                0 == defaultAllocator.numBlocksTotal());
 
     if (testStatus > 0) {
         cerr << "Error, non-zero test status = " << testStatus << "." << endl;

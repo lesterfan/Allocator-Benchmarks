@@ -12,6 +12,8 @@ BSLS_IDENT("$Id: $")
 //@CLASSES:
 //  bdlt::MonthOfYear: namespace for month-of-year 'enum'
 //
+//@AUTHOR: Tom Marshall (tmarshal)
+//
 //@DESCRIPTION: This component provides a namespace for the 'enum' type,
 // 'bdlt::MonthOfYear::Enum', that enumerates the set of month-of-year values.
 //
@@ -107,7 +109,51 @@ struct MonthOfYear {
         e_NOV,     e_NOVEMBER  = e_NOV,
         e_DEC,     e_DECEMBER  = e_DEC
 
+#ifndef BDE_OMIT_INTERNAL_DEPRECATED  // BDE2.22
 
+#if !defined(JAN) && !defined(JANUARY)
+      , JAN       = e_JAN
+      , FEB       = e_FEB
+      , MAR       = e_MAR
+      , APR       = e_APR
+      , MAY       = e_MAY
+      , JUN       = e_JUN
+      , JUL       = e_JUL
+      , AUG       = e_AUG
+      , SEP       = e_SEP
+      , OCT       = e_OCT
+      , NOV       = e_NOV
+      , DEC       = e_DEC
+
+      , JANUARY   = e_JANUARY
+      , FEBRUARY  = e_FEBRUARY
+      , MARCH     = e_MARCH
+      , APRIL     = e_APRIL
+      , JUNE      = e_JUNE
+      , JULY      = e_JULY
+      , AUGUST    = e_AUGUST
+      , SEPTEMBER = e_SEPTEMBER
+      , OCTOBER   = e_OCTOBER
+      , NOVEMBER  = e_NOVEMBER
+      , DECEMBER  = e_DECEMBER
+#endif  // !defined(JAN) && !defined(JANUARY)
+
+#endif  // BDE_OMIT_INTERNAL_DEPRECATED -- BDE2.22
+
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+      , BDET_JAN  = e_JAN, BDET_JANUARY   = e_JAN
+      , BDET_FEB  = e_FEB, BDET_FEBRUARY  = e_FEB
+      , BDET_MAR  = e_MAR, BDET_MARCH     = e_MAR
+      , BDET_APR  = e_APR, BDET_APRIL     = e_APR
+      , BDET_MAY  = e_MAY
+      , BDET_JUN  = e_JUN, BDET_JUNE      = e_JUN
+      , BDET_JUL  = e_JUL, BDET_JULY      = e_JUL
+      , BDET_AUG  = e_AUG, BDET_AUGUST    = e_AUG
+      , BDET_SEP  = e_SEP, BDET_SEPTEMBER = e_SEP
+      , BDET_OCT  = e_OCT, BDET_OCTOBER   = e_OCT
+      , BDET_NOV  = e_NOV, BDET_NOVEMBER  = e_NOV
+      , BDET_DEC  = e_DEC, BDET_DECEMBER  = e_DEC
+#endif // BDE_OPENSOURCE_PUBLICATION -- pending deprecation
     };
 
     enum {
@@ -116,8 +162,20 @@ struct MonthOfYear {
 
         k_NUM_MONTHS = e_DEC
 
+#ifndef BDE_OMIT_INTERNAL_DEPRECATED  // BDE2.22
+      , LENGTH        = k_NUM_MONTHS
+#endif  // BDE_OMIT_INTERNAL_DEPRECATED -- BDE2.22
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+      , BDET_LENGTH   = k_NUM_MONTHS
+
+#endif // BDE_OPENSOURCE_PUBLICATION -- pending deprecation
     };
 
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+    typedef Enum Month;
+        // Define an alias, 'Month', to the enum type, 'Enum' defined by this
+        // component.
+#endif
 
     // CLASS METHODS
     template <class STREAM>
@@ -195,6 +253,15 @@ struct MonthOfYear {
         // from any of those corresponding to the enumerators, but is otherwise
         // unspecified.
 
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+
+    static int maxSupportedBdexVersion();
+        // !DEPRECATED!: Use 'maxSupportedBdexVersion(int)' instead.
+        //
+        // Return the most current BDEX streaming version number supported by
+        // this struct.
+
+#endif // BDE_OPENSOURCE_PUBLICATION -- pending deprecation
 };
 
 // FREE OPERATORS
@@ -306,6 +373,15 @@ int MonthOfYear::maxSupportedBdexVersion(int /* versionSelector */)
     return 1;
 }
 
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+
+inline
+int MonthOfYear::maxSupportedBdexVersion()
+{
+    return maxSupportedBdexVersion(0);
+}
+
+#endif // BDE_OPENSOURCE_PUBLICATION -- pending deprecation
 
 }  // close package namespace
 
@@ -341,6 +417,47 @@ int bdlt::maxSupportedBdexVersion(const bdlt::MonthOfYear::Enum *,
     return bdlt::MonthOfYear::maxSupportedBdexVersion(versionSelector);
 }
 
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+
+// BDEX STREAMING SUPPORT
+
+namespace bdex_InStreamFunctions {
+
+template <class STREAM>
+inline
+STREAM& streamIn(STREAM&                  stream,
+                 bdlt::MonthOfYear::Enum& variable,
+                 int                      version)
+{
+    return bdlt::MonthOfYear::bdexStreamIn(stream, variable, version);
+}
+
+}  // close namespace bdex_InStreamFunctions
+
+namespace bdex_OutStreamFunctions {
+
+template <class STREAM>
+inline
+STREAM& streamOut(STREAM&                        stream,
+                  const bdlt::MonthOfYear::Enum& value,
+                  int                            version)
+{
+    return bdlt::MonthOfYear::bdexStreamOut(stream, value, version);
+}
+
+}  // close namespace bdex_OutStreamFunctions
+
+namespace bdex_VersionFunctions {
+
+inline
+int maxSupportedVersion(bdlt::MonthOfYear::Enum)
+{
+    return bdlt::MonthOfYear::maxSupportedBdexVersion(0);
+}
+
+}  // close namespace bdex_VersionFunctions
+
+#endif // BDE_OPENSOURCE_PUBLICATION -- pending deprecation
 
 }  // close enterprise namespace
 

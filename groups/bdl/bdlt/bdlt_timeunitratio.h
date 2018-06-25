@@ -12,6 +12,8 @@ BSLS_IDENT("$Id: $")
 //@CLASSES:
 //  bdlt::TimeUnitRatio: namespace for common time-unit-ratio constants
 //
+//@AUTHOR: Alexander Beels (abeels)
+//
 //@DESCRIPTION: This component provides a utility 'struct',
 // 'bdlt::TimeUnitRatio', that defines a namespace for constants that
 // characterize the ratios between commonly used time units.  Ratios are
@@ -144,8 +146,7 @@ BSLS_IDENT("$Id: $")
 // Note that in practice, the number of nanoseconds since the event would be
 // provided by some system utility, and not a constant as was shown here for
 // purposes of exposition.
-//..
-//
+
 #ifndef INCLUDED_BDLSCM_VERSION
 #include <bdlscm_version.h>
 #endif

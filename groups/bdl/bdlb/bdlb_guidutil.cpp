@@ -11,6 +11,7 @@ BSLS_IDENT_RCSID(RCSid_bdlb_guidutil_cpp,"$Id$ $CSID$")
 #include <bsls_byteorder.h>
 #include <bsls_platform.h>
 
+#include <bsl_cstring.h>
 #include <bsl_iostream.h>
 #include <bsl_sstream.h>
 
@@ -64,7 +65,7 @@ int vaildateGuidString(bslstl::StringRef guidString)
     const unsigned char *front_p = reinterpret_cast<const unsigned char *>(
                                                       &guidString[0]);
     const unsigned char *back_p = reinterpret_cast<const unsigned char *>(
-                                                      &guidString[length - 1]);
+                                    &guidString[static_cast<int>(length) - 1]);
 
     // check for braces
     if (('[' == *front_p && ']' == *back_p) ||
@@ -139,14 +140,14 @@ void GuidUtil::generate(Guid *result, bsl::size_t numGuids)
 bsls::Types::Uint64 GuidUtil::getLeastSignificantBits(const Guid& guid)
 {
     bsls::Types::Uint64 result = 0;
-    memcpy(&result, &guid[8], sizeof(result));
+    bsl::memcpy(&result, &guid[8], sizeof(result));
     return result;
 }
 
 bsls::Types::Uint64 GuidUtil::getMostSignificantBits(const Guid& guid)
 {
     bsls::Types::Uint64 result = 0;
-    memcpy(&result, &guid[0], sizeof(result));
+    bsl::memcpy(&result, &guid[0], sizeof(result));
     return result;
 }
 
@@ -192,7 +193,7 @@ Guid GuidUtil::guidFromString(bslstl::StringRef guidString)
 
 void GuidUtil::guidToString(bsl::string *result, const Guid& guid)
 {
-    std::ostringstream oss;
+    bsl::ostringstream oss;
     guid.print(oss, 0, -1);
     *result = oss.str();
 }

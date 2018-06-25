@@ -5,9 +5,12 @@
 #include <bdlt_datetime.h>
 #include <bdlt_time.h>
 
-#include <bdls_testutil.h>
+#include <bslim_testutil.h>
 
+#include <bslma_default.h>
+#include <bslma_defaultallocatorguard.h>
 #include <bslma_testallocator.h>
+#include <bslma_testallocatormonitor.h>
 
 #include <bslmf_istriviallycopyable.h>
 
@@ -23,8 +26,8 @@
 #include <bslx_testoutstream.h>
 #include <bslx_versionfunctions.h>
 
-#include <bsl_cstdlib.h>     // atoi()
-#include <bsl_cstring.h>     // strcmp()
+#include <bsl_cstdlib.h>     // 'atoi'
+#include <bsl_cstring.h>     // 'strcmp'
 #include <bsl_iomanip.h>
 #include <bsl_iostream.h>
 #include <bsl_sstream.h>
@@ -82,9 +85,16 @@ using namespace bsl;
 // [ 6] bool operator==(const DatetimeTz& lhs, const DatetimeTz& rhs);
 // [ 6] bool operator!=(const DatetimeTz& lhs, const DatetimeTz& rhs);
 // [ 5] bsl::ostream& operator<<(bsl::ostream&, const DatetimeTz&);
+// [15] void hashAppend(HASHALG&, const DatetimeTz&);
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+// DEPRECATED
+// [10] static int maxSupportedBdexVersion();
+// [13] Datetime gmtDatetime() const;
+// [12] int validateAndSetDatetimeTz(const Datetime& localDT, int offset);
+#endif // BDE_OPENSOURCE_PUBLICATION -- pending deprecation
 // ----------------------------------------------------------------------------
 // [ 1] BREATHING TEST
-// [15] USAGE EXAMPLE
+// [16] USAGE EXAMPLE
 // [ 8] Reserved for 'swap' testing.
 
 // ============================================================================
@@ -113,23 +123,23 @@ void aSsErT(bool condition, const char *message, int line)
 //               STANDARD BDE TEST DRIVER MACRO ABBREVIATIONS
 // ----------------------------------------------------------------------------
 
-#define ASSERT       BDLS_TESTUTIL_ASSERT
-#define ASSERTV      BDLS_TESTUTIL_ASSERTV
+#define ASSERT       BSLIM_TESTUTIL_ASSERT
+#define ASSERTV      BSLIM_TESTUTIL_ASSERTV
 
-#define LOOP_ASSERT  BDLS_TESTUTIL_LOOP_ASSERT
-#define LOOP0_ASSERT BDLS_TESTUTIL_LOOP0_ASSERT
-#define LOOP1_ASSERT BDLS_TESTUTIL_LOOP1_ASSERT
-#define LOOP2_ASSERT BDLS_TESTUTIL_LOOP2_ASSERT
-#define LOOP3_ASSERT BDLS_TESTUTIL_LOOP3_ASSERT
-#define LOOP4_ASSERT BDLS_TESTUTIL_LOOP4_ASSERT
-#define LOOP5_ASSERT BDLS_TESTUTIL_LOOP5_ASSERT
-#define LOOP6_ASSERT BDLS_TESTUTIL_LOOP6_ASSERT
+#define LOOP_ASSERT  BSLIM_TESTUTIL_LOOP_ASSERT
+#define LOOP0_ASSERT BSLIM_TESTUTIL_LOOP0_ASSERT
+#define LOOP1_ASSERT BSLIM_TESTUTIL_LOOP1_ASSERT
+#define LOOP2_ASSERT BSLIM_TESTUTIL_LOOP2_ASSERT
+#define LOOP3_ASSERT BSLIM_TESTUTIL_LOOP3_ASSERT
+#define LOOP4_ASSERT BSLIM_TESTUTIL_LOOP4_ASSERT
+#define LOOP5_ASSERT BSLIM_TESTUTIL_LOOP5_ASSERT
+#define LOOP6_ASSERT BSLIM_TESTUTIL_LOOP6_ASSERT
 
-#define Q            BDLS_TESTUTIL_Q   // Quote identifier literally.
-#define P            BDLS_TESTUTIL_P   // Print identifier and value.
-#define P_           BDLS_TESTUTIL_P_  // P(X) without '\n'.
-#define T_           BDLS_TESTUTIL_T_  // Print a tab (w/o newline).
-#define L_           BDLS_TESTUTIL_L_  // current Line number
+#define Q            BSLIM_TESTUTIL_Q   // Quote identifier literally.
+#define P            BSLIM_TESTUTIL_P   // Print identifier and value.
+#define P_           BSLIM_TESTUTIL_P_  // P(X) without '\n'.
+#define T_           BSLIM_TESTUTIL_T_  // Print a tab (w/o newline).
+#define L_           BSLIM_TESTUTIL_L_  // current Line number
 
 // ============================================================================
 //                  NEGATIVE-TEST MACRO ABBREVIATIONS
@@ -150,7 +160,7 @@ typedef bdlt::DatetimeTz    Obj;
 typedef bslx::TestInStream  In;
 typedef bslx::TestOutStream Out;
 
-#define VERSION_SELECTOR 20140601
+#define VERSION_SELECTOR 99991231
 
 //=============================================================================
 //              Classes, functions, etc., needed for Usage Example
@@ -247,16 +257,17 @@ int main(int argc, char *argv[])
     cout << "TEST " << __FILE__ << " CASE " << test << endl;
 
     // CONCERN: In no case does memory come from the global allocator.
-    // CONCERN: In case 5 only does memory come from the default allocator.
 
     bslma::TestAllocator globalAllocator("global", veryVeryVeryVerbose);
     bslma::Default::setGlobalAllocator(&globalAllocator);
+
+    // CONCERN: In case 5 only does memory come from the default allocator.
 
     bslma::TestAllocator defaultAllocator("default", veryVeryVeryVerbose);
     bslma::Default::setDefaultAllocator(&defaultAllocator);
 
     switch (test) { case 0:
-      case 15: {
+      case 16: {
         // --------------------------------------------------------------------
         // TESTING USAGE EXAMPLE
         //   Extracted from component header file.
@@ -383,6 +394,131 @@ if (verbose) {
 //  Estimated Delivery Time in Los Angeles: 18OCT2014_06:48:56.000-0800
 //..
       } break;
+      case 15: {
+        // --------------------------------------------------------------------
+        // TESTING: hashAppend
+        //
+        // Concerns:
+        //: 1 Hope that different inputs hash differently
+        //: 2 Verify that equal inputs hash identically
+        //: 3 Works for const and non-const values
+        //
+        // Plan:
+        //: 1 Use a table specifying a set of distinct objects, verify that
+        //:   hashes of equivalent objects match and hashes on unequal objects
+        //:   do not.
+        //
+        // Testing:
+        //    void hashAppend(HASHALG&, const DatetimeTz&);
+        // --------------------------------------------------------------------
+        if (verbose)
+            cout << "\nTESTING 'hashAppend'"
+                 << "\n====================\n";
+
+        typedef ::BloombergLP::bslh::Hash<> Hasher;
+        typedef Hasher::result_type         HashType;
+        Hasher                              hasher;
+
+        if (verbose) {
+            cout << "\nCompare hashes of pairs of values (u, v) in S X S.\n";
+        }
+        {
+            static const struct {
+                int d_year;    // year of datetime
+                int d_month;   // month of datetime
+                int d_day;     // day of month of datetime
+                int d_hour;    // hour of datetime
+                int d_min;     // minute of datetime
+                int d_sec;     // second of datetime
+                int d_msec;    // millisecond of datetime
+                int d_offset;  // timezone offset
+            } DATA[] = {
+            //    YEAR  MO  DAY  HOUR  MIN  SEC  MSEC   OFFSET
+            //    ----  --  ---  ----  ---  ---  ----  -------
+                {    1,  1,   1,   24,   0,   0,    0,       0 },
+                {    2,  1,   1,    3,   0,   0,    0,       0 },
+                {    2,  1,   1,    0,   3,   0,    0,       0 },
+                {    2,  1,   1,    0,   0,   3,    0,       0 },
+                {    2,  1,   1,    0,   0,   0,    3,       0 },
+                {    2,  1,   1,    0,   0,   0,    0,       3 },
+                {   10,  4,   5,    1,   0,   0,    0,       1 },
+                {  100,  6,   7,    7,   1,   0,    0,   -1439 },
+                { 1000,  8,   9,   22,   0,   1,    0,    1439 },
+                { 2000,  2,  29,   12,   0,   0,    1,      -1 },
+                { 2000,  2,  29,   12,   0,   0,    1,       0 },
+                { 2000,  2,  29,   12,   0,   0,    1,       1 },
+                { 2002,  7,   4,   18,  59,   0,    0,    1380 },
+                { 2003,  8,   5,    9,   0,  59,    0,   -1380 },
+                { 2004,  9,   3,   11,   0,   0,  999,    5*60 },
+                { 2016,  8,  30,   10,   0,   0,    0,   -2*60 },
+                { 2016,  8,  30,   12,   0,   0,    0,       0 },
+                { 2016,  8,  30,   14,   0,   0,    0,    2*60 },
+                { 9999, 12,  31,   18,  17,  42,  103,   -5*60 }
+            };
+            const int NUM_DATA = static_cast<int>(sizeof DATA / sizeof *DATA);
+
+            for (int i = 0; i < NUM_DATA; ++i) {
+                const int U_YEAR   = DATA[i].d_year;
+                const int U_MONTH  = DATA[i].d_month;
+                const int U_DAY    = DATA[i].d_day;
+                const int U_HOUR   = DATA[i].d_hour;
+                const int U_MIN    = DATA[i].d_min;
+                const int U_SEC    = DATA[i].d_sec;
+                const int U_MSEC   = DATA[i].d_msec;
+                const int U_OFFSET = DATA[i].d_offset;
+
+                if (veryVerbose) {
+                    T_ P_(U_YEAR) P_(U_MONTH) P_(U_DAY)
+                    P_(U_HOUR) P_(U_MIN) P_(U_SEC) P_(U_MSEC)
+                    P(U_OFFSET)
+                }
+
+                const bdlt::Datetime U_DATETIME(U_YEAR,
+                                                U_MONTH,
+                                                U_DAY,
+                                                U_HOUR,
+                                                U_MIN,
+                                                U_SEC,
+                                                U_MSEC);
+
+                const Obj U(U_DATETIME, U_OFFSET);
+
+                for (int j = 0; j < NUM_DATA; ++j) {
+                    const int V_YEAR   = DATA[j].d_year;
+                    const int V_MONTH  = DATA[j].d_month;
+                    const int V_DAY    = DATA[j].d_day;
+                    const int V_HOUR   = DATA[j].d_hour;
+                    const int V_MIN    = DATA[j].d_min;
+                    const int V_SEC    = DATA[j].d_sec;
+                    const int V_MSEC   = DATA[j].d_msec;
+                    const int V_OFFSET = DATA[j].d_offset;
+
+                    if (veryVerbose) {
+                        T_ T_ P_(V_YEAR) P_(V_MONTH) P_(V_DAY)
+                        P_(V_HOUR) P_(V_MIN) P_(V_SEC) P_(V_MSEC)
+                        P(V_OFFSET)
+                    }
+
+                    const bdlt::Datetime V_DATETIME(V_YEAR,
+                                                    V_MONTH,
+                                                    V_DAY,
+                                                    V_HOUR,
+                                                    V_MIN,
+                                                    V_SEC,
+                                                    V_MSEC);
+
+                    const Obj V(V_DATETIME, V_OFFSET);
+
+                    HashType hU = hasher(U);
+                    HashType hV = hasher(V);
+
+                    if (veryVeryVerbose) { T_ T_ T_ P_(i) P_(j) P_(hU) P(hV) }
+
+                    LOOP2_ASSERT(i, j, (i == j) == (hU == hV));
+                }
+            }
+        }
+      } break;
       case 14: {
         // --------------------------------------------------------------------
         // TESTING 'dateTz' AND 'timeTz' METHODS
@@ -486,6 +622,9 @@ if (verbose) {
         //
         // Testing:
         //   Datetime utcDatetime() const;
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+        //   Datetime gmtDatetime() const;
+#endif // BDE_OPENSOURCE_PUBLICATION -- pending deprecation
         // --------------------------------------------------------------------
 
         if (verbose) cout << endl
@@ -551,6 +690,9 @@ if (verbose) {
                 if (veryVeryVerbose) { T_ T_ P(X) }
                 LOOP_ASSERT(i, UTC_DATETIME == X.utcDatetime());
 
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+                LOOP_ASSERT(i, UTC_DATETIME == X.gmtDatetime());
+#endif // BDE_OPENSOURCE_PUBLICATION -- pending deprecation
             }
         }
       } break;
@@ -574,6 +716,9 @@ if (verbose) {
         // Testing:
         //   static bool isValid(const Datetime& localDatetime, int offset);
         //   int setDatetimeTzIfValid(const Datetime& localDT, int offset);
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+        //   int validateAndSetDatetimeTz(const Datetime& localDT, int offset);
+#endif // BDE_OPENSOURCE_PUBLICATION -- pending deprecation
         // --------------------------------------------------------------------
 
         if (verbose) {
@@ -675,6 +820,99 @@ if (verbose) {
             }
         }
 
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+
+        if (verbose) {
+            cout << "\nTesting deprecated methods." << endl;
+        }
+        {
+            static const struct {
+                int d_lineNum;      // source line number
+                int d_year;         // year of datetime
+                int d_month;        // month of datetime
+                int d_day;          // day of month of datetime
+                int d_hour;         // hour of datetime
+                int d_minute;       // minute of datetime
+                int d_second;       // second of datetime
+                int d_millisecond;  // millisecond of datetime
+                int d_offset;       // timezone offset
+                int d_isValid;      // is the implied value valid
+            } DATA[] = {
+            //    LINE  YEAR  MO  DAY  HOUR  MIN  SEC  MSEC   OFFSET  VALID
+            //    ----  ----  --  ---  ----  ---  ---  ----  -------  -----
+                {   L_,    1,  1,   1,   24,   0,   0,    0,       0,     1 },
+                {   L_,    2,  1,   1,    3,   0,   0,    0,       0,     1 },
+                {   L_,    2,  1,   1,    0,   3,   0,    0,       0,     1 },
+                {   L_,    2,  1,   1,    0,   0,   3,    0,       0,     1 },
+                {   L_,    2,  1,   1,    0,   0,   0,    3,       0,     1 },
+                {   L_,    2,  1,   1,    0,   0,   0,    0,       3,     1 },
+                {   L_,   10,  4,   5,    1,   0,   0,    0,       1,     1 },
+                {   L_,  100,  6,   7,    7,   1,   0,    0,   -1439,     1 },
+                {   L_, 1000,  8,   9,   22,   0,   1,    0,    1439,     1 },
+                {   L_, 2000,  2,  29,   12,   0,   0,    1,      -1,     1 },
+                {   L_, 2000,  2,  29,   12,   0,   0,    1,       0,     1 },
+                {   L_, 2000,  2,  29,   12,   0,   0,    1,       1,     1 },
+                {   L_, 2002,  7,   4,   18,  59,   0,    0,    1380,     1 },
+                {   L_, 2003,  8,   5,    9,   0,  59,    0,   -1380,     1 },
+                {   L_, 2004,  9,   3,   11,   0,   0,  999,    5*60,     1 },
+                {   L_, 9999, 12,  31,   18,  17,  42,  103,   -5*60,     1 },
+
+                {   L_,    1,  1,   1,   24,   0,   0,    0,      -1,     0 },
+                {   L_,    1,  1,   1,   24,   0,   0,    0,       1,     0 },
+                {   L_,  100,  6,   7,    7,   1,   0,    0,   -1440,     0 },
+                {   L_, 1000,  8,   9,   22,   0,   1,    0,    1440,     0 }
+            };
+            const int NUM_DATA = static_cast<int>(sizeof DATA / sizeof *DATA);
+
+            for (int di = 0; di < NUM_DATA; ++di) {
+                const int LINE        = DATA[di].d_lineNum;
+                const int YEAR        = DATA[di].d_year;
+                const int MONTH       = DATA[di].d_month;
+                const int DAY         = DATA[di].d_day;
+                const int HOUR        = DATA[di].d_hour;
+                const int MINUTE      = DATA[di].d_minute;
+                const int SECOND      = DATA[di].d_second;
+                const int MILLISECOND = DATA[di].d_millisecond;
+                const int OFFSET      = DATA[di].d_offset;
+                const int IS_VALID    = DATA[di].d_isValid;
+
+                if (veryVerbose) {
+                    T_ P_(YEAR) P_(MONTH) P_(DAY)
+                    P_(HOUR) P_(MINUTE) P_(SECOND) P_(MILLISECOND)
+                    P_(OFFSET) P(IS_VALID)
+                }
+
+                const bdlt::Datetime SRC_DATETIME(YEAR,
+                                                  MONTH,
+                                                  DAY,
+                                                  HOUR,
+                                                  MINUTE,
+                                                  SECOND,
+                                                  MILLISECOND);
+                LOOP_ASSERT(LINE,
+                  IS_VALID == bdlt::DatetimeTz::isValid(SRC_DATETIME, OFFSET));
+
+                const int            OFFSET2 = 5 * 60;
+                const bdlt::Datetime DEST_DATETIME(2003, 3, 18);
+                bdlt::DatetimeTz     t(DEST_DATETIME, OFFSET2);
+
+                int sts = t.validateAndSetDatetimeTz(SRC_DATETIME, OFFSET);
+                LOOP_ASSERT(LINE, IS_VALID == !sts);
+
+                if (IS_VALID) {
+                    LOOP_ASSERT(LINE, SRC_DATETIME == t.localDatetime());
+                    LOOP_ASSERT(LINE, OFFSET       == t.offset());
+                }
+                else {
+                    // verify t was unchanged.
+
+                    LOOP_ASSERT(LINE, DEST_DATETIME == t.localDatetime());
+                    LOOP_ASSERT(LINE,  OFFSET2      == t.offset());
+                }
+            }
+        }
+
+#endif // BDE_OPENSOURCE_PUBLICATION -- pending deprecation
       } break;
       case 11: {
         // --------------------------------------------------------------------
@@ -896,6 +1134,9 @@ if (verbose) {
         //   static int maxSupportedBdexVersion(int versionSelector);
         //   STREAM& bdexStreamIn(STREAM& stream, int version);
         //   STREAM& bdexStreamOut(STREAM& stream, int version) const;
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+        //   static int maxSupportedBdexVersion();
+#endif // BDE_OPENSOURCE_PUBLICATION -- pending deprecation
         // --------------------------------------------------------------------
 
         if (verbose) cout << endl
@@ -906,13 +1147,15 @@ if (verbose) {
         bslma::TestAllocator allocator("bslx", veryVeryVeryVerbose);
 
         // Scalar object values used in various stream tests.
-        const bdlt::Datetime A(   1,  1,  1, 24,  0,  0,   0);
-        const bdlt::Datetime B(   1,  1,  1,  0,  0,  0,   0);
-        const bdlt::Datetime C(   3,  4,  7,  9, 12, 24, 102);
-        const bdlt::Datetime D(2012,  4,  7,  9, 20, 30, 206);
-        const bdlt::Datetime E(2014,  6, 14, 17, 34, 52, 503);
-        const bdlt::Datetime F(2014, 10, 22, 23, 56, 57, 702);
-        const bdlt::Datetime G(9999, 12, 31, 18, 59, 59, 999);
+        const bdlt::Datetime A(   1,  1,  1, 24,  0,  0,   0,   0);
+        const bdlt::Datetime B(   1,  1,  1,  0,  0,  0,   0,  17);
+        const bdlt::Datetime C(   3,  4,  7,  9, 12, 24, 102,   0);
+        const bdlt::Datetime D(2012,  4,  7,  9, 20, 30, 206,   0);
+        const bdlt::Datetime E(2014,  6, 14, 17, 34, 52, 503, 321);
+        const bdlt::Datetime F(2014, 10, 22, 23, 56, 57, 702,   0);
+        const bdlt::Datetime G(9999, 12, 31, 18, 59, 59, 999,   0);
+        const bdlt::Datetime H(9999, 12, 31, 18, 59, 59, 999, 123);
+        const bdlt::Datetime I(9999, 12, 31, 18, 59, 59, 999, 999);
 
         const Obj VA(A,     0);
         const Obj VB(B,     1);
@@ -921,9 +1164,11 @@ if (verbose) {
         const Obj VE(E,  -507);
         const Obj VF(F,  1000);
         const Obj VG(G, -1100);
+        const Obj VH(H,  1200);
+        const Obj VI(I, -1200);
 
         // Array object used in various stream tests.
-        const Obj VALUES[]   = { VA, VB, VC, VD, VE, VF, VG };
+        const Obj VALUES[]   = { VA, VB, VC, VD, VE, VF, VG, VH, VI };
         const int NUM_VALUES = static_cast<int>(sizeof VALUES
                                                 / sizeof *VALUES);
 
@@ -932,289 +1177,345 @@ if (verbose) {
         }
         {
             ASSERT(1 == Obj::maxSupportedBdexVersion(0));
-            ASSERT(1 == Obj::maxSupportedBdexVersion(VERSION_SELECTOR));
+            ASSERT(2 == Obj::maxSupportedBdexVersion(20170401));
+            ASSERT(2 == Obj::maxSupportedBdexVersion(VERSION_SELECTOR));
 
             using bslx::VersionFunctions::maxSupportedBdexVersion;
 
             ASSERT(1 == maxSupportedBdexVersion(reinterpret_cast<Obj *>(0),
                                                 0));
-            ASSERT(1 == maxSupportedBdexVersion(reinterpret_cast<Obj *>(0),
+            ASSERT(2 == maxSupportedBdexVersion(reinterpret_cast<Obj *>(0),
+                                                20170401));
+            ASSERT(2 == maxSupportedBdexVersion(reinterpret_cast<Obj *>(0),
                                                 VERSION_SELECTOR));
         }
 
-        const int VERSION = Obj::maxSupportedBdexVersion(0);
+        const int VERSIONS[] = { 1, 2 };
+        const int NUM_VERSIONS = static_cast<int>(  sizeof VERSIONS
+                                                  / sizeof *VERSIONS);
 
-        if (verbose) {
-            cout << "\nDirect initial trial of 'bdexStreamOut' and (valid) "
-                 << "'bdexStreamIn' functionality." << endl;
-        }
-        {
-            const Obj X(VC);
-            Out       out(VERSION_SELECTOR, &allocator);
+        for (int versionIndex = 0;
+             versionIndex < NUM_VERSIONS;
+             ++versionIndex) {
+            const int VERSION = VERSIONS[versionIndex];
 
-            Out& rvOut = X.bdexStreamOut(out, VERSION);
-            ASSERT(&out == &rvOut);
+            if (verbose) {
+                cout << "\nTesting Version " << VERSION << "." << endl;
+            }
 
-            const char *const OD  = out.data();
-            const int         LOD = out.length();
+            if (verbose) {
+                cout << "\tDirect initial trial of 'bdexStreamOut' and "
+                     << "(valid) 'bdexStreamIn'." << endl;
+            }
 
-            In in(OD, LOD);
-            ASSERT(in);
-            ASSERT(!in.isEmpty());
+            {
+                const Obj X(VC);
+                Out       out(VERSION_SELECTOR, &allocator);
 
-            Obj mT(VA);  const Obj& T = mT;
-            ASSERT(X != T);
+                Out& rvOut = X.bdexStreamOut(out, VERSION);
+                ASSERT(&out == &rvOut);
 
-            In& rvIn = mT.bdexStreamIn(in, VERSION);
-            ASSERT(&in == &rvIn);
-            ASSERT(X == T);
-            ASSERT(in);
-            ASSERT(in.isEmpty());
-        }
-
-        // We will use the stream free functions provided by 'bslx', as opposed
-        // to the class member functions, since the 'bslx' implementation gives
-        // priority to the free function implementations; we want to test what
-        // will be used.  Furthermore, toward making this test case more
-        // reusable in other components, from here on we generally use the
-        // 'bdexStreamIn' and 'bdexStreamOut' free functions that are defined
-        // in the 'bslx' package rather than call the like-named member
-        // functions directly.
-
-        if (verbose) {
-            cout << "\nThorough test using stream free functions."
-                 << endl;
-        }
-        {
-            for (int i = 0; i < NUM_VALUES; ++i) {
-                const Obj X(VALUES[i]);
-
-                Out out(VERSION_SELECTOR, &allocator);
-
-                using bslx::OutStreamFunctions::bdexStreamOut;
-                using bslx::InStreamFunctions::bdexStreamIn;
-
-                Out& rvOut = bdexStreamOut(out, X, VERSION);
-                LOOP_ASSERT(i, &out == &rvOut);
                 const char *const OD  = out.data();
-                const int         LOD = out.length();
+                const int         LOD = static_cast<int>(out.length());
 
-                // Verify that each new value overwrites every old value and
-                // that the input stream is emptied, but remains valid.
+                In in(OD, LOD);
+                ASSERT(in);
+                ASSERT(!in.isEmpty());
 
-                for (int j = 0; j < NUM_VALUES; ++j) {
+                Obj mT(VA);  const Obj& T = mT;
+                ASSERT(X != T);
+
+                In& rvIn = mT.bdexStreamIn(in, VERSION);
+                ASSERT(&in == &rvIn);
+                ASSERT(X == T);
+                ASSERT(in);
+                ASSERT(in.isEmpty());
+            }
+
+            // We will use the stream free functions provided by 'bslx', as
+            // opposed to the class member functions, since the 'bslx'
+            // implementation gives priority to the free function
+            // implementations; we want to test what will be used.
+            // Furthermore, toward making this test case more reusable in other
+            // components, from here on we generally use the 'bdexStreamIn' and
+            // 'bdexStreamOut' free functions that are defined in the 'bslx'
+            // package rather than call the like-named member functions
+            // directly.
+
+            if (verbose) {
+                cout << "\tThorough test using stream free functions."
+                     << endl;
+            }
+            {
+                for (int i = 0; i < NUM_VALUES; ++i) {
+                    Obj mX(VALUES[i]);  const Obj& X = mX;
+
+                    if (VERSION < 2 && X.localDatetime().hour() != 24) {
+                        bdlt::Datetime mXX = X.localDatetime();
+                        mXX.setMicrosecond(0);
+                        mX.setDatetimeTz(mXX, X.offset());
+                    }
+
+                    Out out(VERSION_SELECTOR, &allocator);
+
+                    using bslx::OutStreamFunctions::bdexStreamOut;
+                    using bslx::InStreamFunctions::bdexStreamIn;
+
+                    Out& rvOut = bdexStreamOut(out, X, VERSION);
+                    LOOP_ASSERT(i, &out == &rvOut);
+                    const char *const OD  = out.data();
+                    const int         LOD = static_cast<int>(out.length());
+
+                    // Verify that each new value overwrites every old value
+                    // and that the input stream is emptied, but remains valid.
+
+                    for (int j = 0; j < NUM_VALUES; ++j) {
+                        In in(OD, LOD);
+                        LOOP2_ASSERT(i, j, in);
+                        LOOP2_ASSERT(i, j, !in.isEmpty());
+
+                        Obj mT(VALUES[j]);  const Obj& T = mT;
+
+                        if (VERSION < 2 && T.localDatetime().hour() != 24) {
+                            bdlt::Datetime mTT = T.localDatetime();
+                            mTT.setMicrosecond(0);
+                            mT.setDatetimeTz(mTT, T.offset());
+                        }
+
+                        LOOP2_ASSERT(i, j, (X == T) == (i == j));
+
+                        BSLX_TESTINSTREAM_EXCEPTION_TEST_BEGIN(in) {
+                            in.reset();
+                            In& rvIn = bdexStreamIn(in, mT, VERSION);
+                            LOOP2_ASSERT(i, j, &in == &rvIn);
+                        } BSLX_TESTINSTREAM_EXCEPTION_TEST_END
+
+                        LOOP2_ASSERT(i, j, X == T);
+                        LOOP2_ASSERT(i, j, in);
+                        LOOP2_ASSERT(i, j, in.isEmpty());
+                    }
+                }
+            }
+
+            if (verbose) {
+                cout << "\tOn empty streams and non-empty, invalid streams."
+                     << endl;
+            }
+
+            // Verify correct behavior for empty streams (valid and invalid).
+
+            {
+                Out               out(VERSION_SELECTOR, &allocator);
+                const char *const OD  = out.data();
+                const int         LOD = static_cast<int>(out.length());
+                ASSERT(0 == LOD);
+
+                for (int i = 0; i < NUM_VALUES; ++i) {
                     In in(OD, LOD);
-                    LOOP2_ASSERT(i, j, in);
-                    LOOP2_ASSERT(i, j, !in.isEmpty());
+                    LOOP_ASSERT(i, in);
+                    LOOP_ASSERT(i, in.isEmpty());
 
-                    Obj mT(VALUES[j]);  const Obj& T = mT;
-                    LOOP2_ASSERT(i, j, (X == T) == (i == j));
+                    // Ensure that reading from an empty or invalid input
+                    // stream leaves the stream invalid and the target object
+                    // unchanged.
+
+                    using bslx::InStreamFunctions::bdexStreamIn;
+
+                    const Obj  X(VALUES[i]);
+                    Obj        mT(X);
+                    const Obj& T = mT;
+                    LOOP_ASSERT(i, X == T);
 
                     BSLX_TESTINSTREAM_EXCEPTION_TEST_BEGIN(in) {
                         in.reset();
-                        In& rvIn = bdexStreamIn(in, mT, VERSION);
-                        LOOP2_ASSERT(i, j, &in == &rvIn);
-                    } BSLX_TESTINSTREAM_EXCEPTION_TEST_END
 
-                    LOOP2_ASSERT(i, j, X == T);
-                    LOOP2_ASSERT(i, j, in);
-                    LOOP2_ASSERT(i, j, in.isEmpty());
+                        // Stream is valid.
+                        In& rvIn1 = bdexStreamIn(in, mT, VERSION);
+                        LOOP_ASSERT(i, &in == &rvIn1);
+                        LOOP_ASSERT(i, !in);
+                        LOOP_ASSERT(i, X == T);
+
+                        // Stream is invalid.
+                        In& rvIn2 = bdexStreamIn(in, mT, VERSION);
+                        LOOP_ASSERT(i, &in == &rvIn2);
+                        LOOP_ASSERT(i, !in);
+                        LOOP_ASSERT(i, X == T);
+                    } BSLX_TESTINSTREAM_EXCEPTION_TEST_END
                 }
             }
-        }
 
-        if (verbose) {
-            cout << "\tOn empty streams and non-empty, invalid streams."
-                 << endl;
-        }
+            // Verify correct behavior for non-empty, invalid streams.
 
-        // Verify correct behavior for empty streams (valid and invalid).
+            {
+                Out               out(VERSION_SELECTOR, &allocator);
 
-        {
-            Out               out(VERSION_SELECTOR, &allocator);
-            const char *const OD  = out.data();
-            const int         LOD = out.length();
-            ASSERT(0 == LOD);
+                using bslx::OutStreamFunctions::bdexStreamOut;
+                Out& rvOut = bdexStreamOut(out, Obj(), VERSION);
+                ASSERT(&out == &rvOut);
 
-            for (int i = 0; i < NUM_VALUES; ++i) {
-                In in(OD, LOD);
-                LOOP_ASSERT(i, in);
-                LOOP_ASSERT(i, in.isEmpty());
+                const char *const OD  = out.data();
+                const int         LOD = static_cast<int>(out.length());
+                ASSERT(0 < LOD);
 
-                // Ensure that reading from an empty or invalid input stream
-                // leaves the stream invalid and the target object unchanged.
-
-                using bslx::InStreamFunctions::bdexStreamIn;
-
-                const Obj  X(VALUES[i]);
-                Obj        mT(X);
-                const Obj& T = mT;
-                LOOP_ASSERT(i, X == T);
-
-                BSLX_TESTINSTREAM_EXCEPTION_TEST_BEGIN(in) {
-                    in.reset();
-
-                    // Stream is valid.
-                    In& rvIn1 = bdexStreamIn(in, mT, VERSION);
-                    LOOP_ASSERT(i, &in == &rvIn1);
-                    LOOP_ASSERT(i, !in);
-                    LOOP_ASSERT(i, X == T);
-
-                    // Stream is invalid.
-                    In& rvIn2 = bdexStreamIn(in, mT, VERSION);
-                    LOOP_ASSERT(i, &in == &rvIn2);
-                    LOOP_ASSERT(i, !in);
-                    LOOP_ASSERT(i, X == T);
-                } BSLX_TESTINSTREAM_EXCEPTION_TEST_END
-            }
-        }
-
-        // Verify correct behavior for non-empty, invalid streams.
-
-        {
-            Out               out(VERSION_SELECTOR, &allocator);
-
-            using bslx::OutStreamFunctions::bdexStreamOut;
-            Out& rvOut = bdexStreamOut(out, Obj(), VERSION);
-            ASSERT(&out == &rvOut);
-
-            const char *const OD  = out.data();
-            const int         LOD = out.length();
-            ASSERT(0 < LOD);
-
-            for (int i = 0; i < NUM_VALUES; ++i) {
-                In in(OD, LOD);
-                in.invalidate();
-                LOOP_ASSERT(i, !in);
-                LOOP_ASSERT(i, !in.isEmpty());
-
-                // Ensure that reading from a non-empty, invalid input stream
-                // leaves the stream invalid and the target object unchanged.
-
-                using bslx::InStreamFunctions::bdexStreamIn;
-
-                const Obj  X(VALUES[i]);
-                Obj        mT(X);
-                const Obj& T = mT;
-                LOOP_ASSERT(i, X == T);
-
-                BSLX_TESTINSTREAM_EXCEPTION_TEST_BEGIN(in) {
-                    in.reset();
+                for (int i = 0; i < NUM_VALUES; ++i) {
+                    In in(OD, LOD);
                     in.invalidate();
                     LOOP_ASSERT(i, !in);
                     LOOP_ASSERT(i, !in.isEmpty());
 
-                    In& rvIn = bdexStreamIn(in, mT, VERSION);
-                    LOOP_ASSERT(i, &in == &rvIn);
-                    LOOP_ASSERT(i, !in);
+                    // Ensure that reading from a non-empty, invalid input
+                    // stream leaves the stream invalid and the target object
+                    // unchanged.
+
+                    using bslx::InStreamFunctions::bdexStreamIn;
+
+                    const Obj  X(VALUES[i]);
+                    Obj        mT(X);
+                    const Obj& T = mT;
                     LOOP_ASSERT(i, X == T);
-                } BSLX_TESTINSTREAM_EXCEPTION_TEST_END
+
+                    BSLX_TESTINSTREAM_EXCEPTION_TEST_BEGIN(in) {
+                        in.reset();
+                        in.invalidate();
+                        LOOP_ASSERT(i, !in);
+                        LOOP_ASSERT(i, !in.isEmpty());
+
+                        In& rvIn = bdexStreamIn(in, mT, VERSION);
+                        LOOP_ASSERT(i, &in == &rvIn);
+                        LOOP_ASSERT(i, !in);
+                        LOOP_ASSERT(i, X == T);
+                    } BSLX_TESTINSTREAM_EXCEPTION_TEST_END
+                }
             }
-        }
 
-        if (verbose) {
-            cout << "\tOn incomplete (but otherwise valid) data."
-                 << endl;
-        }
-        {
-            const Obj W1 = VA, X1 = VB;
-            const Obj W2 = VB, X2 = VC;
-            const Obj W3 = VC, X3 = VD;
+            if (verbose) {
+                cout << "\tOn incomplete (but otherwise valid) data."
+                     << endl;
+            }
+            {
+                const Obj W1 = VA;
+                const Obj W2 = VB;
+                const Obj W3 = VC;
 
-            using bslx::OutStreamFunctions::bdexStreamOut;
-            using bslx::InStreamFunctions::bdexStreamIn;
+                Obj mX1(VB);  const Obj& X1 = mX1;
 
-            Out out(VERSION_SELECTOR, &allocator);
+                if (VERSION < 2 && X1.localDatetime().hour() != 24) {
+                    bdlt::Datetime mXX = X1.localDatetime();
+                    mXX.setMicrosecond(0);
+                    mX1.setDatetimeTz(mXX, X1.offset());
+                }
 
-            Out& rvOut1 = bdexStreamOut(out, X1, VERSION);
-            ASSERT(&out == &rvOut1);
-            const int         LOD1 = out.length();
+                Obj mX2(VC);  const Obj& X2 = mX2;
 
-            Out& rvOut2 = bdexStreamOut(out, X2, VERSION);
-            ASSERT(&out == &rvOut2);
-            const int         LOD2 = out.length();
+                if (VERSION < 2 && X2.localDatetime().hour() != 24) {
+                    bdlt::Datetime mXX = X2.localDatetime();
+                    mXX.setMicrosecond(0);
+                    mX2.setDatetimeTz(mXX, X2.offset());
+                }
 
-            Out& rvOut3 = bdexStreamOut(out, X3, VERSION);
-            ASSERT(&out == &rvOut3);
-            const int         LOD3 = out.length();
-            const char *const OD3  = out.data();
+                Obj mX3(VD);  const Obj& X3 = mX3;
 
-            for (int i = 0; i < LOD3; ++i) {
-                In in(OD3, i);
+                if (VERSION < 2 && X3.localDatetime().hour() != 24) {
+                    bdlt::Datetime mXX = X3.localDatetime();
+                    mXX.setMicrosecond(0);
+                    mX3.setDatetimeTz(mXX, X3.offset());
+                }
 
-                BSLX_TESTINSTREAM_EXCEPTION_TEST_BEGIN(in) {
-                    in.reset();
-                    LOOP_ASSERT(i, in);
-                    LOOP_ASSERT(i, !i == in.isEmpty());
+                using bslx::OutStreamFunctions::bdexStreamOut;
+                using bslx::InStreamFunctions::bdexStreamIn;
 
-                    Obj mT1(W1);  const Obj& T1 = mT1;
-                    Obj mT2(W2);  const Obj& T2 = mT2;
-                    Obj mT3(W3);  const Obj& T3 = mT3;
+                Out out(VERSION_SELECTOR, &allocator);
 
-                    if (i < LOD1) {
-                        In& rvIn1 = bdexStreamIn(in, mT1, VERSION);
-                        LOOP_ASSERT(i, &in == &rvIn1);
-                        LOOP_ASSERT(i, !in);
-                        if (0 == i) LOOP_ASSERT(i, W1 == T1);
-                        In& rvIn2 = bdexStreamIn(in, mT2, VERSION);
-                        LOOP_ASSERT(i, &in == &rvIn2);
-                        LOOP_ASSERT(i, !in);
-                        LOOP_ASSERT(i, W2 == T2);
-                        In& rvIn3 = bdexStreamIn(in, mT3, VERSION);
-                        LOOP_ASSERT(i, &in == &rvIn3);
-                        LOOP_ASSERT(i, !in);
-                        LOOP_ASSERT(i, W3 == T3);
-                    }
-                    else if (i < LOD2) {
-                        In& rvIn1 = bdexStreamIn(in, mT1, VERSION);
-                        LOOP_ASSERT(i, &in == &rvIn1);
-                        LOOP_ASSERT(i,  in);
-                        LOOP_ASSERT(i, X1 == T1);
-                        In& rvIn2 = bdexStreamIn(in, mT2, VERSION);
-                        LOOP_ASSERT(i, &in == &rvIn2);
-                        LOOP_ASSERT(i, !in);
-                        if (LOD1 <= i) LOOP_ASSERT(i, W2 == T2);
-                        In& rvIn3 = bdexStreamIn(in, mT3, VERSION);
-                        LOOP_ASSERT(i, &in == &rvIn3);
-                        LOOP_ASSERT(i, !in);
-                        LOOP_ASSERT(i, W3 == T3);
-                    }
-                    else {  // 'LOD2 <= i < LOD3'
-                        In& rvIn1 = bdexStreamIn(in, mT1, VERSION);
-                        LOOP_ASSERT(i, &in == &rvIn1);
-                        LOOP_ASSERT(i,  in);
-                        LOOP_ASSERT(i, X1 == T1);
-                        In& rvIn2 = bdexStreamIn(in, mT2, VERSION);
-                        LOOP_ASSERT(i, &in == &rvIn2);
-                        LOOP_ASSERT(i,  in);
-                        LOOP_ASSERT(i, X2 == T2);
-                        In& rvIn3 = bdexStreamIn(in, mT3, VERSION);
-                        LOOP_ASSERT(i, &in == &rvIn3);
-                        LOOP_ASSERT(i, !in);
-                        if (LOD2 <= i) LOOP_ASSERT(i, W3 == T3);
-                    }
+                Out& rvOut1 = bdexStreamOut(out, X1, VERSION);
+                ASSERT(&out == &rvOut1);
+                const int         LOD1 = static_cast<int>(out.length());
 
-                    // Verify the objects are in a valid state.
+                Out& rvOut2 = bdexStreamOut(out, X2, VERSION);
+                ASSERT(&out == &rvOut2);
+                const int         LOD2 = static_cast<int>(out.length());
 
-                    LOOP_ASSERT(i, (   -1440 < T1.offset()
-                                    &&  1440 > T1.offset()
-                                    && (   bdlt::Time()
+                Out& rvOut3 = bdexStreamOut(out, X3, VERSION);
+                ASSERT(&out == &rvOut3);
+                const int         LOD3 = static_cast<int>(out.length());
+                const char *const OD3  = out.data();
+
+                for (int i = 0; i < LOD3; ++i) {
+                    In in(OD3, i);
+
+                    BSLX_TESTINSTREAM_EXCEPTION_TEST_BEGIN(in) {
+                        in.reset();
+                        LOOP_ASSERT(i, in);
+                        LOOP_ASSERT(i, !i == in.isEmpty());
+
+                        Obj mT1(W1);  const Obj& T1 = mT1;
+                        Obj mT2(W2);  const Obj& T2 = mT2;
+                        Obj mT3(W3);  const Obj& T3 = mT3;
+
+                        if (i < LOD1) {
+                            In& rvIn1 = bdexStreamIn(in, mT1, VERSION);
+                            LOOP_ASSERT(i, &in == &rvIn1);
+                            LOOP_ASSERT(i, !in);
+                            if (0 == i) LOOP_ASSERT(i, W1 == T1);
+                            In& rvIn2 = bdexStreamIn(in, mT2, VERSION);
+                            LOOP_ASSERT(i, &in == &rvIn2);
+                            LOOP_ASSERT(i, !in);
+                            LOOP_ASSERT(i, W2 == T2);
+                            In& rvIn3 = bdexStreamIn(in, mT3, VERSION);
+                            LOOP_ASSERT(i, &in == &rvIn3);
+                            LOOP_ASSERT(i, !in);
+                            LOOP_ASSERT(i, W3 == T3);
+                        }
+                        else if (i < LOD2) {
+                            In& rvIn1 = bdexStreamIn(in, mT1, VERSION);
+                            LOOP_ASSERT(i, &in == &rvIn1);
+                            LOOP_ASSERT(i,  in);
+                            LOOP_ASSERT(i, X1 == T1);
+                            In& rvIn2 = bdexStreamIn(in, mT2, VERSION);
+                            LOOP_ASSERT(i, &in == &rvIn2);
+                            LOOP_ASSERT(i, !in);
+                            if (LOD1 <= i) LOOP_ASSERT(i, W2 == T2);
+                            In& rvIn3 = bdexStreamIn(in, mT3, VERSION);
+                            LOOP_ASSERT(i, &in == &rvIn3);
+                            LOOP_ASSERT(i, !in);
+                            LOOP_ASSERT(i, W3 == T3);
+                        }
+                        else {  // 'LOD2 <= i < LOD3'
+                            In& rvIn1 = bdexStreamIn(in, mT1, VERSION);
+                            LOOP_ASSERT(i, &in == &rvIn1);
+                            LOOP_ASSERT(i,  in);
+                            LOOP_ASSERT(i, X1 == T1);
+                            In& rvIn2 = bdexStreamIn(in, mT2, VERSION);
+                            LOOP_ASSERT(i, &in == &rvIn2);
+                            LOOP_ASSERT(i,  in);
+                            LOOP_ASSERT(i, X2 == T2);
+                            In& rvIn3 = bdexStreamIn(in, mT3, VERSION);
+                            LOOP_ASSERT(i, &in == &rvIn3);
+                            LOOP_ASSERT(i, !in);
+                            if (LOD2 <= i) LOOP_ASSERT(i, W3 == T3);
+                        }
+
+                        // Verify the objects are in a valid state.
+
+                        LOOP_ASSERT(i, (   -1440 < T1.offset()
+                                        &&  1440 > T1.offset()
+                                        && (   bdlt::Time()
                                                    != T1.localDatetime().time()
-                                        || 0 == T1.offset())));
+                                            || 0 == T1.offset())));
 
-                    LOOP_ASSERT(i, (   -1440 < T2.offset()
-                                    &&  1440 > T2.offset()
-                                    && (   bdlt::Time()
+                        LOOP_ASSERT(i, (   -1440 < T2.offset()
+                                        &&  1440 > T2.offset()
+                                        && (   bdlt::Time()
                                                    != T2.localDatetime().time()
-                                        || 0 == T2.offset())));
+                                            || 0 == T2.offset())));
 
-                    LOOP_ASSERT(i, (   -1440 < T3.offset()
-                                    &&  1440 > T3.offset()
-                                    && (   bdlt::Time()
+                        LOOP_ASSERT(i, (   -1440 < T3.offset()
+                                        &&  1440 > T3.offset()
+                                        && (   bdlt::Time()
                                                    != T3.localDatetime().time()
-                                        || 0 == T3.offset())));
+                                            || 0 == T3.offset())));
 
-                } BSLX_TESTINSTREAM_EXCEPTION_TEST_END
+                    } BSLX_TESTINSTREAM_EXCEPTION_TEST_END
+                }
             }
         }
 
@@ -1237,16 +1538,18 @@ if (verbose) {
             cout << "\t\tGood stream (for control)." << endl;
         }
         {
+            // Version 1.
+
             Out out(VERSION_SELECTOR, &allocator);
 
             // Stream out "new" value.
             using bslx::OutStreamFunctions::bdexStreamOut;
 
-            bdexStreamOut(out, bdlt::Datetime(1, 1, 1, 0), VERSION);
+            bdexStreamOut(out, bdlt::Datetime(1, 1, 1, 0), 1);
             out.putInt32(SERIAL_Y);
 
             const char *const OD  = out.data();
-            const int         LOD = out.length();
+            const int         LOD = static_cast<int>(out.length());
 
             Obj mT(X);  const Obj& T = mT;
             ASSERT(X == T);
@@ -1256,7 +1559,34 @@ if (verbose) {
 
             using bslx::InStreamFunctions::bdexStreamIn;
 
-            In& rvIn = bdexStreamIn(in, mT, VERSION);
+            In& rvIn = bdexStreamIn(in, mT, 1);
+            ASSERT(&in == &rvIn);
+            ASSERT(in);
+            ASSERT(Y == T);
+        }
+        {
+            // Version 2.
+
+            Out out(VERSION_SELECTOR, &allocator);
+
+            // Stream out "new" value.
+            using bslx::OutStreamFunctions::bdexStreamOut;
+
+            bdexStreamOut(out, bdlt::Datetime(1, 1, 1, 0), 2);
+            out.putInt32(SERIAL_Y);
+
+            const char *const OD  = out.data();
+            const int         LOD = static_cast<int>(out.length());
+
+            Obj mT(X);  const Obj& T = mT;
+            ASSERT(X == T);
+
+            In in(OD, LOD);
+            ASSERT(in);
+
+            using bslx::InStreamFunctions::bdexStreamIn;
+
+            In& rvIn = bdexStreamIn(in, mT, 2);
             ASSERT(&in == &rvIn);
             ASSERT(in);
             ASSERT(Y == T);
@@ -1273,11 +1603,11 @@ if (verbose) {
             // Stream out "new" value.
             using bslx::OutStreamFunctions::bdexStreamOut;
 
-            bdexStreamOut(out, bdlt::Datetime(1, 1, 1, 0), VERSION);
+            bdexStreamOut(out, bdlt::Datetime(1, 1, 1, 0), 1);
             out.putInt32(SERIAL_Y);
 
             const char *const OD  = out.data();
-            const int         LOD = out.length();
+            const int         LOD = static_cast<int>(out.length());
 
             Obj mT(X);  const Obj& T = mT;
             ASSERT(X == T);
@@ -1294,18 +1624,18 @@ if (verbose) {
             ASSERT(X == T);
         }
         {
-            const char version = 2 ; // too large (current version is 1)
+            const char version = 3 ; // too large (current version is 2)
 
             Out out(VERSION_SELECTOR, &allocator);
 
             // Stream out "new" value.
             using bslx::OutStreamFunctions::bdexStreamOut;
 
-            bdexStreamOut(out, bdlt::Datetime(1, 1, 1, 0), VERSION);
+            bdexStreamOut(out, bdlt::Datetime(1, 1, 1, 0), 2);
             out.putInt32(SERIAL_Y);
 
             const char *const OD  = out.data();
-            const int         LOD = out.length();
+            const int         LOD = static_cast<int>(out.length());
 
             Obj mT(X);  const Obj& T = mT;
             ASSERT(X == T);
@@ -1331,11 +1661,11 @@ if (verbose) {
             // Stream out "new" value.
             using bslx::OutStreamFunctions::bdexStreamOut;
 
-            bdexStreamOut(out, bdlt::Datetime(1, 1, 1, 0), VERSION);
+            bdexStreamOut(out, bdlt::Datetime(1, 1, 1, 0), 2);
             out.putInt32(-1440);
 
             const char *const OD  = out.data();
-            const int         LOD = out.length();
+            const int         LOD = static_cast<int>(out.length());
 
             Obj mT(X);  const Obj& T = mT;
             ASSERT(X == T);
@@ -1346,7 +1676,7 @@ if (verbose) {
 
             using bslx::InStreamFunctions::bdexStreamIn;
 
-            In& rvIn = bdexStreamIn(in, mT, VERSION);
+            In& rvIn = bdexStreamIn(in, mT, 2);
             ASSERT(&in == &rvIn);
             ASSERT(!in);
             ASSERT(X == T);
@@ -1361,11 +1691,11 @@ if (verbose) {
             // Stream out "new" value.
             using bslx::OutStreamFunctions::bdexStreamOut;
 
-            bdexStreamOut(out, bdlt::Datetime(1, 1, 1, 0), VERSION);
+            bdexStreamOut(out, bdlt::Datetime(1, 1, 1, 0), 2);
             out.putInt32(1440);
 
             const char *const OD  = out.data();
-            const int         LOD = out.length();
+            const int         LOD = static_cast<int>(out.length());
 
             Obj mT(X);  const Obj& T = mT;
             ASSERT(X == T);
@@ -1376,7 +1706,7 @@ if (verbose) {
 
             using bslx::InStreamFunctions::bdexStreamIn;
 
-            In& rvIn = bdexStreamIn(in, mT, VERSION);
+            In& rvIn = bdexStreamIn(in, mT, 2);
             ASSERT(&in == &rvIn);
             ASSERT(!in);
             ASSERT(X == T);
@@ -1389,11 +1719,11 @@ if (verbose) {
             Out out(VERSION_SELECTOR, &allocator);
             using bslx::OutStreamFunctions::bdexStreamOut;
 
-            bdexStreamOut(out, bdlt::Datetime(1, 1, 1, 24), VERSION);
+            bdexStreamOut(out, bdlt::Datetime(1, 1, 1, 24), 2);
             out.putInt32(1);
 
             const char *const OD  = out.data();
-            const int         LOD = out.length();
+            const int         LOD = static_cast<int>(out.length());
 
             Obj mT(X);  const Obj& T = mT;
             ASSERT(X == T);
@@ -1404,7 +1734,7 @@ if (verbose) {
 
             using bslx::InStreamFunctions::bdexStreamIn;
 
-            In& rvIn = bdexStreamIn(in, mT, VERSION);
+            In& rvIn = bdexStreamIn(in, mT, 2);
             ASSERT(&in == &rvIn);
             ASSERT(!in);
             ASSERT(X == T);
@@ -1415,17 +1745,23 @@ if (verbose) {
         }
         {
             static const struct {
-                int         d_lineNum;      // source line number
-                int         d_offset;       // specification offset
-                int         d_version;      // version to stream with
-                int         d_length;       // expect output length
-                const char *d_fmt_p;        // expected output format
+                int          d_lineNum;      // source line number
+                int          d_offset;       // specification offset
+                int          d_version;      // version to stream with
+                bsl::size_t  d_length;       // expect output length
+                const char  *d_fmt_p;        // expected output format
             } DATA[] = {
     //LINE  OFFSET  VER  LEN  FORMAT
     //----  ------  ---  ---  ----------------------------------------------
     { L_,       -1,   1,  11, "\x00\x00\x01\x00\x00\x00\x00\xff\xff\xff\xff" },
     { L_,        0,   1,  11, "\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00" },
-    { L_,        1,   1,  11, "\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x01" }
+    { L_,        1,   1,  11, "\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x01" },
+    { L_,       -1,   2,  12,
+                          "\x00\x00\x00\x00\x00\x00\x00\x00\xff\xff\xff\xff" },
+    { L_,        0,   2,  12,
+                          "\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00" },
+    { L_,        1,   2,  12,
+                          "\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01" }
             };
             const int NUM_DATA = static_cast<int>(sizeof DATA / sizeof *DATA);
 
@@ -1433,7 +1769,7 @@ if (verbose) {
                 const int         LINE        = DATA[i].d_lineNum;
                 const int         OFFSET      = DATA[i].d_offset;
                 const int         VERSION     = DATA[i].d_version;
-                const int         LEN         = DATA[i].d_length;
+                const bsl::size_t LEN         = DATA[i].d_length;
                 const char *const FMT         = DATA[i].d_fmt_p;
 
                 // Test using class methods.
@@ -1452,7 +1788,7 @@ if (verbose) {
                     if (verbose && memcmp(out.data(), FMT, LEN)) {
                         const char *hex = "0123456789abcdef";
                         P_(LINE);
-                        for (int j = 0; j < out.length(); ++j) {
+                        for (bsl::size_t j = 0; j < out.length(); ++j) {
                             cout << "\\x"
                                  << hex[static_cast<unsigned char>
                                             ((*(out.data() + j) >> 4) & 0x0f)]
@@ -1490,7 +1826,7 @@ if (verbose) {
                     if (verbose && memcmp(out.data(), FMT, LEN)) {
                         const char *hex = "0123456789abcdef";
                         P_(LINE);
-                        for (int j = 0; j < out.length(); ++j) {
+                        for (bsl::size_t j = 0; j < out.length(); ++j) {
                             cout << "\\x"
                                  << hex[static_cast<unsigned char>
                                             ((*(out.data() + j) >> 4) & 0x0f)]
@@ -1512,6 +1848,17 @@ if (verbose) {
             }
         }
 
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+
+        if (verbose) {
+            cout << "\nTesting deprecated methods." << endl;
+        }
+        {
+            ASSERT(Obj::maxSupportedBdexVersion()
+                                           == Obj::maxSupportedBdexVersion(0));
+        }
+
+#endif // BDE_OPENSOURCE_PUBLICATION -- pending deprecation
       } break;
       case 9: {
         // --------------------------------------------------------------------
@@ -2000,6 +2347,9 @@ if (verbose) {
         //: 7 The output 'operator<<' signature and return type are standard.
         //:
         //: 8 The output 'operator<<' returns the supplied 'ostream'.
+        //:
+        //: 9 QoI: Neither the 'print' method nor 'operator<<' allocate from
+        //:   the default allocator.
         //
         // Plan:
         //: 1 Use the addresses of the 'print' member function and 'operator<<'
@@ -2031,6 +2381,9 @@ if (verbose) {
         //:     stream.  (C-8)
         //:
         //:   3 Verify that the output string has the expected value.  (C-3)
+        //:
+        //: 4 Use a 'bslma::TestAllocatorMonitor' to verify that 'print' and
+        //:   'operator<<' do not allocate from the default allocator.  (C-9)
         //
         // Testing:
         //   bsl::ostream& print(bsl::ostream& stream, int l, int spl) const;
@@ -2064,30 +2417,30 @@ if (verbose) {
             int         d_offset;          // tz offset
             const char *d_expected_p;      // expected output format
         } DATA[] = {
-            //line  lvl  spaces  offset  format
-            //----  ---  ------  ------  -----------------------------
-            { L_,    0,     -1,      0,  "01JAN0001_00:00:00.000+0000"      },
-            { L_,    0,      0,     15,  "01JAN0001_00:00:00.000+0015\n"    },
-            { L_,    0,      2,     60,  "01JAN0001_00:00:00.000+0100\n"    },
-            { L_,   -8,     -8,     60,  "01JAN0001_00:00:00.000+0100\n"    },
-            { L_,    1,      1,     90,  " 01JAN0001_00:00:00.000+0130\n"   },
-            { L_,    1,      2,    -20,  "  01JAN0001_00:00:00.000-0020\n"  },
-            { L_,    1,      0,    -20,  "01JAN0001_00:00:00.000-0020\n"    },
-            { L_,    1,     -1,    -20,  " 01JAN0001_00:00:00.000-0020"     },
-            { L_,   -1,      2,   -330,  "01JAN0001_00:00:00.000-0530\n"    },
-            { L_,   -1,      0,   -330,  "01JAN0001_00:00:00.000-0530\n"    },
-            { L_,   -2,      1,    311,  "01JAN0001_00:00:00.000+0511\n"    },
-            { L_,    2,      1,   1439,  "  01JAN0001_00:00:00.000+2359\n"  },
-            { L_,    1,      3,  -1439,  "   01JAN0001_00:00:00.000-2359\n" },
-            { L_,   -9,     -9,      0,  "01JAN0001_00:00:00.000+0000"      },
-            { L_,   -9,     -9,     15,  "01JAN0001_00:00:00.000+0015"      },
-            { L_,   -9,     -9,     60,  "01JAN0001_00:00:00.000+0100"      },
-            { L_,   -9,     -9,     90,  "01JAN0001_00:00:00.000+0130"      },
-            { L_,   -9,     -9,    -20,  "01JAN0001_00:00:00.000-0020"      },
-            { L_,   -9,     -9,   -330,  "01JAN0001_00:00:00.000-0530"      },
-            { L_,   -9,     -9,    311,  "01JAN0001_00:00:00.000+0511"      },
-            { L_,   -9,     -9,   1439,  "01JAN0001_00:00:00.000+2359"      },
-            { L_,   -9,     -9,  -1439,  "01JAN0001_00:00:00.000-2359"      },
+        //line  lvl  spaces  offset  format
+        //----  ---  ------  ------  -----------------------------
+        { L_,    0,     -1,      0,  "01JAN0001_00:00:00.000000+0000"      },
+        { L_,    0,      0,     15,  "01JAN0001_00:00:00.000000+0015\n"    },
+        { L_,    0,      2,     60,  "01JAN0001_00:00:00.000000+0100\n"    },
+        { L_,   -8,     -8,     60,  "01JAN0001_00:00:00.000000+0100\n"    },
+        { L_,    1,      1,     90,  " 01JAN0001_00:00:00.000000+0130\n"   },
+        { L_,    1,      2,    -20,  "  01JAN0001_00:00:00.000000-0020\n"  },
+        { L_,    1,      0,    -20,  "01JAN0001_00:00:00.000000-0020\n"    },
+        { L_,    1,     -1,    -20,  " 01JAN0001_00:00:00.000000-0020"     },
+        { L_,   -1,      2,   -330,  "01JAN0001_00:00:00.000000-0530\n"    },
+        { L_,   -1,      0,   -330,  "01JAN0001_00:00:00.000000-0530\n"    },
+        { L_,   -2,      1,    311,  "01JAN0001_00:00:00.000000+0511\n"    },
+        { L_,    2,      1,   1439,  "  01JAN0001_00:00:00.000000+2359\n"  },
+        { L_,    1,      3,  -1439,  "   01JAN0001_00:00:00.000000-2359\n" },
+        { L_,   -9,     -9,      0,  "01JAN0001_00:00:00.000000+0000"      },
+        { L_,   -9,     -9,     15,  "01JAN0001_00:00:00.000000+0015"      },
+        { L_,   -9,     -9,     60,  "01JAN0001_00:00:00.000000+0100"      },
+        { L_,   -9,     -9,     90,  "01JAN0001_00:00:00.000000+0130"      },
+        { L_,   -9,     -9,    -20,  "01JAN0001_00:00:00.000000-0020"      },
+        { L_,   -9,     -9,   -330,  "01JAN0001_00:00:00.000000-0530"      },
+        { L_,   -9,     -9,    311,  "01JAN0001_00:00:00.000000+0511"      },
+        { L_,   -9,     -9,   1439,  "01JAN0001_00:00:00.000000+2359"      },
+        { L_,   -9,     -9,  -1439,  "01JAN0001_00:00:00.000000-2359"      },
         };
         const int NUM_DATA = static_cast<int>(sizeof DATA / sizeof *DATA);
 
@@ -2108,7 +2461,11 @@ if (verbose) {
                 bdlt::Datetime datetime(1, 1, 1); // 01JAN0001_00:00:00.000
                 const Obj      X(datetime, OFF);
 
-                ostringstream os;
+                bslma::TestAllocator scratch("scratch", veryVeryVeryVerbose);
+
+                ostringstream os(&scratch);
+
+                bslma::TestAllocatorMonitor oam(&defaultAllocator);
 
                 // Verify supplied stream is returned by reference.
 
@@ -2133,7 +2490,14 @@ if (verbose) {
                     if (veryVeryVerbose) { T_ T_ Q(print) }
                 }
 
-                // Verify output is formatted as expected.
+                // Verify no allocation from the default allocator.
+
+                ASSERT(oam.isTotalSame());
+
+                // Verify output is formatted as expected.  Note that each
+                // 'os.str()' below incurs an allocation from the default
+                // allocator, which is accounted for in the final 'ASSERTV' in
+                // this test driver.
 
                 if (veryVeryVerbose) { P(os.str()) }
 
@@ -2543,13 +2907,14 @@ if (verbose) {
     }
 
     // CONCERN: In no case does memory come from the global allocator.
+
+    ASSERTV(globalAllocator.numBlocksTotal(),
+            0 == globalAllocator.numBlocksTotal());
+
     // CONCERN: In case 5 only does memory come from the default allocator.
 
-    LOOP_ASSERT(globalAllocator.numBlocksTotal(),
-                0 == globalAllocator.numBlocksTotal());
-
-    LOOP_ASSERT(defaultAllocator.numBlocksTotal(),
-                5 == test || 0 == defaultAllocator.numBlocksTotal());
+    ASSERTV(defaultAllocator.numBlocksTotal(),
+            5 == test || 0 == defaultAllocator.numBlocksTotal());
 
     if (testStatus > 0) {
         cerr << "Error, non-zero test status = " << testStatus << "." << endl;
@@ -2558,7 +2923,7 @@ if (verbose) {
 }
 
 // ----------------------------------------------------------------------------
-// Copyright 2014 Bloomberg Finance L.P.
+// Copyright 2016 Bloomberg Finance L.P.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.

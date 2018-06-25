@@ -1,7 +1,7 @@
 // bdlt_date.t.cpp                                                    -*-C++-*-
 #include <bdlt_date.h>
 
-#include <bdls_testutil.h>
+#include <bslim_testutil.h>
 
 #include <bslma_default.h>
 #include <bslma_defaultallocatorguard.h>
@@ -23,7 +23,6 @@
 #include <bsl_cstring.h>     // 'memcmp', 'strcmp'
 #include <bsl_iostream.h>
 #include <bsl_sstream.h>
-
 
 using namespace BloombergLP;
 using namespace bsl;
@@ -122,9 +121,22 @@ using namespace bsl;
 // [15] Date operator+(int numDays, const Date& date);
 // [15] Date operator-(const Date& date, int numDays);
 // [16] int operator-(const Date& lhs, const Date& rhs);
+// [20] void hashAppend(HASHALG&, const Date&);
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+// DEPRECATED
+// [13] static bool isValid(int year, int dayOfYear);
+// [13] static bool isValid(int year, int month, int day);
+// [10] static int maxSupportedBdexVersion();
+#endif // BDE_OPENSOURCE_PUBLICATION -- pending deprecation
+#ifndef BDE_OMIT_INTERNAL_DEPRECATED  // BDE2.22
+// [10] static int maxSupportedVersion();
+// [13] int validateAndSetYearDay(int year, int dayOfYear);
+// [13] int validateAndSetYearMonthDay(int year, int month, int day);
+// [ 5] bsl::ostream& streamOut(bsl::ostream& stream) const;
+#endif // BDE_OMIT_INTERNAL_DEPRECATED -- BDE2.22
 // ----------------------------------------------------------------------------
 // [ 1] BREATHING TEST
-// [20] USAGE EXAMPLE
+// [21] USAGE EXAMPLE
 // [ *] CONCERN: This test driver is reusable w/other, similar components.
 // [ *] CONCERN: In no case does memory come from the global allocator.
 // [ *] CONCERN: In no case does memory come from the default allocator.
@@ -160,23 +172,23 @@ void aSsErT(bool condition, const char *message, int line)
 //               STANDARD BDE TEST DRIVER MACRO ABBREVIATIONS
 // ----------------------------------------------------------------------------
 
-#define ASSERT       BDLS_TESTUTIL_ASSERT
-#define ASSERTV      BDLS_TESTUTIL_ASSERTV
+#define ASSERT       BSLIM_TESTUTIL_ASSERT
+#define ASSERTV      BSLIM_TESTUTIL_ASSERTV
 
-#define LOOP_ASSERT  BDLS_TESTUTIL_LOOP_ASSERT
-#define LOOP0_ASSERT BDLS_TESTUTIL_LOOP0_ASSERT
-#define LOOP1_ASSERT BDLS_TESTUTIL_LOOP1_ASSERT
-#define LOOP2_ASSERT BDLS_TESTUTIL_LOOP2_ASSERT
-#define LOOP3_ASSERT BDLS_TESTUTIL_LOOP3_ASSERT
-#define LOOP4_ASSERT BDLS_TESTUTIL_LOOP4_ASSERT
-#define LOOP5_ASSERT BDLS_TESTUTIL_LOOP5_ASSERT
-#define LOOP6_ASSERT BDLS_TESTUTIL_LOOP6_ASSERT
+#define LOOP_ASSERT  BSLIM_TESTUTIL_LOOP_ASSERT
+#define LOOP0_ASSERT BSLIM_TESTUTIL_LOOP0_ASSERT
+#define LOOP1_ASSERT BSLIM_TESTUTIL_LOOP1_ASSERT
+#define LOOP2_ASSERT BSLIM_TESTUTIL_LOOP2_ASSERT
+#define LOOP3_ASSERT BSLIM_TESTUTIL_LOOP3_ASSERT
+#define LOOP4_ASSERT BSLIM_TESTUTIL_LOOP4_ASSERT
+#define LOOP5_ASSERT BSLIM_TESTUTIL_LOOP5_ASSERT
+#define LOOP6_ASSERT BSLIM_TESTUTIL_LOOP6_ASSERT
 
-#define Q            BDLS_TESTUTIL_Q   // Quote identifier literally.
-#define P            BDLS_TESTUTIL_P   // Print identifier and value.
-#define P_           BDLS_TESTUTIL_P_  // P(X) without '\n'.
-#define T_           BDLS_TESTUTIL_T_  // Print a tab (w/o newline).
-#define L_           BDLS_TESTUTIL_L_  // current Line number
+#define Q            BSLIM_TESTUTIL_Q   // Quote identifier literally.
+#define P            BSLIM_TESTUTIL_P   // Print identifier and value.
+#define P_           BSLIM_TESTUTIL_P_  // P(X) without '\n'.
+#define T_           BSLIM_TESTUTIL_T_  // Print a tab (w/o newline).
+#define L_           BSLIM_TESTUTIL_L_  // current Line number
 
 // ============================================================================
 //                  NEGATIVE-TEST MACRO ABBREVIATIONS
@@ -205,7 +217,6 @@ typedef bslx::TestInStream  In;
 typedef bslx::TestOutStream Out;
 
 #define VERSION_SELECTOR 20140601
-
 
 // ============================================================================
 //                                 TYPE TRAITS
@@ -302,7 +313,9 @@ const AltDataRow ALT_DATA[] =
 
     { L_,    1999,   59,   2000,   58,       364 },
 
+#ifdef BDE_USE_PROLEPTIC_DATES
     { L_,    1000,    1,   1001,    1,       365 },
+#endif
     { L_,    1998,   59,   1999,   59,       365 },
 
     { L_,    1200,    1,   1201,    1,       366 },
@@ -312,7 +325,9 @@ const AltDataRow ALT_DATA[] =
 
     { L_,    1999,   59,   2002,   59,      1096 },
 
+#ifdef BDE_USE_PROLEPTIC_DATES
     { L_,       1,    1,   9999,  365,   3652058 },
+#endif
 };
 const int ALT_NUM_DATA = static_cast<int>(sizeof ALT_DATA / sizeof *ALT_DATA);
 
@@ -343,7 +358,7 @@ int main(int argc, char *argv[])
     bslma::DefaultAllocatorGuard defaultAllocatorGuard(&defaultAllocator);
 
     switch (test) { case 0:
-      case 20: {
+      case 21: {
         // --------------------------------------------------------------------
         // USAGE EXAMPLE
         //   Extracted from component header file.
@@ -440,6 +455,95 @@ if (verbose)
 //..
 // on 'stdout'.
 
+      } break;
+      case 20: {
+        // --------------------------------------------------------------------
+        // TESTING: hashAppend
+        //
+        // Concerns:
+        //: 1 Hashes different inputs differently
+        //
+        //: 2 Hashes equal inputs identically
+        //
+        //: 3 Works for const and non-const dates
+        //
+        // Plan:
+        //: 1 Brute force test of a few hand picked values, ensuring that
+        //    hashes of equivalent values match and hashes of unequal values do
+        //    not.
+        //
+        // Testing:
+        //    void hashAppend(HASHALG&, const Date&);
+        // --------------------------------------------------------------------
+        if (verbose) cout << "\nTESTING 'hashAppend'"
+                          << "\n====================\n";
+
+        if (verbose) cout << "Brute force test of several dates." << endl;
+        {
+            typedef ::BloombergLP::bslh::Hash<> Hasher;
+
+            bdlt::Date d1; // P-1
+            bdlt::Date d2(1999, 12, 31);
+            bdlt::Date d3(1999, 12, 31);
+            bdlt::Date d4(1, 1, 2);
+            const bdlt::Date d5(1, 1, 2);
+            const bdlt::Date d6(1, 1, 3);
+
+            Hasher hasher;
+            Hasher::result_type a1 = hasher(d1), a2 = hasher(d2),
+                                a3 = hasher(d3), a4 = hasher(d4),
+                                a5 = hasher(d5), a6 = hasher(d6);
+
+            if (veryVerbose) {
+                cout << "\tHash of " << d1 << " is " << a1 << endl;
+                cout << "\tHash of " << d2 << " is " << a2 << endl;
+                cout << "\tHash of " << d3 << " is " << a3 << endl;
+                cout << "\tHash of " << d4 << " is " << a4 << endl;
+                cout << "\tHash of " << d5 << " is " << a5 << endl;
+                cout << "\tHash of " << d6 << " is " << a6 << endl;
+            }
+
+            ASSERT(a1 != a2);
+            ASSERT(a1 != a3);
+            ASSERT(a1 != a4);
+            ASSERT(a1 != a5);
+            ASSERT(a1 != a6);
+            if (veryVerbose) {
+                cout << "\td1/d2: " << int(a1 != a2)
+                     << ", d1/d3: " << int(a1 != a3)
+                     << ", d1/d4: " << int(a1 != a4)
+                     << ", d1/d5: " << int(a1 != a5)
+                     << ", d1/d6: " << int(a1 != a6) << endl;
+            }
+            ASSERT(a2 == a3);
+            ASSERT(a2 != a4);
+            ASSERT(a2 != a5);
+            ASSERT(a2 != a6);
+            if (veryVerbose) {
+                cout << "\td2/d3: " << int(a2 != a3)
+                     << ", d2/d4: " << int(a2 != a4)
+                     << ", d2/d5: " << int(a2 != a5)
+                     << ", d2/d6: " << int(a2 != a6) << endl;
+            }
+            ASSERT(a3 != a4);
+            ASSERT(a3 != a5);
+            ASSERT(a3 != a6);
+            if (veryVerbose) {
+                cout << "\td3/d4: " << int(a3 != a4)
+                     << ", d3/d5: " << int(a3 != a5)
+                     << ", d3/d6: " << int(a3 != a6) << endl;
+            }
+            ASSERT(a4 == a5);
+            ASSERT(a4 != a6);
+            if (veryVerbose) {
+                cout << "\td4/d5: " << int(a4 != a5)
+                     << ", d4/d6: " << int(a4 != a6) << endl;
+            }
+            ASSERT(a5 != a6);
+            if (veryVerbose) {
+                cout << "\td5/d6: " << int(a5 != a6) << endl;
+            }
+        }
       } break;
       case 19: {
         // --------------------------------------------------------------------
@@ -564,7 +668,9 @@ if (verbose)
                 { L_,       1,     1,    INT_MIN },
                 { L_,    9999,   365,    INT_MIN },
 
+#ifdef BDE_USE_PROLEPTIC_DATES
                 { L_,    9999,   365,   -3652059 },
+#endif
 
                 { L_,       1,   365,       -365 },
                 { L_,       2,     1,       -366 },
@@ -587,7 +693,9 @@ if (verbose)
 
                 { L_,    9998,   365,        366 },
 
+#ifdef BDE_USE_PROLEPTIC_DATES
                 { L_,       1,     1,    3652059 },
+#endif
 
                 { L_,       1,     1,    INT_MAX },
                 { L_,    9999,   365,    INT_MAX },
@@ -711,6 +819,24 @@ if (verbose)
             { L_,    2014,     10,    1,   DOW::e_WED,           MOY::e_OCT },
             { L_,    2014,     11,    1,   DOW::e_SAT,           MOY::e_NOV },
             { L_,    2014,     12,    1,   DOW::e_MON,           MOY::e_DEC },
+
+            { L_,    2016,      2,   29,   DOW::e_MON,           MOY::e_FEB },
+            { L_,    2020,      2,   29,   DOW::e_SAT,           MOY::e_FEB },
+            { L_,    2024,      2,   29,   DOW::e_THU,           MOY::e_FEB },
+            { L_,    2028,      2,   29,   DOW::e_TUE,           MOY::e_FEB },
+            { L_,    2032,      2,   29,   DOW::e_SUN,           MOY::e_FEB },
+            { L_,    2036,      2,   29,   DOW::e_FRI,           MOY::e_FEB },
+            { L_,    2040,      2,   29,   DOW::e_WED,           MOY::e_FEB },
+            { L_,    2044,      2,   29,   DOW::e_MON,           MOY::e_FEB },
+            { L_,    2048,      2,   29,   DOW::e_SAT,           MOY::e_FEB },
+            { L_,    2052,      2,   29,   DOW::e_THU,           MOY::e_FEB },
+            { L_,    2056,      2,   29,   DOW::e_TUE,           MOY::e_FEB },
+            { L_,    2060,      2,   29,   DOW::e_SUN,           MOY::e_FEB },
+            { L_,    2064,      2,   29,   DOW::e_FRI,           MOY::e_FEB },
+            { L_,    2068,      2,   29,   DOW::e_WED,           MOY::e_FEB },
+            { L_,    2072,      2,   29,   DOW::e_MON,           MOY::e_FEB },
+            { L_,    2076,      2,   29,   DOW::e_SAT,           MOY::e_FEB },
+            { L_,    2080,      2,   29,   DOW::e_THU,           MOY::e_FEB },
         };
         const int NUM_DATA = static_cast<int>(sizeof DATA / sizeof *DATA);
 
@@ -726,6 +852,11 @@ if (verbose)
                 T_ P_(LINE) P_(YEAR) P_(MONTH) P_(DAY) P_(EXP_DOW) P(EXP_MOY)
             }
 
+#ifndef BDE_USE_PROLEPTIC_DATES
+            if (YEAR <= 1752) {
+                continue;
+            }
+#endif
 
             const Obj X(YEAR, MONTH, DAY);
 
@@ -1414,10 +1545,14 @@ if (verbose)
                     Obj mX(V);  ASSERT_SAFE_PASS(mX +=        0);
                     Obj mY(V);  ASSERT_SAFE_FAIL(mY +=       -1);
                 }
-
                 {
+#ifdef BDE_USE_PROLEPTIC_DATES
                     Obj mX(V);  ASSERT_SAFE_PASS(mX +=  3652058);
                     Obj mY(V);  ASSERT_SAFE_FAIL(mY +=  3652059);
+#else
+                    Obj mX(V);  ASSERT_SAFE_PASS(mX +=  3652060);
+                    Obj mY(V);  ASSERT_SAFE_FAIL(mY +=  3652061);
+#endif
                 }
 
                 const Obj W(9999, 365);
@@ -1427,8 +1562,13 @@ if (verbose)
                 }
 
                 {
+#ifdef BDE_USE_PROLEPTIC_DATES
                     Obj mX(W);  ASSERT_SAFE_PASS(mX += -3652058);
                     Obj mY(W);  ASSERT_SAFE_FAIL(mY += -3652059);
+#else
+                    Obj mX(W);  ASSERT_SAFE_PASS(mX += -3652060);
+                    Obj mY(W);  ASSERT_SAFE_FAIL(mY += -3652061);
+#endif
                 }
             }
 
@@ -1441,8 +1581,13 @@ if (verbose)
                 }
 
                 {
+#ifdef BDE_USE_PROLEPTIC_DATES
                     Obj mX(V);  ASSERT_SAFE_PASS(mX -= -3652058);
                     Obj mY(V);  ASSERT_SAFE_FAIL(mY -= -3652059);
+#else
+                    Obj mX(V);  ASSERT_SAFE_PASS(mX -= -3652060);
+                    Obj mY(V);  ASSERT_SAFE_FAIL(mY -= -3652061);
+#endif
                 }
 
                 const Obj W(9999, 365);
@@ -1452,8 +1597,13 @@ if (verbose)
                 }
 
                 {
+#ifdef BDE_USE_PROLEPTIC_DATES
                     Obj mX(W);  ASSERT_SAFE_PASS(mX -=  3652058);
                     Obj mY(W);  ASSERT_SAFE_FAIL(mY -=  3652059);
+#else
+                    Obj mX(W);  ASSERT_SAFE_PASS(mX -=  3652060);
+                    Obj mY(W);  ASSERT_SAFE_FAIL(mY -=  3652061);
+#endif
                 }
             }
 
@@ -1464,16 +1614,26 @@ if (verbose)
                 ASSERT_SAFE_PASS(V +        0);
                 ASSERT_SAFE_FAIL(V +       -1);
 
+#ifdef BDE_USE_PROLEPTIC_DATES
                 ASSERT_SAFE_PASS(V +  3652058);
                 ASSERT_SAFE_FAIL(V +  3652059);
+#else
+                ASSERT_SAFE_PASS(V +  3652060);
+                ASSERT_SAFE_FAIL(V +  3652061);
+#endif
 
                 const Obj W(9999, 365);
 
                 ASSERT_SAFE_PASS(W +        0);
                 ASSERT_SAFE_FAIL(W +        1);
 
+#ifdef BDE_USE_PROLEPTIC_DATES
                 ASSERT_SAFE_PASS(W + -3652058);
                 ASSERT_SAFE_FAIL(W + -3652059);
+#else
+                ASSERT_SAFE_PASS(W + -3652060);
+                ASSERT_SAFE_FAIL(W + -3652061);
+#endif
             }
 
             if (verbose) cout << "\t'operator+(int, Date)'" << endl;
@@ -1483,16 +1643,26 @@ if (verbose)
                 ASSERT_SAFE_PASS(       0 + V);
                 ASSERT_SAFE_FAIL(      -1 + V);
 
+#ifdef BDE_USE_PROLEPTIC_DATES
                 ASSERT_SAFE_PASS( 3652058 + V);
                 ASSERT_SAFE_FAIL( 3652059 + V);
+#else
+                ASSERT_SAFE_PASS( 3652060 + V);
+                ASSERT_SAFE_FAIL( 3652061 + V);
+#endif
 
                 const Obj W(9999, 365);
 
                 ASSERT_SAFE_PASS(       0 + W);
                 ASSERT_SAFE_FAIL(       1 + W);
 
+#ifdef BDE_USE_PROLEPTIC_DATES
                 ASSERT_SAFE_PASS(-3652058 + W);
                 ASSERT_SAFE_FAIL(-3652059 + W);
+#else
+                ASSERT_SAFE_PASS(-3652060 + W);
+                ASSERT_SAFE_FAIL(-3652061 + W);
+#endif
             }
 
             if (verbose) cout << "\t'operator-(Date, int)'" << endl;
@@ -1502,16 +1672,26 @@ if (verbose)
                 ASSERT_SAFE_PASS(V -        0);
                 ASSERT_SAFE_FAIL(V -        1);
 
+#ifdef BDE_USE_PROLEPTIC_DATES
                 ASSERT_SAFE_PASS(V - -3652058);
                 ASSERT_SAFE_FAIL(V - -3652059);
+#else
+                ASSERT_SAFE_PASS(V - -3652060);
+                ASSERT_SAFE_FAIL(V - -3652061);
+#endif
 
                 const Obj W(9999, 365);
 
                 ASSERT_SAFE_PASS(W -        0);
                 ASSERT_SAFE_FAIL(W -       -1);
 
+#ifdef BDE_USE_PROLEPTIC_DATES
                 ASSERT_SAFE_PASS(W -  3652058);
                 ASSERT_SAFE_FAIL(W -  3652059);
+#else
+                ASSERT_SAFE_PASS(W -  3652060);
+                ASSERT_SAFE_FAIL(W -  3652061);
+#endif
             }
         }
 
@@ -1680,7 +1860,9 @@ if (verbose)
                 { L_,       4,  366,      5,    1 },
                 { L_,      10,   59,     10,   60 },
                 { L_,     100,   90,    100,   91 },
+#ifdef BDE_USE_PROLEPTIC_DATES
                 { L_,     100,  365,    101,    1 },
+#endif
                 { L_,     400,   59,    400,   60 },
                 { L_,     400,   60,    400,   61 },
                 { L_,     400,  366,    401,    1 },
@@ -1980,6 +2162,14 @@ if (verbose)
         //   static bool isValidYearMonthDay(int year, int month, int day);
         //   int setYearDayIfValid(int year, int dayOfYear);
         //   int setYearMonthDayIfValid(int year, int month, int day);
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+        //   static bool isValid(int year, int dayOfYear);
+        //   static bool isValid(int year, int month, int day);
+#endif // BDE_OPENSOURCE_PUBLICATION -- pending deprecation
+#ifndef BDE_OMIT_INTERNAL_DEPRECATED  // BDE2.22
+        //   int validateAndSetYearDay(int year, int dayOfYear);
+        //   int validateAndSetYearMonthDay(int year, int month, int day);
+#endif // BDE_OMIT_INTERNAL_DEPRECATED -- BDE2.22
         // --------------------------------------------------------------------
 
         if (verbose) cout << endl
@@ -2030,7 +2220,9 @@ if (verbose)
                 { L_,        100,        0,     0 },
                 { L_,        100,        1,     1 },
                 { L_,        100,      365,     1 },
+#ifdef BDE_USE_PROLEPTIC_DATES
                 { L_,        100,      366,     0 },
+#endif
 
                 { L_,        400,        0,     0 },
                 { L_,        400,        1,     1 },
@@ -2040,7 +2232,9 @@ if (verbose)
                 { L_,       1000,        0,     0 },
                 { L_,       1000,        1,     1 },
                 { L_,       1000,      365,     1 },
+#ifdef BDE_USE_PROLEPTIC_DATES
                 { L_,       1000,      366,     0 },
+#endif
 
                 { L_,       9999,  INT_MIN,     0 },
                 { L_,       9999,        0,     0 },
@@ -2085,6 +2279,36 @@ if (verbose)
 
                     if (veryVeryVerbose) { T_ T_ P_(W) P(X) }
                 }
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+                // '[isValid|validateAndSetYearDay](year, dayOfYear)'
+
+                {
+                    LOOP_ASSERT(LINE, EXP == Obj::isValid(YEAR, DAY));
+#ifndef BDE_OMIT_INTERNAL_DEPRECATED  // BDE2.22
+
+                    Obj mX(1133, 275);  const Obj& X = mX;
+
+                    const Obj W(X);  // control
+
+                    if (1 == EXP) {
+                        const Obj V(YEAR, DAY);
+
+                        LOOP_ASSERT(LINE, 0 == mX.validateAndSetYearDay(YEAR,
+                                                                        DAY));
+                        LOOP_ASSERT(LINE, V == X);
+
+                        if (veryVeryVerbose) { T_ T_ P_(V) P(X) }
+                    }
+                    else {
+                        LOOP_ASSERT(LINE, 0 != mX.validateAndSetYearDay(YEAR,
+                                                                        DAY));
+                        LOOP_ASSERT(LINE, W == X);
+
+                        if (veryVeryVerbose) { T_ T_ P_(W) P(X) }
+                    }
+#endif // BDE_OMIT_INTERNAL_DEPRECATED -- BDE2.22
+                }
+#endif // BDE_OPENSOURCE_PUBLICATION -- pending deprecation
             }
         }
 
@@ -2129,14 +2353,18 @@ if (verbose)
                 { L_,          4,        2,       30,     0 },
 
                 { L_,        100,        2,       28,     1 },
+#ifdef BDE_USE_PROLEPTIC_DATES
                 { L_,        100,        2,       29,     0 },
+#endif
 
                 { L_,        400,        2,       28,     1 },
                 { L_,        400,        2,       29,     1 },
                 { L_,        400,        2,       30,     0 },
 
                 { L_,       1000,        2,       28,     1 },
+#ifdef BDE_USE_PROLEPTIC_DATES
                 { L_,       1000,        2,       29,     0 },
+#endif
 
                 { L_,       2003,        1,       31,     1 },
                 { L_,       2003,        1,       32,     0 },
@@ -2199,6 +2427,24 @@ if (verbose)
 
                 { L_,      10000,        1,        1,     0 },
                 { L_,    INT_MAX,        1,        1,     0 },
+
+                { L_,       2016,        2,       29,     1 },
+                { L_,       2020,        2,       29,     1 },
+                { L_,       2024,        2,       29,     1 },
+                { L_,       2028,        2,       29,     1 },
+                { L_,       2032,        2,       29,     1 },
+                { L_,       2036,        2,       29,     1 },
+                { L_,       2040,        2,       29,     1 },
+                { L_,       2044,        2,       29,     1 },
+                { L_,       2048,        2,       29,     1 },
+                { L_,       2052,        2,       29,     1 },
+                { L_,       2056,        2,       29,     1 },
+                { L_,       2060,        2,       29,     1 },
+                { L_,       2064,        2,       29,     1 },
+                { L_,       2068,        2,       29,     1 },
+                { L_,       2072,        2,       29,     1 },
+                { L_,       2076,        2,       29,     1 },
+                { L_,       2080,        2,       29,     1 },
             };
             const int NUM_DATA = static_cast<int>(sizeof DATA / sizeof *DATA);
 
@@ -2238,6 +2484,40 @@ if (verbose)
 
                     if (veryVeryVerbose) { T_ T_ P_(W) P(X) }
                 }
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+                // '[isValid|validateAndSetYearMonthDay](year, month, day)'
+
+                {
+                    LOOP_ASSERT(LINE, EXP == Obj::isValid(YEAR, MONTH, DAY));
+#ifndef BDE_OMIT_INTERNAL_DEPRECATED  // BDE2.22
+
+                    Obj mY(1133, 10, 2);  const Obj& Y = mY;
+
+                    const Obj W(Y);  // control
+
+                    if (1 == EXP) {
+                        const Obj V(YEAR, MONTH, DAY);
+
+                        LOOP_ASSERT(LINE,
+                                    0 == mY.validateAndSetYearMonthDay(YEAR,
+                                                                       MONTH,
+                                                                       DAY));
+                        LOOP_ASSERT(LINE, V == Y);
+
+                        if (veryVeryVerbose) { T_ T_ P_(V) P(Y) }
+                    }
+                    else {
+                        LOOP_ASSERT(LINE,
+                                    0 != mY.validateAndSetYearMonthDay(YEAR,
+                                                                       MONTH,
+                                                                       DAY));
+                        LOOP_ASSERT(LINE, W == Y);
+
+                        if (veryVeryVerbose) { T_ T_ P_(W) P(Y) }
+                    }
+#endif // BDE_OMIT_INTERNAL_DEPRECATED -- BDE2.22
+                }
+#endif // BDE_OPENSOURCE_PUBLICATION -- pending deprecation
             }
         }
 
@@ -2358,16 +2638,22 @@ if (verbose)
                 { L_,       2,    1,      1,        1 },
                 { L_,      10,   95,      4,        5 },
                 { L_,      10,  284,     10,       11 },
+#ifdef BDE_USE_PROLEPTIC_DATES
                 { L_,     100,  158,      6,        7 },
                 { L_,     100,  316,     11,       12 },
                 { L_,    1000,  221,      8,        9 },
+#endif
                 { L_,    1100,   31,      1,       31 },
                 { L_,    1200,   60,      2,       29 },
+#ifdef BDE_USE_PROLEPTIC_DATES
                 { L_,    1300,   90,      3,       31 },
                 { L_,    1400,  120,      4,       30 },
                 { L_,    1500,  151,      5,       31 },
+#endif
                 { L_,    1600,  182,      6,       30 },
+#ifdef BDE_USE_PROLEPTIC_DATES
                 { L_,    1700,  212,      7,       31 },
+#endif
                 { L_,    1800,  243,      8,       31 },
                 { L_,    1900,  273,      9,       30 },
                 { L_,    2000,  305,     10,       31 },
@@ -2880,6 +3166,12 @@ if (verbose)
         //   static int maxSupportedBdexVersion(int versionSelector);
         //   STREAM& bdexStreamIn(STREAM& stream, int version);
         //   STREAM& bdexStreamOut(STREAM& stream, int version) const;
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+        //   static int maxSupportedBdexVersion();
+#endif // BDE_OPENSOURCE_PUBLICATION -- pending deprecation
+#ifndef BDE_OMIT_INTERNAL_DEPRECATED  // BDE2.22
+        //   static int maxSupportedVersion();
+#endif // BDE_OMIT_INTERNAL_DEPRECATED -- BDE2.22
         // --------------------------------------------------------------------
 
         if (verbose) cout << endl
@@ -3196,7 +3488,11 @@ if (verbose)
         ASSERT(W != Y);
         ASSERT(X != Y);
 
+#ifdef BDE_USE_PROLEPTIC_DATES
         const int SERIAL_Y = 733;   // streamed rep. of 'Y'
+#else
+        const int SERIAL_Y = 731;   // streamed rep. of 'Y'
+#endif
 
         if (verbose) {
             cout << "\t\tGood stream (for control)." << endl;
@@ -3429,7 +3725,21 @@ if (verbose)
             }
         }
 
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
 
+        if (verbose) {
+            cout << "\nTesting deprecated methods." << endl;
+        }
+        {
+#ifndef BDE_OMIT_INTERNAL_DEPRECATED  // BDE2.22
+            ASSERT(Obj::maxSupportedVersion()
+                                           == Obj::maxSupportedBdexVersion(0));
+#endif // BDE_OMIT_INTERNAL_DEPRECATED -- BDE2.22
+            ASSERT(Obj::maxSupportedBdexVersion()
+                                           == Obj::maxSupportedBdexVersion(0));
+        }
+
+#endif // BDE_OPENSOURCE_PUBLICATION -- pending deprecation
       } break;
       case 9: {
         // --------------------------------------------------------------------
@@ -3925,6 +4235,9 @@ if (verbose)
         // Testing:
         //   ostream& print(ostream& s, int level = 0, int sPL = 4) const;
         //   ostream& operator<<(ostream &os, const Date& object);
+#ifndef BDE_OMIT_INTERNAL_DEPRECATED  // BDE2.22
+        //   bsl::ostream& streamOut(bsl::ostream& stream) const;
+#endif // BDE_OMIT_INTERNAL_DEPRECATED -- BDE2.22
         // --------------------------------------------------------------------
 
         if (verbose) cout << endl
@@ -4098,6 +4411,23 @@ if (verbose)
             }
         }
 
+#ifndef BDE_OMIT_INTERNAL_DEPRECATED  // BDE2.22
+        if (verbose) cout << "\nTesting DEPRECATED 'streamOut' for sanity."
+                          << endl;
+        {
+            const Obj X(1959, 3, 8);
+
+            bslma::TestAllocator oa("object", veryVeryVeryVerbose);
+
+            ostringstream os1(&oa);  // use with 'print'
+            ostringstream os2(&oa);  // use with 'streamOut'
+
+            ASSERT(&os1 == &X.print(os1, 0, -1));
+            ASSERT(&os2 == &X.streamOut(os2));
+
+            ASSERT(os1.str() == os2.str());
+        }
+#endif // BDE_OMIT_INTERNAL_DEPRECATED -- BDE2.22
 
       } break;
       case 4: {

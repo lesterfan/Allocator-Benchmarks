@@ -12,6 +12,8 @@ BSLS_IDENT("$Id: $")
 //@CLASSES:
 //  bdlt::DayOfWeekSet: ordered set of (unique) 'bdlt::DayOfWeek::Enum' values
 //
+//@AUTHOR: Jeffrey Mendelsohn (jmendelsohn)
+//
 //@SEE_ALSO: bdlt_dayofweek
 //
 //@DESCRIPTION: This component implements an efficient value-semantic, ordered
@@ -50,9 +52,9 @@ BSLS_IDENT("$Id: $")
 //
 ///Example 1: Manipulation and Traversal of Day of Week Sets
 ///- - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// A 'bdlt::DayOfWeekSet' is useful for recording recurring appointments,
-// or special days (e.g., weekend days), in a calendar.  The following
-// snippets of code illustrate how to create and use a 'bdlt::DayOfWeek' set.
+// A 'bdlt::DayOfWeekSet' is useful for recording recurring appointments, or
+// special days (e.g., weekend days), in a calendar.  The following snippets of
+// code illustrate how to create and use a 'bdlt::DayOfWeek' set.
 //
 // First, we create a couple of commonly useful sets.  First we define the
 // 'bdlt::DayOfWeekSet' 'weekendDays':
@@ -224,6 +226,18 @@ BSLS_IDENT("$Id: $")
 #include <bdlb_bitutil.h>
 #endif
 
+#ifndef INCLUDED_BSLH_HASH
+#include <bslh_hash.h>
+#endif
+
+#ifndef INCLUDED_BSLMF_INTEGRALCONSTANT
+#include <bslmf_integralconstant.h>
+#endif
+
+#ifndef INCLUDED_BSLMF_ISBITWISEMOVEABLE
+#include <bslmf_isbitwisemoveable.h>
+#endif
+
 #ifndef INCLUDED_BSLS_ASSERT
 #include <bsls_assert.h>
 #endif
@@ -348,6 +362,8 @@ class DayOfWeekSet {
     friend bool operator==(const DayOfWeekSet&, const DayOfWeekSet&);
     friend bool operator!=(const DayOfWeekSet&, const DayOfWeekSet&);
     friend DayOfWeekSet operator~(const DayOfWeekSet&);
+    template <class HASHALG>
+    friend void hashAppend(HASHALG& hashAlg, const DayOfWeekSet&);
 
   public:
     // TYPES
@@ -455,6 +471,10 @@ class DayOfWeekSet {
         // Return an iterator indicating one position past the last possible
         // element in this set.
 
+    bool isEmpty() const;
+        // Return 'true' if there are no elements in this set, and 'false'
+        // otherwise.
+
     bool isMember(DayOfWeek::Enum value) const;
         // Return 'true' if the specified 'value' is an element of this set,
         // and 'false' otherwise.
@@ -496,13 +516,22 @@ class DayOfWeekSet {
         // the initial indentation (as governed by 'level').  If 'stream' is
         // not valid on entry, this operation has no effect.
 
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+
+    static int maxSupportedBdexVersion();
+        // !DEPRECATED!: Use 'maxSupportedBdexVersion(int)' instead.
+        //
+        // Return the most current BDEX streaming version number supported by
+        // this class.
+
+#endif // BDE_OPENSOURCE_PUBLICATION -- pending deprecation
 
 };
 
 // FREE OPERATORS
 DayOfWeekSet operator~(const DayOfWeekSet& set);
-    // Return a set containing the complement of the specified 'set'
-    // (i.e., those members *not* contained in 'set').
+    // Return a set containing the complement of the specified 'set' (i.e.,
+    // those members *not* contained in 'set').
 
 DayOfWeekSet operator|(const DayOfWeekSet& lhs, const DayOfWeekSet& rhs);
     // Return a set containing the union of the specified 'lhs' and 'rhs' sets
@@ -539,6 +568,13 @@ bool operator!=(const DayOfWeekSet& lhs, const DayOfWeekSet& rhs);
 bsl::ostream& operator<<(bsl::ostream& stream, const DayOfWeekSet& rhs);
     // Write the specified 'rhs' set to the specified output 'stream' in some
     // reasonable (single-line) format, and return a reference to 'stream'.
+
+// FREE FUNCTIONS
+template <class HASHALG>
+void hashAppend(HASHALG& hashAlg, const DayOfWeekSet& object);
+    // Pass the specified 'object' to the specified 'hashAlg'.  This function
+    // integrates with the 'bslh' modular hashing system and effectively
+    // provides a 'bsl::hash' specialization for 'DayOfWeekSet'.
 
 // ============================================================================
 //                            INLINE DEFINITIONS
@@ -616,8 +652,8 @@ bool bdlt::operator==(const DayOfWeekSet_Iter& lhs,
 {
     BSLS_ASSERT_SAFE(lhs.d_data == rhs.d_data);
 
-    // If the data is not the same, either the objects were not initially
-    // the same, or one has subsequently been modified.
+    // If the data is not the same, either the objects were not initially the
+    // same, or one has subsequently been modified.
 
     return lhs.d_index == rhs.d_index;
 }
@@ -710,8 +746,8 @@ void DayOfWeekSet::add(DayOfWeek::Enum value)
 inline
 bool DayOfWeekSet::remove(DayOfWeek::Enum value)
 {
-    const int mask = 1 << value;
-    const bool rv  = d_days & mask;
+    const int  mask = 1 << value;
+    const bool rv   = d_days & mask;
     d_days &= static_cast<unsigned char>(~mask);
     return rv;
 }
@@ -768,6 +804,12 @@ DayOfWeekSet::iterator DayOfWeekSet::end() const
 }
 
 inline
+bool DayOfWeekSet::isEmpty() const
+{
+    return 0 == d_days;
+}
+
+inline
 bool DayOfWeekSet::isMember(DayOfWeek::Enum value) const
 {
     const int mask = 1 << value;
@@ -810,6 +852,15 @@ STREAM& DayOfWeekSet::bdexStreamOut(STREAM& stream, int version) const
     return stream;
 }
 
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+
+inline
+int DayOfWeekSet::maxSupportedBdexVersion()
+{
+    return maxSupportedBdexVersion(0);
+}
+
+#endif // BDE_OPENSOURCE_PUBLICATION -- pending deprecation
 
 }  // close package namespace
 
@@ -866,6 +917,21 @@ inline
 bsl::ostream& bdlt::operator<<(bsl::ostream& stream, const DayOfWeekSet& rhs)
 {
     return rhs.print(stream, 0, -1);
+}
+
+// FREE FUNCTIONS
+template <class HASHALG>
+inline
+void bdlt::hashAppend(HASHALG& hashAlg, const DayOfWeekSet& object)
+{
+    using ::BloombergLP::bslh::hashAppend;
+    hashAppend(hashAlg, object.d_days);
+}
+
+// TRAITS SPECIALIZATIONS
+namespace bslmf {
+template <>
+struct IsBitwiseMoveable<bdlt::DayOfWeekSet> : ::bsl::true_type {};
 }
 
 }  // close enterprise namespace

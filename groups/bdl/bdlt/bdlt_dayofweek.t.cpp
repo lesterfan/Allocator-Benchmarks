@@ -1,7 +1,7 @@
 // bdlt_dayofweek.t.cpp                                               -*-C++-*-
 #include <bdlt_dayofweek.h>
 
-#include <bdls_testutil.h>
+#include <bslim_testutil.h>
 
 #include <bslma_testallocator.h>
 #include <bslma_default.h>
@@ -18,8 +18,8 @@
 #include <bslx_testoutstream.h>
 #include <bslx_versionfunctions.h>
 
-#include <bsl_cstdlib.h>     // atoi()
-#include <bsl_cstring.h>     // strcmp()
+#include <bsl_cstdlib.h>     // 'atoi'
+#include <bsl_cstring.h>     // 'strcmp'
 #include <bsl_iostream.h>
 #include <bsl_set.h>
 #include <bsl_sstream.h>
@@ -51,6 +51,13 @@ using namespace bsl;
 // [ 4] STREAM& bdexStreamIn(STREAM& s, Enum& variable, int v);
 // [ 4] STREAM& bdexStreamOut(STREAM& s, const Enum& value, int v) const;
 // [ 4] int maxSupportedBdexVersion(const Enum *, int versionSelector);
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+// DEPRECATED
+// [ 4] static int maxSupportedBdexVersion();
+// [ 4] STREAM& streamIn(STREAM& s, Enum& variable, int v);
+// [ 4] STREAM& streamOut(STREAM& s, const Enum& value, int v) const;
+// [ 4] int maxSupportedVersion(Enum);
+#endif // BDE_OPENSOURCE_PUBLICATION -- pending deprecation
 // ----------------------------------------------------------------------------
 // [ 5] USAGE EXAMPLE
 
@@ -80,30 +87,34 @@ void aSsErT(bool condition, const char *message, int line)
 //               STANDARD BDE TEST DRIVER MACRO ABBREVIATIONS
 // ----------------------------------------------------------------------------
 
-#define ASSERT       BDLS_TESTUTIL_ASSERT
-#define ASSERTV      BDLS_TESTUTIL_ASSERTV
+#define ASSERT       BSLIM_TESTUTIL_ASSERT
+#define ASSERTV      BSLIM_TESTUTIL_ASSERTV
 
-#define LOOP_ASSERT  BDLS_TESTUTIL_LOOP_ASSERT
-#define LOOP0_ASSERT BDLS_TESTUTIL_LOOP0_ASSERT
-#define LOOP1_ASSERT BDLS_TESTUTIL_LOOP1_ASSERT
-#define LOOP2_ASSERT BDLS_TESTUTIL_LOOP2_ASSERT
-#define LOOP3_ASSERT BDLS_TESTUTIL_LOOP3_ASSERT
-#define LOOP4_ASSERT BDLS_TESTUTIL_LOOP4_ASSERT
-#define LOOP5_ASSERT BDLS_TESTUTIL_LOOP5_ASSERT
-#define LOOP6_ASSERT BDLS_TESTUTIL_LOOP6_ASSERT
+#define LOOP_ASSERT  BSLIM_TESTUTIL_LOOP_ASSERT
+#define LOOP0_ASSERT BSLIM_TESTUTIL_LOOP0_ASSERT
+#define LOOP1_ASSERT BSLIM_TESTUTIL_LOOP1_ASSERT
+#define LOOP2_ASSERT BSLIM_TESTUTIL_LOOP2_ASSERT
+#define LOOP3_ASSERT BSLIM_TESTUTIL_LOOP3_ASSERT
+#define LOOP4_ASSERT BSLIM_TESTUTIL_LOOP4_ASSERT
+#define LOOP5_ASSERT BSLIM_TESTUTIL_LOOP5_ASSERT
+#define LOOP6_ASSERT BSLIM_TESTUTIL_LOOP6_ASSERT
 
-#define Q            BDLS_TESTUTIL_Q   // Quote identifier literally.
-#define P            BDLS_TESTUTIL_P   // Print identifier and value.
-#define P_           BDLS_TESTUTIL_P_  // P(X) without '\n'.
-#define T_           BDLS_TESTUTIL_T_  // Print a tab (w/o newline).
-#define L_           BDLS_TESTUTIL_L_  // current Line number
+#define Q            BSLIM_TESTUTIL_Q   // Quote identifier literally.
+#define P            BSLIM_TESTUTIL_P   // Print identifier and value.
+#define P_           BSLIM_TESTUTIL_P_  // P(X) without '\n'.
+#define T_           BSLIM_TESTUTIL_T_  // Print a tab (w/o newline).
+#define L_           BSLIM_TESTUTIL_L_  // current Line number
 
 // ============================================================================
 //                  GLOBAL TYPEDEFS/CONSTANTS FOR TESTING
 // ----------------------------------------------------------------------------
 
 typedef bdlt::DayOfWeek    Obj;
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+typedef Obj::Day           Enum;
+#else
 typedef Obj::Enum          Enum;
+#endif // BDE_OPENSOURCE_PUBLICATION -- pending deprecation
 
 enum { ABOVE_ENUM_RANGE = Obj::e_SAT + 1 };
 
@@ -276,6 +287,12 @@ if (verbose) {  // added in test driver
         //   STREAM& bdexStreamIn(STREAM& s, Enum& variable, int v);
         //   STREAM& bdexStreamOut(STREAM& s, const Enum& value, int v) const;
         //   int maxSupportedBdexVersion(const Enum *, int versionSelector);
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+        //   static int maxSupportedBdexVersion();
+        //   STREAM& streamIn(STREAM& s, Enum& variable, int v);
+        //   STREAM& streamOut(STREAM& s, const Enum& value, int v) const;
+        //   int maxSupportedVersion(Enum);
+#endif // BDE_OPENSOURCE_PUBLICATION -- pending deprecation
         // --------------------------------------------------------------------
 
         // Allocator to use instead of the default allocator.
@@ -723,11 +740,11 @@ if (verbose) {  // added in test driver
         }
         {
             static const struct {
-                int         d_lineNum;      // source line number
-                Enum        d_value;        // specification value
-                int         d_version;      // version to stream with
-                int         d_length;       // expect output length
-                const char *d_fmt_p;        // expected output format
+                int          d_lineNum;      // source line number
+                Enum         d_value;        // specification value
+                int          d_version;      // version to stream with
+                bsl::size_t  d_length;       // expect output length
+                const char  *d_fmt_p;        // expected output format
             } DATA[] = {
                 //LINE  VALUE       VER  LEN  FORMAT
                 //----  ----------  ---  ---  -------
@@ -745,7 +762,7 @@ if (verbose) {  // added in test driver
                 const int         LINE        = DATA[i].d_lineNum;
                 const Enum        VALUE       = DATA[i].d_value;
                 const int         VERSION     = DATA[i].d_version;
-                const int         LEN         = DATA[i].d_length;
+                const bsl::size_t LEN         = DATA[i].d_length;
                 const char *const FMT         = DATA[i].d_fmt_p;
 
                 // Test using class methods.
@@ -765,7 +782,7 @@ if (verbose) {  // added in test driver
                     if (verbose && memcmp(out.data(), FMT, LEN)) {
                         const char *hex = "0123456789abcdef";
                         P_(LINE);
-                        for (int j = 0; j < out.length(); ++j) {
+                        for (bsl::size_t j = 0; j < out.length(); ++j) {
                             cout << "\\x"
                                  << hex[static_cast<unsigned char>
                                             ((*(out.data() + j) >> 4) & 0x0f)]
@@ -804,7 +821,7 @@ if (verbose) {  // added in test driver
                     if (verbose && memcmp(out.data(), FMT, LEN)) {
                         const char *hex = "0123456789abcdef";
                         P_(LINE);
-                        for (int j = 0; j < out.length(); ++j) {
+                        for (bsl::size_t j = 0; j < out.length(); ++j) {
                             cout << "\\x"
                                  << hex[static_cast<unsigned char>
                                             ((*(out.data() + j) >> 4) & 0x0f)]
@@ -826,6 +843,83 @@ if (verbose) {  // added in test driver
             }
         }
 
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+
+        if (verbose) {
+            cout << "\nTesting deprecated methods." << endl;
+        }
+        {
+            ASSERT(Obj::maxSupportedBdexVersion()
+                                           == Obj::maxSupportedBdexVersion(0));
+
+            using bdex_VersionFunctions::maxSupportedVersion;
+
+            ASSERT(1 == maxSupportedVersion(Obj::e_SUN));
+
+            static const struct {
+                int          d_lineNum;      // source line number
+                Enum         d_value;        // specification value
+                int          d_version;      // version to stream with
+                bsl::size_t  d_length;       // expect output length
+                const char  *d_fmt_p;        // expected output format
+            } DATA[] = {
+                //LINE  VALUE       VER  LEN  FORMAT
+                //----  ----------  ---  ---  -------
+                { L_,   Obj::e_SUN,   1,   1,  "\x01"  },
+                { L_,   Obj::e_MON,   1,   1,  "\x02"  },
+                { L_,   Obj::e_TUE,   1,   1,  "\x03"  },
+                { L_,   Obj::e_WED,   1,   1,  "\x04"  },
+                { L_,   Obj::e_THU,   1,   1,  "\x05"  },
+                { L_,   Obj::e_FRI,   1,   1,  "\x06"  },
+                { L_,   Obj::e_SAT,   1,   1,  "\x07"  }
+            };
+            const int NUM_DATA = static_cast<int>(sizeof DATA / sizeof *DATA);
+
+            for (int i = 0; i < NUM_DATA; ++i) {
+                const int         LINE        = DATA[i].d_lineNum;
+                const Enum        VALUE       = DATA[i].d_value;
+                const int         VERSION     = DATA[i].d_version;
+                const bsl::size_t LEN         = DATA[i].d_length;
+                const char *const FMT         = DATA[i].d_fmt_p;
+
+                {
+                    const Enum X(VALUE);
+
+                    using bdex_OutStreamFunctions::streamOut;
+
+                    bslx::ByteOutStream  out(VERSION_SELECTOR, &allocator);
+                    bslx::ByteOutStream& rvOut = streamOut(out, X, VERSION);
+                    LOOP_ASSERT(LINE, &out == &rvOut);
+
+                    LOOP_ASSERT(LINE, LEN == out.length());
+                    LOOP_ASSERT(LINE, 0 == memcmp(out.data(), FMT, LEN));
+
+                    if (verbose && memcmp(out.data(), FMT, LEN)) {
+                        const char *hex = "0123456789abcdef";
+                        P_(LINE);
+                        for (bsl::size_t j = 0; j < out.length(); ++j) {
+                            cout << "\\x"
+                                 << hex[static_cast<unsigned char>
+                                            ((*(out.data() + j) >> 4) & 0x0f)]
+                                 << hex[static_cast<unsigned char>
+                                                   (*(out.data() + j) & 0x0f)];
+                        }
+                        cout << endl;
+                    }
+
+                    Enum mY;  const Enum& Y = mY;
+
+                    using bdex_InStreamFunctions::streamIn;
+
+                    bslx::ByteInStream  in(out.data(), out.length());
+                    bslx::ByteInStream& rvIn = streamIn(in, mY, VERSION);
+                    LOOP_ASSERT(LINE, &in == &rvIn);
+                    LOOP_ASSERT(LINE, X == Y);
+                }
+            }
+        }
+
+#endif // BDE_OPENSOURCE_PUBLICATION -- pending deprecation
       } break;
       case 3: {
         // --------------------------------------------------------------------
@@ -898,6 +992,23 @@ if (verbose) {  // added in test driver
             { L_,     Obj::e_FRIDAY,              "FRI"              },
             { L_,     Obj::e_SATURDAY,            "SAT"              },
 
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+            { L_,     Obj::BDET_SUN,              "SUN"              },
+            { L_,     Obj::BDET_MON,              "MON"              },
+            { L_,     Obj::BDET_TUE,              "TUE"              },
+            { L_,     Obj::BDET_WED,              "WED"              },
+            { L_,     Obj::BDET_THU,              "THU"              },
+            { L_,     Obj::BDET_FRI,              "FRI"              },
+            { L_,     Obj::BDET_SAT,              "SAT"              },
+
+            { L_,     Obj::BDET_SUNDAY,           "SUN"              },
+            { L_,     Obj::BDET_MONDAY,           "MON"              },
+            { L_,     Obj::BDET_TUESDAY,          "TUE"              },
+            { L_,     Obj::BDET_WEDNESDAY,        "WED"              },
+            { L_,     Obj::BDET_THURSDAY,         "THU"              },
+            { L_,     Obj::BDET_FRIDAY,           "FRI"              },
+            { L_,     Obj::BDET_SATURDAY,         "SAT"              },
+#endif
 
             { L_,     ABOVE_ENUM_RANGE,           UNKNOWN_FORMAT     },
             { L_,     -1,                         UNKNOWN_FORMAT     },
@@ -1027,6 +1138,15 @@ if (verbose) {  // added in test driver
             { L_,     0,    4,  Obj::e_FRIDAY,           "FRI" NL           },
             { L_,     0,    4,  Obj::e_SATURDAY,         "SAT" NL           },
 
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+            { L_,     0,    4,  Obj::BDET_SUN,           "SUN" NL           },
+            { L_,     0,    4,  Obj::BDET_MON,           "MON" NL           },
+            { L_,     0,    4,  Obj::BDET_TUE,           "TUE" NL           },
+            { L_,     0,    4,  Obj::BDET_WED,           "WED" NL           },
+            { L_,     0,    4,  Obj::BDET_THU,           "THU" NL           },
+            { L_,     0,    4,  Obj::BDET_FRI,           "FRI" NL           },
+            { L_,     0,    4,  Obj::BDET_SAT,           "SAT" NL           },
+#endif
 
 #if !defined(BSLS_ASSERT_SAFE_IS_ACTIVE)
             { L_,     0,    4,  ABOVE_ENUM_RANGE,        UNKNOWN_FORMAT NL  },
@@ -1147,7 +1267,7 @@ if (verbose) {  // added in test driver
         //
         // Plan:
         //: 1 Verify that the enumerator values are sequential, starting from
-        //:   0.  (C-1)
+        //:   1.  (C-1)
         //: 2 Verify that the 'toAscii' method returns the expected string
         //:   representation for each enumerator.  (C-2)
         //: 3 Verify that the 'toAscii' method returns a distinguished string

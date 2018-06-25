@@ -14,6 +14,10 @@ BSLS_IDENT("$Id: $")
 //
 //@SEE_ALSO: bdlt_time, bdlt_datetimetz
 //
+//@AUTHOR: Shezan Baig (sbaig)
+//
+//@CONTACT: Rohan Bhindwale (rbhindwa)
+//
 //@DESCRIPTION: This component provides a single, simply constrained
 // value-semantic class, 'bdlt::TimeTz', that represents a time value in a
 // particular time zone.  Each 'bdlt::TimeTz' object contains a time zone
@@ -27,7 +31,8 @@ BSLS_IDENT("$Id: $")
 // corresponding to the local time and UTC time represented by the object,
 // respectively.  In addition, the 'offset' method returns the time zone offset
 // in minutes from UTC (i.e., 'UTC + offset' equals local time).
-/////Attributes
+//
+///Attributes
 ///----------
 //..
 //  Name                Type         Default         Simple Constraints
@@ -53,6 +58,12 @@ BSLS_IDENT("$Id: $")
 // For these reasons (and others), this component cannot and does not perform
 // any validation relating to time zones or offsets.  The user must take care
 // to honor the "local time" contract of this component.
+//
+///ISO Standard Text Representation
+///--------------------------------
+// A common standard text representation of a date and time value is described
+// by ISO 8601.  BDE provides the 'bdlt_iso8601util' component for conversion
+// to and from the standard ISO8601 format.
 //
 ///Usage
 ///-----
@@ -107,6 +118,10 @@ BSLS_IDENT("$Id: $")
 
 #ifndef INCLUDED_BDLT_TIME
 #include <bdlt_time.h>
+#endif
+
+#ifndef INCLUDED_BSLH_HASH
+#include <bslh_hash.h>
 #endif
 
 #ifndef INCLUDED_BSLMF_INTEGRALCONSTANT
@@ -285,6 +300,32 @@ class TimeTz {
         // valid on entry, this operation has no effect.  Note that the format
         // is not fully specified, and can change without notice.
 
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+
+    // DEPRECATED
+    Time gmtTime() const;
+        // !DEPRECATED!: replaced by 'utcTime'.
+        //
+        // Return a 'Time' object having the value of the UTC time represented
+        // by this object.  Note that the returned value is equal to
+        // 'localTime() - offset()' minutes.
+
+    static int maxSupportedBdexVersion();
+        // !DEPRECATED!: Use 'maxSupportedBdexVersion(int)' instead.
+        //
+        // Return the most current BDEX streaming version number supported by
+        // this class.
+
+    int validateAndSetTimeTz(const Time& localTime, int offset);
+        // !DEPRECATED!: replaced by 'setTimeTzIfValid'.
+        //
+        // Set the local time and the time zone offset of this object to the
+        // specified 'localTime' and 'offset' values respectively if
+        // 'localTime' and 'offset' represent a valid 'TimeTz' value.  Return 0
+        // on success, and a non-zero value with no effect on this object
+        // otherwise.
+
+#endif // BDE_OPENSOURCE_PUBLICATION -- pending deprecation
 };
 
 // FREE OPERATORS
@@ -309,6 +350,15 @@ bsl::ostream& operator<<(bsl::ostream& stream, const TimeTz& object);
     // method has the same behavior as 'object.print(stream, 0, -1)', but with
     // the attribute names elided.
 
+// FREE FUNCTIONS
+template <class HASHALG>
+void hashAppend(HASHALG& hashAlg, const TimeTz& object);
+    // Pass the specified 'object' to the specified 'hashAlg'.  This function
+    // integrates with the 'bslh' modular hashing system and effectively
+    // provides a 'bsl::hash' specialization for 'TimeTz'.  Note that two
+    // objects which represent the same UTC time but have different offsets
+    // will not (necessarily) hash to the same value.
+
 // ============================================================================
 //                            INLINE DEFINITIONS
 // ============================================================================
@@ -329,8 +379,11 @@ bool TimeTz::isValid(const Time& localTime, int offset)
                                   // Aspects
 
 inline
-int TimeTz::maxSupportedBdexVersion(int /* versionSelector */)
+int TimeTz::maxSupportedBdexVersion(int versionSelector)
 {
+    if (versionSelector >= 20170401) {
+        return 2;                                                     // RETURN
+    }
     return 1;
 }
 
@@ -400,9 +453,10 @@ STREAM& TimeTz::bdexStreamIn(STREAM& stream, int version)
 {
     if (stream) {
         switch (version) { // switch on the schema version
+          case 2:                                               // FALL THROUGH
           case 1: {
             Time time;
-            time.bdexStreamIn(stream, 1);
+            time.bdexStreamIn(stream, version);
 
             int offset;
             stream.getInt32(offset);
@@ -459,8 +513,9 @@ STREAM& TimeTz::bdexStreamOut(STREAM& stream, int version) const
 {
     if (stream) {
         switch (version) { // switch on the schema version
+          case 2:                                               // FALL THROUGH
           case 1: {
-            d_localTime.bdexStreamOut(stream, 1);
+            d_localTime.bdexStreamOut(stream, version);
             stream.putInt32(d_offset);
           } break;
           default: {
@@ -471,6 +526,26 @@ STREAM& TimeTz::bdexStreamOut(STREAM& stream, int version) const
     return stream;
 }
 
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+// DEPRECATED
+inline
+Time TimeTz::gmtTime() const
+{
+    return utcTime();
+}
+
+inline
+int TimeTz::maxSupportedBdexVersion()
+{
+    return maxSupportedBdexVersion(0);
+}
+
+inline
+int TimeTz::validateAndSetTimeTz(const Time& localTime, int offset)
+{
+    return setTimeTzIfValid(localTime, offset);
+}
+#endif // BDE_OPENSOURCE_PUBLICATION -- pending deprecation
 
 }  // close package namespace
 
@@ -493,6 +568,16 @@ inline
 bsl::ostream& bdlt::operator<<(bsl::ostream& stream, const TimeTz& object)
 {
     return object.print(stream, 0, -1);
+}
+
+// FREE FUNCTIONS
+template <class HASHALG>
+inline
+void bdlt::hashAppend(HASHALG& hashAlg, const TimeTz& object)
+{
+    using ::BloombergLP::bslh::hashAppend;
+    hashAppend(hashAlg, object.localTime());
+    hashAppend(hashAlg, object.offset());
 }
 
 }  // close enterprise namespace

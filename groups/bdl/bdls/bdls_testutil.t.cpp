@@ -23,7 +23,9 @@
 # include <unistd.h>
 #endif
 
-using namespace bsl;
+// Ensure that the 'BDLS_TESTUTIL_*' macros do not require:
+//  using namespace bsl;
+
 using namespace BloombergLP;
 using namespace BloombergLP::bsltf;
 
@@ -44,26 +46,25 @@ using namespace BloombergLP::bsltf;
 // used in the usage example.  Therefore, this test driver avoids the standard
 // test macros (and support functions), and uses the following instead:
 //
-// STANDARD              BDLS_TESTUTIL.T.CPP
-// --------              -------------------
-// 'LOOP_ASSERT'         'REALLOOP1_ASSERT'
-// 'LOOP2_ASSERT'        'REALLOOP2_ASSERT'
-// 'LOOP3_ASSERT'        'REALLOOP3_ASSERT'
-// 'LOOP4_ASSERT'        'REALLOOP4_ASSERT'
-// 'LOOP5_ASSERT'        not used
-// 'LOOP6_ASSERT'        not used
-// 'Q'                   not used
-// 'P'                   'REALP'
-// 'P_'                  'REALT_'
-// 'T_'                  'REALT_'
-// 'L_'                  not used
-// 'void aSsErT()'       'void realaSsErT()'
-// 'int testStatus'      'int realTestStatus'
+//  STANDARD              BDLS_TESTUTIL.T.CPP
+//  --------              -------------------
+//  'LOOP_ASSERT'         'REALLOOP1_ASSERT'
+//  'LOOP2_ASSERT'        'REALLOOP2_ASSERT'
+//  'LOOP3_ASSERT'        'REALLOOP3_ASSERT'
+//  'LOOP4_ASSERT'        'REALLOOP4_ASSERT'
+//  'LOOP5_ASSERT'        not used
+//  'LOOP6_ASSERT'        not used
+//  'Q'                   not used
+//  'P'                   'REALP'
+//  'P_'                  'REALT_'
+//  'T_'                  'REALT_'
+//  'L_'                  not used
+//  'void aSsErT()'       'void realaSsErT()'
+//  'int testStatus'      'int realTestStatus'
 //
-// All of the methods write output to
-// stdout and do nothing more.  Therefore, there are no Primary Manipulators or
-// Basic Accessors to test.  All of the tests fall under the category of Print
-// Operations.
+// All of the methods write output to stdout and do nothing more.  Therefore,
+// there are no Primary Manipulators or Basic Accessors to test.  All of the
+// tests fall under the category of Print Operations.
 //
 // The main difficulty with writing the test driver is capturing the output of
 // the methods under test so that it can be checked for accuracy.  In addition,
@@ -115,54 +116,55 @@ using namespace BloombergLP::bsltf;
 // 'realTestStatus' and 'realaSsErT' instead.
 //
 // Additionally, in order to allow capturing the output of the
-// 'BSLS_BSLTESTUTIL_*' macros, the standard macros output to 'stderr' instead
-// of 'stdout'.
+// 'BDLS_TESTUTIL_*' macros, the standard macros output to 'stderr' instead of
+// 'stdout'.
 
 static int realTestStatus = 0;
 
 static void realaSsErT(bool b, const char *s, int i)
 {
     if (b) {
-        cerr << "Error " << __FILE__ << "(" << i << "): " << s
-             << "    (failed)" << endl;
+        bsl::cerr << "Error " << __FILE__ << "(" << i << "): " << s
+                  << "    (failed)" << bsl::endl;
         if (realTestStatus >= 0 && realTestStatus <= 100) ++realTestStatus;
     }
 }
 // The standard 'ASSERT' macro definition is deferred until after the usage
 // example code
+
 // #define ASSERT(X) { realaSsErT(!(X), #X, __LINE__); }
 
 
 #define REALLOOP_ASSERT(I,X)                                                  \
-    if (!(X)) { cerr << #I << ": " << I << "\n";                              \
+    if (!(X)) { bsl::cerr << #I << ": " << I << "\n";                         \
                 realaSsErT(1, #X, __LINE__); }
 
 #define REALLOOP2_ASSERT(I,J,X)                                               \
-    if (!(X)) { cerr << #I << ": " << I << "\t"                               \
-                     << #J << ": " << J << "\n";                              \
+    if (!(X)) { bsl::cerr << #I << ": " << I << "\t"                          \
+                          << #J << ": " << J << "\n";                         \
                 realaSsErT(1, #X, __LINE__); }
 
 #define REALLOOP3_ASSERT(I,J,K,X)                                             \
-    if (!(X)) { cerr << #I << ": " << I << "\t"                               \
-                     << #J << ": " << J << "\t"                               \
-                     << #K << ": " << K << "\n";                              \
+    if (!(X)) { bsl::cerr << #I << ": " << I << "\t"                          \
+                          << #J << ": " << J << "\t"                          \
+                          << #K << ": " << K << "\n";                         \
                 realaSsErT(1, #X, __LINE__); }
 
 #define REALLOOP4_ASSERT(I,J,K,L,X)                                           \
-    if (!(X)) { cerr << #I << ": " << I << "\t"                               \
-                     << #J << ": " << J << "\t"                               \
-                     << #K << ": " << K << "\t"                               \
-                     << #L << ": " << L << "\n";                              \
+    if (!(X)) { bsl::cerr << #I << ": " << I << "\t"                          \
+                          << #J << ": " << J << "\t"                          \
+                          << #K << ": " << K << "\t"                          \
+                          << #L << ": " << L << "\n";                         \
                 realaSsErT(1, #X, __LINE__); }
 
 #define REALP(X)                                                              \
-    cerr << #X " = " << (X) << endl;
+    bsl::cerr << #X " = " << (X) << bsl::endl;
 
 #define REALP_(X)                                                             \
-    cerr << #X " = " << (X) << ", " << flush;
+    bsl::cerr << #X " = " << (X) << ", " << bsl::flush;
 
 #define REALT_                                                                \
-    cerr << "\t" << flush;
+    bsl::cerr << "\t" << bsl::flush;
 
 // ============================================================================
 //                  NEGATIVE-TEST MACRO ABBREVIATIONS
@@ -204,7 +206,7 @@ namespace {
         return 42;
     }
 
-    }  // close package namespace
+    }  // close namespace bdlabc
 //..
 // Then, we can write a test driver for this component.  We start by providing
 // the standard BDE assert test macro:
@@ -217,8 +219,8 @@ namespace {
     static void aSsErT(int c, const char *s, int i)
     {
         if (c) {
-            cout << "Error " << __FILE__ << "(" << i << "): " << s
-                 << "    (failed)" << endl;
+            bsl::cout << "Error " << __FILE__ << "(" << i << "): " << s
+                      << "    (failed)" << bsl::endl;
             if (testStatus >= 0 && testStatus <= 100) ++testStatus;
         }
     }
@@ -239,7 +241,7 @@ namespace {
     #define LOOP5_ASSERT BDLS_TESTUTIL_LOOP5_ASSERT
     #define LOOP6_ASSERT BDLS_TESTUTIL_LOOP6_ASSERT
     #define ASSERTV      BDLS_TESTUTIL_ASSERTV
-    
+
     #define Q   BDLS_TESTUTIL_Q   // Quote identifier literally.
     #define P   BDLS_TESTUTIL_P   // Print identifier and value.
     #define P_  BDLS_TESTUTIL_P_  // P(X) without '\n'.
@@ -322,8 +324,8 @@ bool tempFileName(char *result)
     // Create a temporary file and store its name in the user-supplied buffer
     // at the address pointed to by the specified 'result'.  Return 'true' if
     // the temporary file was successfully created, and 'false' otherwise.  The
-    // behavior is undefined unless the buffer pointed to by the specified
-    // 'result' is at least 'PATH_BUFFER_SIZE' bytes long.
+    // behavior is undefined unless the buffer pointed to by 'result' is at
+    // least 'PATH_BUFFER_SIZE' bytes long.
 {
     ASSERT(result);
 
@@ -344,7 +346,7 @@ bool tempFileName(char *result)
         result[PATH_BUFFER_SIZE - 1] = '\0';
         free(fn);
     } else {
-        return false;
+        return false;                                                 // RETURN
     }
 #endif
 
@@ -413,8 +415,8 @@ class OutputRedirector {
   public:
     // CREATORS
     explicit OutputRedirector();
-        // Create an 'OutputRedirector' in an un-redirected state, and
-        // an empty scratch buffer.
+        // Create an 'OutputRedirector' in an un-redirected state, and an empty
+        // scratch buffer.
 
     ~OutputRedirector();
         // Destroy this 'OutputRedirector' object.  If the object is in a
@@ -467,8 +469,8 @@ class OutputRedirector {
         // specified 'expectedLength'.  Return 0 if the 'expected' buffer has
         // the same length and contents as the scratch buffer, and non-zero
         // otherwise.  Note that the 'expected' buffer is allowed to contain
-        // embedded nulls.  The behavior is undefined unless
-        // 'redirect' has been previously been called successfully.
+        // embedded nulls.  The behavior is undefined unless 'redirect' has
+        // been previously been called successfully.
 
     int compare(const char *expected);
         // Compare the character buffer pointed to by the specified pointer
@@ -506,9 +508,9 @@ int OutputRedirector::redirectStream(FILE *from, FILE *to)
     ASSERT(to);
 
     // The canonical way to redirect 'stderr' to 'stdout' is
-    // 'ASSERT(freopen("/dev/stdout", "w", stderr));', but we use dup2
-    // instead of 'freopen', because 'freopen' fails on AIX with errno
-    // 13 'Permission denied' when redirecting stderr.
+    // 'ASSERT(freopen("/dev/stdout", "w", stderr));', but we use dup2 instead
+    // of 'freopen', because 'freopen' fails on AIX with errno 13
+    // 'Permission denied' when redirecting stderr.
 
 #if defined(BSLS_PLATFORM_OS_AIX)
     int redirected = dup2(fileno(from), fileno(to));
@@ -788,7 +790,7 @@ int main(int argc, char *argv[])
         output.redirect();
     }
 
-    cerr << "TEST " << __FILE__ << " CASE " << test << endl;
+    bsl::cerr << "TEST " << __FILE__ << " CASE " << test << bsl::endl;
 
     switch (test) { case 0:  // Zero is always the leading case.
       case 8: {
@@ -809,9 +811,9 @@ int main(int argc, char *argv[])
         // --------------------------------------------------------------------
 
 
-        if (verbose) cerr << endl
-                          << "USAGE EXAMPLE" << endl
-                          << "=============" << endl;
+        if (verbose) bsl::cerr << bsl::endl
+                               << "USAGE EXAMPLE" << bsl::endl
+                               << "=============" << bsl::endl;
 
         testFortyTwo(verbose);
 
@@ -847,7 +849,7 @@ int main(int argc, char *argv[])
         // Plan:
         //: 1 For each 'bsltf' test type, create an object of such a type
         //:   having an unique value and stream its value into a
-        //:   'bsl::stringstream'.  Verify the the string stored in the
+        //:   'bsl::stringstream'.  Verify that the string stored in the
         //:   string has the expected value.  (C-1)
         //
         // Testing:
@@ -864,9 +866,9 @@ int main(int argc, char *argv[])
         //   bsl::ostream& operator<<(s, NonEqualComparableTestType& obj)
         // --------------------------------------------------------------------
 
-        if (verbose) cerr << endl
-                          << "INPUT ('<<') OPERATORS" << endl
-                          << "======================" << endl;
+        if (verbose) bsl::cerr << bsl::endl
+                               << "INPUT ('<<') OPERATORS" << bsl::endl
+                               << "======================" << bsl::endl;
 
         EnumeratedTestType::Enum o1 =
                      TemplateTestFacility::create<EnumeratedTestType::Enum>(1);
@@ -935,9 +937,11 @@ int main(int argc, char *argv[])
         oss << o8;
         ASSERT(oss.str() == "8");
 
-        // oss.str("");
-        // oss << o9;
-        // ASSERT(oss.str() == "9");
+#if 0
+        oss.str("");
+        oss << o9;
+        ASSERT(oss.str() == "9");
+#endif
 
         oss.str("");
         oss << o10;
@@ -992,9 +996,12 @@ int main(int argc, char *argv[])
         //     BDLS_ASSERTV(...)
         // --------------------------------------------------------------------
 
-        if (verbose) cerr << endl
-               << "BDLS_TESTUTIL_LOOP*_ASSERT AND BDLS_ASSERTV MACROS" << endl
-               << "==================================================" << endl;
+        if (verbose)
+            bsl::cerr << bsl::endl
+                      << "BDLS_TESTUTIL_LOOP*_ASSERT AND BDLS_ASSERTV MACROS"
+                      << bsl::endl
+                      << "=================================================="
+                      << bsl::endl;
 
         enum {
             BUFFER_SIZE     = 1024, // size of the buffer used to store
@@ -1400,7 +1407,7 @@ int main(int argc, char *argv[])
 
                 output.reset();
 
-                // On AIX, the the printed line number from the
+                // On AIX, the printed line number from the
                 // 'BDLS_TESTUTIL_ASSERTV' macro is the line number of the
                 // first line of the call statement, even if the statement is
                 // split over multiple lines.  This behavior is different from
@@ -1544,9 +1551,9 @@ int main(int argc, char *argv[])
         //    BDLS_TESTUTIL_Q(X)
         // --------------------------------------------------------------------
 
-        if (verbose) cerr << endl
-                          << "'Q' (IDENTIFIER OUTPUT MACRO)" << endl
-                          << "=============================" << endl;
+        if (verbose) bsl::cerr << bsl::endl
+                               << "'Q' (IDENTIFIER OUTPUT MACRO)" << bsl::endl
+                               << "=============================" << bsl::endl;
         {
             output.reset();
             BDLS_TESTUTIL_Q(sample);
@@ -1601,9 +1608,11 @@ int main(int argc, char *argv[])
         //    BDLS_TESTUTIL_P_(X)
         // --------------------------------------------------------------------
 
-        if (verbose) cerr << endl
-                          << "'P' AND 'P_' (VALUE OUTPUT MACROS)" << endl
-                          << "==================================" << endl;
+        if (verbose) bsl::cerr << bsl::endl
+                               << "'P' AND 'P_' (VALUE OUTPUT MACROS)"
+                               << bsl::endl
+                               << "=================================="
+                               << bsl::endl;
 
         // BDLS_TESTUTIL_P(X)
         {
@@ -1648,14 +1657,14 @@ int main(int argc, char *argv[])
         //    BDLS_TESTUTIL_T_
         // --------------------------------------------------------------------
 
-        if (verbose) cerr << endl
-                          << "'L_' AND 'T_' (STATIC MACROS)" << endl
-                          << "=============================" << endl;
+        if (verbose) bsl::cerr << bsl::endl
+                               << "'L_' AND 'T_' (STATIC MACROS)" << bsl::endl
+                               << "=============================" << bsl::endl;
 
         // BDLS_TESTUTIL_L_
         {
-            // Line spacing is significant, as it assures BDLS_TESTUTIL_L_
-            // is not a simple sequence.
+            // Line spacing is significant, as it assures BDLS_TESTUTIL_L_ is
+            // not a simple sequence.
             ASSERT(__LINE__ == BDLS_TESTUTIL_L_);
 
 
@@ -1766,9 +1775,9 @@ int main(int argc, char *argv[])
         //:    and inode of 'stdout' before redirection.  (C-11)
         // --------------------------------------------------------------------
 
-        if (verbose) cerr << endl
-                          << "TEST APPARATUS" << endl
-                          << "==============" << endl;
+        if (verbose) bsl::cerr << bsl::endl
+                               << "TEST APPARATUS" << bsl::endl
+                               << "==============" << bsl::endl;
 
         {
             // 1 Output is redirected
@@ -1988,9 +1997,9 @@ int main(int argc, char *argv[])
         //   This "test" *exercises* basic functionality, but *tests* nothing.
         // --------------------------------------------------------------------
 
-        if (verbose) cerr << endl
-                          << "BREATHING TEST" << endl
-                          << "==============" << endl;
+        if (verbose) bsl::cerr << bsl::endl
+                               << "BREATHING TEST" << bsl::endl
+                               << "==============" << bsl::endl;
 
         const bool    b = true;
         const char    c = 'c';
@@ -2032,6 +2041,8 @@ int main(int argc, char *argv[])
             ASSERT(testStatus == 7);
         }
       } break;
+// BDE_VERIFY pragma: -TP23     // using realTestStatus instead of testStatus
+// BDE_VERIFY pragma: -TP24
       default: {
         fprintf(stderr, "WARNING: CASE `%d' NOT FOUND.\n", test);
         realTestStatus = -1;

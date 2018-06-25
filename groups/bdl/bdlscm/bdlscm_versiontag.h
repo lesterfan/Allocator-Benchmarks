@@ -2,7 +2,7 @@
 #ifndef INCLUDED_BDLSCM_VERSIONTAG
 #define INCLUDED_BDLSCM_VERSIONTAG
 
-#ifndef INCLUDED_BDLS_IDENT
+#ifndef INCLUDED_BSLS_IDENT
 #include <bsls_ident.h>
 #endif
 BSLS_IDENT("$Id: $")
@@ -12,9 +12,13 @@ BSLS_IDENT("$Id: $")
 //@SEE_ALSO: bdlscm_version
 //
 //@DESCRIPTION: This component provides versioning information for the 'bdl'
-// package group.  The 'BDL_VERSION' and 'BDL_MAKE_VERSION' macros that are
-// supplied can be used for conditional-compilation based on 'bdl' version
-// information.  The following usage example illustrates this basic capability.
+// package group.  The 'BDL_VERSION' macro that is supplied can be used for
+// conditional-compilation based on 'bdl' version information.  The following
+// usage example illustrates this basic capability.
+//
+// Note that since 'bdl' is always released in lock-step with 'bsl', they
+// share common versioning, and the 'BDL_VERSION' will always equal the
+// 'BSL_VERSION'.
 //
 ///Usage
 ///-----
@@ -26,9 +30,9 @@ BSLS_IDENT("$Id: $")
 // old or new name using conditional compilation.  In the following, the '#if'
 // preprocessor directive compares 'BDL_VERSION' (i.e., the latest BDL version,
 // excluding the patch version) to a specified major and minor version composed
-// using the 'BDL_MAKE_VERSION' macro:
+// using the 'BSL_MAKE_VERSION' macro:
 //..
-//  #if BDL_VERSION > BDL_MAKE_VERSION(1, 3)
+//  #if BDL_VERSION > BSL_MAKE_VERSION(1, 3)
 //      // Call 'newFunction' for BDL versions later than 1.3.
 //      int result = newFunction();
 //  #else
@@ -46,10 +50,12 @@ BSLS_IDENT("$Id: $")
 #endif
 
 
-#define BDL_VERSION_MAJOR     BSL_VERSION_MAJOR
+// For the 3.7.x release series, 'bdl' is being versioned independently of
+// 'bsl'.
+#define BDL_VERSION_MAJOR     3
     // Provide the major version number of the current (latest) BDL release.
 
-#define BDL_VERSION_MINOR     BSL_VERSION_MINOR
+#define BDL_VERSION_MINOR     9
     // Provide the minor version number of the current (latest) BDL release.
 
 #define BDL_VERSION BSL_MAKE_VERSION(BDL_VERSION_MAJOR, \
@@ -60,6 +66,14 @@ BSLS_IDENT("$Id: $")
     // the current (latest) BDL release.  Note that the patch version number is
     // intentionally not included.  For example, 'BDL_VERSION' produces 10300
     // (decimal) for BDL version 1.3.1.
+
+#define BDL_VERSION_DEPRECATION_THRESHOLD BSLS_DEPRECATE_MAKE_VER(3, 1)
+    // Declare that deprecations for this UOR introduced in the specified
+    // version or earlier will be "active" by default -- i.e.,
+    // 'BSLS_DEPRECATE_IS_ACTIVE' will be 'true' (which typically enables
+    // deprecation warnings).  Note that we define this macro in the version
+    // component, so that it is available at the lowest level in the component
+    // hierarchy of this UOR.
 
 #endif
 

@@ -1,7 +1,7 @@
 // bdlt_dayofweekset.t.cpp                                            -*-C++-*-
 #include <bdlt_dayofweekset.h>
 
-#include <bdls_testutil.h>
+#include <bslim_testutil.h>
 
 #include <bslma_testallocator.h>
 #include <bslma_default.h>
@@ -18,8 +18,8 @@
 #include <bslx_versionfunctions.h>
 
 #include <bsl_new.h>          // placement syntax
-#include <bsl_cstring.h>      // strlen(), memset(), memcpy(), memcmp()
-#include <bsl_c_stdlib.h>     // atoi()
+#include <bsl_cstring.h>      // 'strlen', 'memset', 'memcpy', 'memcmp'
+#include <bsl_c_stdlib.h>     // 'atoi'
 #include <bsl_iostream.h>
 #include <bsl_sstream.h>
 
@@ -67,6 +67,7 @@ using bsl::flush;
 // [ 5] ostream& print(ostream& stream, int level, int spacesPerLevel);
 // [ 4] iterator begin() const;
 // [ 4] iterator end() const;
+// [ 4] bool isEmpty() const;
 // [ 4] bool isMember(Month::Month value) const;
 // [ 4] int length() const;
 // [ 4] reverse_iterator rbegin() const;
@@ -82,6 +83,11 @@ using bsl::flush;
 // [ 6] operator==(const DayOfWeekSet&, const DayOfWeekSet&);
 // [ 6] operator!=(const DayOfWeekSet&, const DayOfWeekSet&);
 // [ 5] operator<<(ostream&, const DayOfWeekSet&);
+// [15] void hashAppend(HASHALG&, const DayOfWeekSet&);
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+// DEPRECATED
+// [10] static int maxSupportedBdexVersion();
+#endif // BDE_OPENSOURCE_PUBLICATION -- pending deprecation
 // ----------------------------------------------------------------------------
 // [ 4] DayOfWeekSet_Iter();
 // [ 4] DayOfWeekSet_Iter(int data, int index);
@@ -98,7 +104,7 @@ using bsl::flush;
 // [ 2] ~DayOfWeekSet();
 // [ 2] void add(DayOfWeek value);
 // [ 2] void removeAll();
-// [15] USAGE EXAMPLE
+// [16] USAGE EXAMPLE
 // [ 3] DayOfWeekSet& gg(DayOfWeekSet* obj, const char *spec);
 // [ 3] int ggg(DayOfWeekSet *object, const char *spec, int vF = 1);
 // [ 3] DayOfWeekSet g(const char *spec);
@@ -134,23 +140,23 @@ void aSsErT(bool condition, const char *message, int line)
 //               STANDARD BDE TEST DRIVER MACRO ABBREVIATIONS
 // ----------------------------------------------------------------------------
 
-#define ASSERT       BDLS_TESTUTIL_ASSERT
-#define ASSERTV      BDLS_TESTUTIL_ASSERTV
+#define ASSERT       BSLIM_TESTUTIL_ASSERT
+#define ASSERTV      BSLIM_TESTUTIL_ASSERTV
 
-#define LOOP_ASSERT  BDLS_TESTUTIL_LOOP_ASSERT
-#define LOOP0_ASSERT BDLS_TESTUTIL_LOOP0_ASSERT
-#define LOOP1_ASSERT BDLS_TESTUTIL_LOOP1_ASSERT
-#define LOOP2_ASSERT BDLS_TESTUTIL_LOOP2_ASSERT
-#define LOOP3_ASSERT BDLS_TESTUTIL_LOOP3_ASSERT
-#define LOOP4_ASSERT BDLS_TESTUTIL_LOOP4_ASSERT
-#define LOOP5_ASSERT BDLS_TESTUTIL_LOOP5_ASSERT
-#define LOOP6_ASSERT BDLS_TESTUTIL_LOOP6_ASSERT
+#define LOOP_ASSERT  BSLIM_TESTUTIL_LOOP_ASSERT
+#define LOOP0_ASSERT BSLIM_TESTUTIL_LOOP0_ASSERT
+#define LOOP1_ASSERT BSLIM_TESTUTIL_LOOP1_ASSERT
+#define LOOP2_ASSERT BSLIM_TESTUTIL_LOOP2_ASSERT
+#define LOOP3_ASSERT BSLIM_TESTUTIL_LOOP3_ASSERT
+#define LOOP4_ASSERT BSLIM_TESTUTIL_LOOP4_ASSERT
+#define LOOP5_ASSERT BSLIM_TESTUTIL_LOOP5_ASSERT
+#define LOOP6_ASSERT BSLIM_TESTUTIL_LOOP6_ASSERT
 
-#define Q            BDLS_TESTUTIL_Q   // Quote identifier literally.
-#define P            BDLS_TESTUTIL_P   // Print identifier and value.
-#define P_           BDLS_TESTUTIL_P_  // P(X) without '\n'.
-#define T_           BDLS_TESTUTIL_T_  // Print a tab (w/o newline).
-#define L_           BDLS_TESTUTIL_L_  // current Line number
+#define Q            BSLIM_TESTUTIL_Q   // Quote identifier literally.
+#define P            BSLIM_TESTUTIL_P   // Print identifier and value.
+#define P_           BSLIM_TESTUTIL_P_  // P(X) without '\n'.
+#define T_           BSLIM_TESTUTIL_T_  // Print a tab (w/o newline).
+#define L_           BSLIM_TESTUTIL_L_  // current Line number
 
 // ============================================================================
 //                        NON-STANDARD OUTPUT MACROS
@@ -389,7 +395,7 @@ int main(int argc, char *argv[])
     bslma::DefaultAllocatorGuard allocatorGuard(&dfltAlloc);
 
     switch (test) { case 0:  // Zero is always the leading case.
-      case 15: {
+      case 16: {
         // --------------------------------------------------------------------
         // USAGE EXAMPLE
         //
@@ -415,9 +421,9 @@ int main(int argc, char *argv[])
 //
 ///Example 1: Manipulation and Traversal of Day of Week Sets
 ///- - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// A 'bdlt::DayOfWeekSet' is useful for recording recurring appointments,
-// or special days (e.g., weekend days), in a calendar.  The following
-// snippets of code illustrate how to create and use a 'bdlt::DayOfWeek' set.
+// A 'bdlt::DayOfWeekSet' is useful for recording recurring appointments, or
+// special days (e.g., weekend days), in a calendar.  The following snippets of
+// code illustrate how to create and use a 'bdlt::DayOfWeek' set.
 //
 // First, we create a couple of commonly useful sets.  First we define the
 // 'bdlt::DayOfWeekSet' 'weekendDays':
@@ -577,6 +583,94 @@ int main(int argc, char *argv[])
 //  MON
 //..
       } break;
+      case 15: {
+        // --------------------------------------------------------------------
+        // TESTING: hashAppend
+        //
+        // Concerns:
+        //: 1 Hope that different inputs hash differently
+        //: 2 Verify that equal inputs hash identically
+        //: 3 Works for const and non-const values
+        //
+        // Plan:
+        //: 1 Use a table specifying a set of distinct objects, verify that
+        //:   hashes of equivalent objects match and hashes on unequal objects
+        //:   do not.
+        //
+        // Testing:
+        //    void hashAppend(HASHALG& hashAlg, const DayOfWeekSet&);
+        // --------------------------------------------------------------------
+        if (verbose)
+            cout << "\nTESTING 'hashAppend'"
+                 << "\n====================\n";
+
+        typedef ::BloombergLP::bslh::Hash<> Hasher;
+        typedef Hasher::result_type         HashType;
+        Hasher                              hasher;
+
+        if (verbose) {
+            cout << "\nCompare hashes of pairs of similar values (u, v)"
+                    " in S X S.\n";
+        }
+        {
+            static const struct {
+                int         d_lineNum;  // source line number
+                const char *d_spec;     // string
+            } DATA[] = {
+                //line spec
+                //---- ---------------------
+                { L_,  ""                 },
+                { L_,  "A"                },
+                { L_,  "B"                },
+                { L_,  "AB"               },
+                { L_,  "BC"               },
+                { L_,  "CD"               },
+                { L_,  "ABC"              },
+                { L_,  "BCD"              },
+                { L_,  "CDE"              },
+                { L_,  "DEF"              },
+                { L_,  "ABCD"             },
+                { L_,  "AEFG"             },
+                { L_,  "BCDE"             },
+                { L_,  "CDEF"             },
+                { L_,  "DEFG"             },
+                { L_,  "ABCDE"            },
+                { L_,  "ABCEFG"           },
+                { L_,  "ABCDEFG"          }
+            };
+            const int NUM_DATA = sizeof DATA / sizeof *DATA;
+
+            int oldLen = -1;
+            for (int i = 0; i < NUM_DATA; ++i) {
+                const int curLen = strlen(DATA[i].d_spec);
+                if (curLen != oldLen) {
+                    if (veryVerbose) cout << "\tUsing lhs objects of length "
+                                          << curLen << '.' << endl;
+                    ASSERTV(i, oldLen <= curLen); // non-decreasing
+                    oldLen = curLen;
+                }
+
+                Obj mX;  const Obj& X = mX;
+                ASSERT(-1 == ggg(&mX, DATA[i].d_spec));
+
+                if (veryVerbose) { P_(i) P_(DATA[i].d_spec) P(X) }
+
+                for (int j = 0; j < NUM_DATA; ++j) {
+                    Obj mY;  const Obj& Y = mY;
+                    ASSERT(-1 == ggg(&mY, DATA[j].d_spec));
+
+                    if (veryVerbose) { T_ P_(j) P_(DATA[j].d_spec) P(Y) }
+
+                    HashType hX = hasher(X);
+                    HashType hY = hasher(Y);
+
+                    if (veryVerbose) { T_ P_(hX) P(hY) }
+
+                    ASSERTV(i, j,  (i == j) == (hX == hY));
+                }
+            }
+        }
+      } break;
       case 14: {
         // --------------------------------------------------------------------
         // NEGATIVE TESTING
@@ -699,7 +793,7 @@ int main(int argc, char *argv[])
         // Plan:
         //   We have a table where each of the lines of the table indicates
         //   specs for two 'DayOfWeekSet' values, and then the specs for each
-        //   of the the 4 infix operations:
+        //   of the 4 infix operations:
         //:  1 Perform the infix operation, assigning the result to a
         //:    reference.
         //:
@@ -1476,6 +1570,9 @@ int main(int argc, char *argv[])
         //   static int maxSupportedBdexVersion(int versionSelector);
         //   STREAM& bdexStreamIn(STREAM& stream, int version);
         //   STREAM& bdexStreamOut(STREAM& stream, int version) const;
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+        //   static int maxSupportedBdexVersion();
+#endif // BDE_OPENSOURCE_PUBLICATION -- pending deprecation
         // --------------------------------------------------------------------
 
         // Allocator to use instead of the default allocator.
@@ -1913,11 +2010,11 @@ int main(int argc, char *argv[])
         }
         {
             static const struct {
-                int         d_lineNum;  // source line number
-                const char *d_spec_p;   // specification string
-                int         d_version;  // version to stream with
-                int         d_length;   // expect output length
-                const char *d_fmt_p;    // expected output format
+                int          d_lineNum;  // source line number
+                const char  *d_spec_p;   // specification string
+                int          d_version;  // version to stream with
+                bsl::size_t  d_length;   // expect output length
+                const char  *d_fmt_p;    // expected output format
             } DATA[] = {
                 //LINE  SPEC       VER  LEN  FORMAT
                 //----  ---------  ---  ---  ------
@@ -1934,7 +2031,7 @@ int main(int argc, char *argv[])
                 const int         LINE    = DATA[i].d_lineNum;
                 const char *const SPEC    = DATA[i].d_spec_p;
                 const int         VERSION = DATA[i].d_version;
-                const int         LEN     = DATA[i].d_length;
+                const bsl::size_t LEN     = DATA[i].d_length;
                 const char *const FMT     = DATA[i].d_fmt_p;
 
                 // Test using class methods.
@@ -1952,7 +2049,7 @@ int main(int argc, char *argv[])
                     if (verbose && memcmp(out.data(), FMT, LEN)) {
                         const char *hex = "0123456789abcdef";
                         P_(LINE);
-                        for (int j = 0; j < out.length(); ++j) {
+                        for (bsl::size_t j = 0; j < out.length(); ++j) {
                             cout << "\\x"
                                  << hex[static_cast<unsigned char>
                                             ((*(out.data() + j) >> 4) & 0x0f)]
@@ -1989,7 +2086,7 @@ int main(int argc, char *argv[])
                     if (verbose && memcmp(out.data(), FMT, LEN)) {
                         const char *hex = "0123456789abcdef";
                         P_(LINE);
-                        for (int j = 0; j < out.length(); ++j) {
+                        for (bsl::size_t j = 0; j < out.length(); ++j) {
                             cout << "\\x"
                                  << hex[static_cast<unsigned char>
                                             ((*(out.data() + j) >> 4) & 0x0f)]
@@ -2011,6 +2108,17 @@ int main(int argc, char *argv[])
             }
         }
 
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+
+        if (verbose) {
+            cout << "\nTesting deprecated methods." << endl;
+        }
+        {
+            ASSERT(Obj::maxSupportedBdexVersion()
+                                           == Obj::maxSupportedBdexVersion(0));
+        }
+
+#endif // BDE_OPENSOURCE_PUBLICATION -- pending deprecation
       } break;
       case 9: {
         // --------------------------------------------------------------------
@@ -2187,7 +2295,8 @@ int main(int argc, char *argv[])
                           << "SWAP MEMBER AND FREE FUNCTIONS" << endl
                           << "==============================" << endl;
 
-        if (verbose) cout << "Not implemented for 'bdlt::DayOfWeekSet'." << endl;
+        if (verbose) cout << "Not implemented for 'bdlt::DayOfWeekSet'."
+                          << endl;
 
       } break;
       case 7: {
@@ -2657,7 +2766,7 @@ int main(int argc, char *argv[])
         // Plan:
         //: 1 Test iterator constructors and 'operator='.
         //:   For each line in a set of test data, initialize a 'data'
-        //:   variable containing the the elements from the line.  Create the
+        //:   variable containing the elements from the line.  Create the
         //:   following 3 iterators:
         //:   o X (default ctor)
         //:   o Y (initial ctor)
@@ -2680,6 +2789,7 @@ int main(int argc, char *argv[])
         // Testing:
         //   iterator begin() const;
         //   iterator end() const;
+        //   bool isEmpty() const;
         //   bool isMember(Month::Month value) const;
         //   int length() const;
         //   reverse_iterator rbegin() const;
@@ -2927,9 +3037,10 @@ int main(int argc, char *argv[])
             if (veryVerbose) CR;
         }
 
-        if (verbose) cout << "\nTesting 'isMember', 'length', 'begin', 'end', "
-                          << "'rbegin', 'rend', 'operator++', 'operator--', "
-                          << "and 'operator*'." << endl;
+        if (verbose) cout << "\nTesting 'isEmpty', 'isMember', 'length', "
+                          << "'begin', 'end', 'rbegin', 'rend', 'operator++',"
+                          << " 'operator--', and 'operator*'."
+                          << endl;
         for (ti = 0; ti < NUM_DATA ; ++ti) {
             const int LINE         = DATA[ti].d_lineNum;
             const char *const SPEC = DATA[ti].d_spec_p;
@@ -2940,6 +3051,7 @@ int main(int argc, char *argv[])
             Obj mX;
             const Obj& X = gg(&mX, SPEC);
 
+            ASSERTV(ti, (0 == curLen) == X.isEmpty());
             ASSERTV(ti, curLen == X.length());
 
             if (curLen != oldLen) {
@@ -2952,6 +3064,7 @@ int main(int argc, char *argv[])
             if (veryVerbose) cout << "\t\tSpec = \"" << SPEC << '"' << endl;
             if (veryVeryVerbose) { cout << "\t\t\t"; P(X); }
 
+            ASSERTV(LINE, (0 == LENGTH) == X.isEmpty());
             ASSERTV(LINE, LENGTH == X.length());
 
             int i;
@@ -3187,6 +3300,8 @@ int main(int argc, char *argv[])
                     cout << "\t\t\t"; P(Y);
                 }
 
+                ASSERTV(LINE, (0 == LENGTH) == X.isEmpty());
+                ASSERTV(LINE, (0 == LENGTH) == Y.isEmpty());
                 ASSERTV(LINE, LENGTH == X.length());
                 ASSERTV(LINE, LENGTH == Y.length());
                 for (int i = 0; i < LENGTH; ++i) {

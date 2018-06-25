@@ -9,6 +9,8 @@ BSLS_IDENT("$Id: $")
 
 //@PURPOSE: Provide test utilities for components in 'bdl' and above.
 //
+//@DEPRECATED: Use 'bslim_testutil' instead.
+//
 //@CLASSES:
 //
 //@MACROS:
@@ -25,7 +27,7 @@ BSLS_IDENT("$Id: $")
 //  BDLS_TESTUTIL_L_: current line number
 //  BDLS_TESTUTIL_T_: print tab without '\n'
 //
-//@SEE ALSO: bsls_bsltestutil
+//@SEE_ALSO: bslim_testutil
 //
 //@DESCRIPTION: This component provides the standard print macros used in
 // BDE-style test drivers ('ASSERT', 'LOOP_ASSERT', 'ASSERTV', 'P', 'Q', 'L',
@@ -37,7 +39,7 @@ BSLS_IDENT("$Id: $")
 // above to print the objects of these types to 'bsl::cout'.
 //
 // Note that the 'bsltf' package resides below 'bsl+bslhdrs', in which
-// 'bsl::cout' is defined; therefore, the components in 'bsltf' can not
+// 'bsl::cout' is defined; therefore, the components in 'bsltf' cannot
 // directly define the overloads of the insertion operator to support printing
 // the test types.  Instead, an alternate method supplied in 'bsls_bsltestutil'
 // is used for test drivers in the 'bsl' package group.
@@ -46,7 +48,7 @@ BSLS_IDENT("$Id: $")
 ///-----
 // This section illustrates intended use of this component.
 //
-///Example 1: Writing a test driver
+///Example 1: Writing a Test Driver
 /// - - - - - - - - - - - - - - - -
 // First, we write a component to test, which provides a utility class:
 //..
@@ -90,7 +92,7 @@ BSLS_IDENT("$Id: $")
 //  //=========================================================================
 //  //                       STANDARD BDE TEST DRIVER MACROS
 //  //-------------------------------------------------------------------------
-//  
+//
 //  #define ASSERT       BDLS_TESTUTIL_ASSERT
 //  #define LOOP_ASSERT  BDLS_TESTUTIL_LOOP_ASSERT
 //  #define LOOP0_ASSERT BDLS_TESTUTIL_LOOP0_ASSERT
@@ -101,7 +103,7 @@ BSLS_IDENT("$Id: $")
 //  #define LOOP5_ASSERT BDLS_TESTUTIL_LOOP5_ASSERT
 //  #define LOOP6_ASSERT BDLS_TESTUTIL_LOOP6_ASSERT
 //  #define ASSERTV      BDLS_TESTUTIL_ASSERTV
-//  
+//
 //  #define Q   BDLS_TESTUTIL_Q   // Quote identifier literally.
 //  #define P   BDLS_TESTUTIL_P   // Print identifier and value.
 //  #define P_  BDLS_TESTUTIL_P_  // P(X) without '\n'.
@@ -125,7 +127,7 @@ BSLS_IDENT("$Id: $")
 //  value = 42
 //..
 //
-///Example 2: Print The Value of A Test Type
+///Example 2: Print the Value of a Test Type
 ///- - - - - - - - - - - - - - - - - - - - -
 // Suppose we want to print the value of an object of a test type defined the
 // 'bsltf' package using 'bsl::cout'.  This component supplies the necessary
@@ -169,51 +171,51 @@ BSLS_IDENT("$Id: $")
     BDLS_TESTUTIL_ASSERT
 
 #define BDLS_TESTUTIL_LOOP_ASSERT(I,X)                                        \
-    if (!(X)) { cout << #I << ": " << I << "\n";                              \
+    if (!(X)) { bsl::cout << #I << ": " << I << "\n";                         \
                 aSsErT(1, #X, __LINE__); }
 
 #define BDLS_TESTUTIL_LOOP1_ASSERT                                            \
     BDLS_TESTUTIL_LOOP_ASSERT
 
 #define BDLS_TESTUTIL_LOOP2_ASSERT(I,J,X)                                     \
-    if (!(X)) { cout << #I << ": " << I << "\t"                               \
-                     << #J << ": " << J << "\n";                              \
+    if (!(X)) { bsl::cout << #I << ": " << I << "\t"                          \
+                          << #J << ": " << J << "\n";                         \
                 aSsErT(1, #X, __LINE__); }
 
 #define BDLS_TESTUTIL_LOOP3_ASSERT(I,J,K,X)                                   \
-    if (!(X)) { cout << #I << ": " << I << "\t"                               \
-                     << #J << ": " << J << "\t"                               \
-                     << #K << ": " << K << "\n";                              \
+    if (!(X)) { bsl::cout << #I << ": " << I << "\t"                          \
+                          << #J << ": " << J << "\t"                          \
+                          << #K << ": " << K << "\n";                         \
                 aSsErT(1, #X, __LINE__); }
 
 #define BDLS_TESTUTIL_LOOP4_ASSERT(I,J,K,L,X)                                 \
-    if (!(X)) { cout << #I << ": " << I << "\t"                               \
-                     << #J << ": " << J << "\t"                               \
-                     << #K << ": " << K << "\t"                               \
-                     << #L << ": " << L << "\n";                              \
+    if (!(X)) { bsl::cout << #I << ": " << I << "\t"                          \
+                          << #J << ": " << J << "\t"                          \
+                          << #K << ": " << K << "\t"                          \
+                          << #L << ": " << L << "\n";                         \
                 aSsErT(1, #X, __LINE__); }
 
 #define BDLS_TESTUTIL_LOOP5_ASSERT(I,J,K,L,M,X)                               \
-    if (!(X)) { cout << #I << ": " << I << "\t"                               \
-                     << #J << ": " << J << "\t"                               \
-                     << #K << ": " << K << "\t"                               \
-                     << #L << ": " << L << "\t"                               \
-                     << #M << ": " << M << "\n";                              \
-               aSsErT(1, #X, __LINE__); }
+    if (!(X)) { bsl::cout << #I << ": " << I << "\t"                          \
+                          << #J << ": " << J << "\t"                          \
+                          << #K << ": " << K << "\t"                          \
+                          << #L << ": " << L << "\t"                          \
+                          << #M << ": " << M << "\n";                         \
+                aSsErT(1, #X, __LINE__); }
 
 #define BDLS_TESTUTIL_LOOP6_ASSERT(I,J,K,L,M,N,X)                             \
-    if (!(X)) { cout << #I << ": " << I << "\t"                               \
-                     << #J << ": " << J << "\t"                               \
-                     << #K << ": " << K << "\t"                               \
-                     << #L << ": " << L << "\t"                               \
-                     << #M << ": " << M << "\t"                               \
-                     << #N << ": " << N << "\n";                              \
-               aSsErT(1, #X, __LINE__); }
+    if (!(X)) { bsl::cout << #I << ": " << I << "\t"                          \
+                          << #J << ": " << J << "\t"                          \
+                          << #K << ": " << K << "\t"                          \
+                          << #L << ": " << L << "\t"                          \
+                          << #M << ": " << M << "\t"                          \
+                          << #N << ": " << N << "\n";                         \
+                aSsErT(1, #X, __LINE__); }
 
+// The 'BDLS_TESTUTIL_EXPAND' macro is required to work around a preprocessor
+// issue on Windows that prevents '__VA_ARGS__' from being expanded in the
+// definition of 'BDLS_TESTUTIL_NUM_ARGS'.
 
-// The 'BDLS_TESTUTIL_EXPAND' macro is required to workaround a
-// pre-processor issue on windows that prevents __VA_ARGS__ to be expanded in
-// the definition of 'BDLS_TESTUTIL_NUM_ARGS'
 #define BDLS_TESTUTIL_EXPAND(X)                                               \
     X
 
@@ -235,15 +237,15 @@ BSLS_IDENT("$Id: $")
                               BDLS_TESTUTIL_NUM_ARGS(__VA_ARGS__), __VA_ARGS__)
 
 #define BDLS_TESTUTIL_Q(X)                                                    \
-    cout << "<| " #X " |>" << endl;
+    bsl::cout << "<| " #X " |>" << bsl::endl;
     // Quote identifier literally.
 
 #define BDLS_TESTUTIL_P(X)                                                    \
-    cout << #X " = " << (X) << endl;
+    bsl::cout << #X " = " << (X) << bsl::endl;
     // Print identifier and its value.
 
 #define BDLS_TESTUTIL_P_(X)                                                   \
-    cout << #X " = " << (X) << ", " << flush;
+    bsl::cout << #X " = " << (X) << ", " << bsl::flush;
     // 'P(X)' without '\n'
 
 #define BDLS_TESTUTIL_L_                                                      \
@@ -251,9 +253,8 @@ BSLS_IDENT("$Id: $")
     // current Line number
 
 #define BDLS_TESTUTIL_T_                                                      \
-    cout << "\t" << flush;
+    bsl::cout << "\t" << bsl::flush;
     // Print tab (w/o newline).
-
 
 namespace BloombergLP {
 namespace bsltf {
@@ -275,20 +276,21 @@ bsl::ostream& operator<<(bsl::ostream&                          stream,
                          const NonTypicalOverloadsTestType&     obj);
 bsl::ostream& operator<<(bsl::ostream&                          stream,
                          const NonAssignableTestType&           obj);
-// bsl::ostream& operator<<(bsl::ostream&                          stream,
-//                          const NonCopyConstructibleTestType&    obj);
+#if 0
+bsl::ostream& operator<<(bsl::ostream&                          stream,
+                         const NonCopyConstructibleTestType&    obj);
+#endif
 bsl::ostream& operator<<(bsl::ostream&                          stream,
                          const NonDefaultConstructibleTestType& obj);
 bsl::ostream& operator<<(bsl::ostream&                          stream,
                          const NonEqualComparableTestType&      obj);
-    // Write the value of the specified 'object' to the specified
-    // output 'stream' in a single-line format, and return a reference
-    // providing modifiable access to 'stream'.  If 'stream' is not valid on
-    // entry, this operation has no effect.
-
+    // Write the value of the specified 'object' to the specified output
+    // 'stream' in a single-line format, and return a reference providing
+    // modifiable access to 'stream'.  If 'stream' is not valid on entry, this
+    // operation has no effect.
 
 // ============================================================================
-//                      INLINE FUNCTION DEFINITIONS
+//                          INLINE DEFINITIONS
 // ============================================================================
 
 // FREE OPERATORS
@@ -348,12 +350,14 @@ bsl::ostream& operator<<(bsl::ostream&                stream,
     return stream << bsltf::TemplateTestFacility::getIdentifier(obj);
 }
 
-// inline
-// bsl::ostream& operator<<(bsl::ostream&                       stream,
-//                          const NonCopyConstructibleTestType& obj)
-// {
-//     return stream << obj.data();
-// }
+#if 0
+inline
+bsl::ostream& operator<<(bsl::ostream&                       stream,
+                         const NonCopyConstructibleTestType& obj)
+{
+    return stream << obj.data();
+}
+#endif
 
 inline
 bsl::ostream& operator<<(bsl::ostream&                          stream,
@@ -369,7 +373,7 @@ bsl::ostream& operator<<(bsl::ostream&                     stream,
     return stream << bsltf::TemplateTestFacility::getIdentifier(obj);
 }
 
-}  // close package namespace
+}  // close namespace bsltf
 }  // close enterprise namespace
 
 #endif

@@ -1,22 +1,22 @@
 // bdlt_datetimeutil.t.cpp                                            -*-C++-*-
 #include <bdlt_datetimeutil.h>
 
-#include <bdls_testutil.h>
+#include <bslim_testutil.h>
 #include <bslma_usesbslmaallocator.h>      // usage example
 #include <bslmf_nestedtraitdeclaration.h>  // usage example
 
-#include <bsl_algorithm.h> // min()
+#include <bsl_algorithm.h> // 'min'
 #include <bsl_climits.h>
-#include <bsl_cstdio.h>    // sprintf()
-#include <bsl_cstdlib.h>   // atoi()
-#include <bsl_cstring.h>   // memset()
+#include <bsl_cstdio.h>    // 'sprintf'
+#include <bsl_cstdlib.h>   // 'atoi'
+#include <bsl_cstring.h>   // 'memset'
 #include <bsl_iostream.h>
 #include <bsl_sstream.h>
 #include <bsl_vector.h>
 
 #include <bsl_map.h>       // usage example
-#include <bsl_string.h>    // usage example
-#include <bsl_utility.h>   // usage example
+#include <bsl_string.h>    //   "     "
+#include <bsl_utility.h>   //   "     "
 
 using namespace BloombergLP;
 using namespace bsl;
@@ -34,6 +34,7 @@ using namespace bsl;
 // appropriate.
 //-----------------------------------------------------------------------------
 // [ 3] tm convertToTm(const Datetime& datetime);
+// [ 3] void convertToTm(tm *result, const Datetime& datetime);
 // [ 3] int convertFromTm(Datetime *result, const tm& timeStruct);
 //-----------------------------------------------------------------------------
 // [ 1] BOOTSTRAP: 'convertToTm'
@@ -67,23 +68,23 @@ void aSsErT(bool condition, const char *message, int line)
 //               STANDARD BDE TEST DRIVER MACRO ABBREVIATIONS
 // ----------------------------------------------------------------------------
 
-#define ASSERT       BDLS_TESTUTIL_ASSERT
-#define ASSERTV      BDLS_TESTUTIL_ASSERTV
+#define ASSERT       BSLIM_TESTUTIL_ASSERT
+#define ASSERTV      BSLIM_TESTUTIL_ASSERTV
 
-#define LOOP_ASSERT  BDLS_TESTUTIL_LOOP_ASSERT
-#define LOOP0_ASSERT BDLS_TESTUTIL_LOOP0_ASSERT
-#define LOOP1_ASSERT BDLS_TESTUTIL_LOOP1_ASSERT
-#define LOOP2_ASSERT BDLS_TESTUTIL_LOOP2_ASSERT
-#define LOOP3_ASSERT BDLS_TESTUTIL_LOOP3_ASSERT
-#define LOOP4_ASSERT BDLS_TESTUTIL_LOOP4_ASSERT
-#define LOOP5_ASSERT BDLS_TESTUTIL_LOOP5_ASSERT
-#define LOOP6_ASSERT BDLS_TESTUTIL_LOOP6_ASSERT
+#define LOOP_ASSERT  BSLIM_TESTUTIL_LOOP_ASSERT
+#define LOOP0_ASSERT BSLIM_TESTUTIL_LOOP0_ASSERT
+#define LOOP1_ASSERT BSLIM_TESTUTIL_LOOP1_ASSERT
+#define LOOP2_ASSERT BSLIM_TESTUTIL_LOOP2_ASSERT
+#define LOOP3_ASSERT BSLIM_TESTUTIL_LOOP3_ASSERT
+#define LOOP4_ASSERT BSLIM_TESTUTIL_LOOP4_ASSERT
+#define LOOP5_ASSERT BSLIM_TESTUTIL_LOOP5_ASSERT
+#define LOOP6_ASSERT BSLIM_TESTUTIL_LOOP6_ASSERT
 
-#define Q            BDLS_TESTUTIL_Q   // Quote identifier literally.
-#define P            BDLS_TESTUTIL_P   // Print identifier and value.
-#define P_           BDLS_TESTUTIL_P_  // P(X) without '\n'.
-#define T_           BDLS_TESTUTIL_T_  // Print a tab (w/o newline).
-#define L_           BDLS_TESTUTIL_L_  // current Line number
+#define Q            BSLIM_TESTUTIL_Q   // Quote identifier literally.
+#define P            BSLIM_TESTUTIL_P   // Print identifier and value.
+#define P_           BSLIM_TESTUTIL_P_  // P(X) without '\n'.
+#define T_           BSLIM_TESTUTIL_T_  // Print a tab (w/o newline).
+#define L_           BSLIM_TESTUTIL_L_  // current Line number
 
 //=============================================================================
 //                   GLOBAL TYPEDEFS/CONSTANTS FOR TESTING
@@ -466,6 +467,7 @@ int main(int argc, char *argv[])
         //
         // Testing:
         //   tm convertToTm(const Datetime& datetime);
+        //   void convertToTm(tm *result, const Datetime& datetime);
         //   int convertFromTm(Datetime *result, const tm& timeStruct);
         // --------------------------------------------------------------------
 
@@ -477,16 +479,16 @@ int main(int argc, char *argv[])
 
         if (verbose) cout << "\nDatetime => struct tm => Datetime." << endl;
 
-        vector<Uint64> parameters;
+        vector<unsigned> parameters;
 
         if (argc > 2) {
-            ConfigParser<Uint64>::parse(&parameters, argv[2]);
+            ConfigParser<unsigned>::parse(&parameters, argv[2]);
         }
 
-        int numTrials = 1000000;
+        unsigned numTrials = 1000000;
 
         if (parameters.size() > 0) {
-            numTrials = static_cast<int>(parameters[0]);
+            numTrials = parameters[0];
         }
 
         const Uint64 SIZE = Uint64(9999) * 12 * 31 * 24 * 60 * 60 + 1;
@@ -523,7 +525,7 @@ int main(int argc, char *argv[])
         // through the search space will not repeat until the 'SIZE'-eth
         // iteration.
 
-        double percentCovered = 100 * double(numTrials) / SIZE;
+        double percentCovered = 100.0 * numTrials / SIZE;
 
         Uint64 startingValue = 0;
 
@@ -545,7 +547,7 @@ int main(int argc, char *argv[])
 
         int numInvalid = 0;
 
-        for (Uint64 i = 0; static_cast<double>(i) < numTrials; ++i) {
+        for (unsigned i = 0; i < numTrials; ++i) {
             if (veryVerbose) { loopMeter(i, numTrials); }
 
             // Ensure that there is no premature repetition; ok first time.
@@ -595,17 +597,32 @@ int main(int argc, char *argv[])
                                                static_cast<int>(m),
                                                static_cast<int>(s));
 
-            tm tmp;
-            memset(&tmp, i, sizeof tmp);    // junk
-  //v-----------^
-    tmp = Util::convertToTm(INITIAL_VALUE);
+            {
+                tm tmp;
+                memset(&tmp, i, sizeof tmp);    // junk
 
-    bdlt::Datetime result(1, 2, 3, 4, 5, 6, 7);
+                tmp = Util::convertToTm(INITIAL_VALUE);
 
-    LOOP_ASSERT(i, 0 == Util::convertFromTm(&result, tmp));
+                bdlt::Datetime result(1, 2, 3, 4, 5, 6, 7);
 
-    LOOP_ASSERT(i, INITIAL_VALUE == result);
-  //^-------v
+                LOOP_ASSERT(i, 0 == Util::convertFromTm(&result, tmp));
+
+                LOOP_ASSERT(i, INITIAL_VALUE == result);
+            }
+
+            {
+                tm tmp;
+                memset(&tmp, i, sizeof tmp);    // junk
+
+                Util::convertToTm(&tmp, INITIAL_VALUE);
+
+                bdlt::Datetime result(1, 2, 3, 4, 5, 6, 7);
+
+                LOOP_ASSERT(i, 0 == Util::convertFromTm(&result, tmp));
+
+                LOOP_ASSERT(i, INITIAL_VALUE == result);
+            }
+
         }
         if (verbose) { loopMeter(numTrials, numTrials); }
 
@@ -966,7 +983,7 @@ int main(int argc, char *argv[])
             bdlt::Datetime result;
             tm             in;
 
-            bsl::memset(&in, sizeof(tm), 0);
+            bsl::memset(&in, 0, sizeof(in));
 
             // For date 1/1/1, time 24:00:00 is valid.
             in.tm_sec    = 0;

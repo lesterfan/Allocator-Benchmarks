@@ -14,6 +14,10 @@ BSLS_IDENT("$Id: $")
 //
 //@SEE_ALSO: bdlt_date, bdlt_datetimetz
 //
+//@AUTHOR: Shezan Baig (sbaig)
+//
+//@CONTACT: Rohan Bhindwale (rbhindwa)
+//
 //@DESCRIPTION: This component provides a single value-semantic class,
 // 'bdlt::DateTz', that represents a date value in a particular time zone.
 // Each 'bdlt::DateTz' object contains a time zone offset from UTC (in minutes)
@@ -42,6 +46,12 @@ BSLS_IDENT("$Id: $")
 // For these reasons (and others), this component cannot and does not perform
 // any validation relating to time zones or offsets.  The user must take care
 // to honor the "local date" contract of this component.
+//
+///ISO Standard Text Representation
+///--------------------------------
+// A common standard text representation of a date and time value is described
+// by ISO 8601.  BDE provides the 'bdlt_iso8601util' component for conversion
+// to and from the standard ISO8601 format.
 //
 ///Usage
 ///-----
@@ -270,6 +280,34 @@ class DateTz {
         // valid on entry, this operation has no effect.  Note that the format
         // is not fully specified, and can change without notice.
 
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+
+    Datetime gmtStartTime() const;
+        // !DEPRECATED!: replaced by 'utcStartTime'.
+        //
+        // Return a 'Datetime' object having the value of the UTC "point in
+        // time" when the local date starts (i.e., 0000 hours local time).  The
+        // behavior is undefined unless the local date starting time represents
+        // a valid 'Datetime' value for the UTC timezone.  Note that the
+        // returned value is equal to:
+        //..
+        //  Datetime(localDate()).addMinutes(-offset());
+        //..
+
+    static int maxSupportedBdexVersion();
+        // !DEPRECATED!: Use 'maxSupportedBdexVersion(int)' instead.
+        //
+        // Return the most current BDEX streaming version number supported by
+        // this class.
+
+    int validateAndSetDateTz(const Date& localDate, int offset);
+        // Set the local date and time zone offset of this object to the
+        // specified 'localDate' and 'offset' values respectively if
+        // 'localDate' and 'offset' represent a valid 'DateTz' value.  Return 0
+        // on success, and a non-zero value with no effect on this 'DateTz'
+        // object otherwise.
+
+#endif // BDE_OPENSOURCE_PUBLICATION -- pending deprecation
 
 };
 
@@ -294,6 +332,15 @@ bsl::ostream& operator<<(bsl::ostream& stream, const DateTz& rhs);
     // fully specified and can change without notice.  Also note that this
     // method has the same behavior as 'object.print(stream, 0, -1)', but with
     // the attribute names elided.
+
+// FREE FUNCTIONS
+template <class HASHALG>
+void hashAppend(HASHALG& hashAlg, const DateTz& object);
+    // Pass the specified 'object' to the specified 'hashAlg'.  This function
+    // integrates with the 'bslh' modular hashing system and effectively
+    // provides a 'bsl::hash' specialization for 'DateTz'.  Note that two
+    // objects which represent the same UTC time but have different offsets
+    // will not (necessarily) hash to the same value.
 
 // ============================================================================
 //                            INLINE DEFINITIONS
@@ -447,6 +494,31 @@ STREAM& DateTz::bdexStreamOut(STREAM& stream, int version) const
     return stream;
 }
 
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+// DEPRECATED
+inline
+Datetime DateTz::gmtStartTime() const
+{
+    return utcStartTime();
+}
+
+inline
+int DateTz::maxSupportedBdexVersion()
+{
+    return maxSupportedBdexVersion(0);
+}
+
+inline
+int DateTz::validateAndSetDateTz(const Date& localDate, int offset)
+{
+    if (isValid(localDate, offset)) {
+        setDateTz(localDate, offset);
+        return 0;                                                     // RETURN
+    }
+    return -1;
+}
+
+#endif // BDE_OPENSOURCE_PUBLICATION -- pending deprecation
 
 }  // close package namespace
 
@@ -469,6 +541,16 @@ inline
 bsl::ostream& bdlt::operator<<(bsl::ostream& stream, const DateTz& rhs)
 {
     return rhs.print(stream, 0, -1);
+}
+
+// FREE FUNCTIONS
+template <class HASHALG>
+inline
+void bdlt::hashAppend(HASHALG& hashAlg, const DateTz& object)
+{
+    using ::BloombergLP::bslh::hashAppend;
+    hashAppend(hashAlg, object.localDate());
+    hashAppend(hashAlg, object.offset());
 }
 
 }  // close enterprise namespace

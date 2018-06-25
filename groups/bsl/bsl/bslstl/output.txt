@@ -1,0 +1,1268 @@
+[bslstl_lesterstring.t.cpp (ERROR)] <<<<<<<<<<
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp: In static member function 'static void TestDriver<TYPE, TRAITS, ALLOC>::testCase33()':
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:2097:50: error: no matching function for call to 'BloombergLP::bslma::TestAllocatorMonitor::TestAllocatorMonitor()'
+         Tam& dam = *new(*defaultAllocator_p) Tam();
+                                                  ^
+In file included from ../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:15:0:
+/bb/bde/lfan77/bde/groups/bsl/bslma/bslma_testallocatormonitor.h:568:1: note: candidate: BloombergLP::bslma::TestAllocatorMonitor::TestAllocatorMonitor(const BloombergLP::bslma::TestAllocator*)
+ TestAllocatorMonitor::TestAllocatorMonitor(const TestAllocator *testAllocator)
+ ^~~~~~~~~~~~~~~~~~~~
+/bb/bde/lfan77/bde/groups/bsl/bslma/bslma_testallocatormonitor.h:568:1: note:   candidate expects 1 argument, 0 provided
+/bb/bde/lfan77/bde/groups/bsl/bslma/bslma_testallocatormonitor.h:460:5: note: candidate: BloombergLP::bslma::TestAllocatorMonitor::TestAllocatorMonitor(const BloombergLP::bslma::TestAllocatorMonitor&)
+     TestAllocatorMonitor(const TestAllocatorMonitor&);             // = delete
+     ^~~~~~~~~~~~~~~~~~~~
+/bb/bde/lfan77/bde/groups/bsl/bslma/bslma_testallocatormonitor.h:460:5: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:2098:16: error: 'RawDeleterProctor' is not a member of 'BloombergLP::bslma'
+         bslma::RawDeleterProctor<Tam, bslma::Allocator> dp0(&dam, defaultAllocator_p);
+                ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:2098:16: note: suggested alternative: 'NewDeleteAllocator'
+         bslma::RawDeleterProctor<Tam, bslma::Allocator> dp0(&dam, defaultAllocator_p);
+                ^~~~~~~~~~~~~~~~~
+                NewDeleteAllocator
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:2098:37: error: expected primary-expression before ',' token
+         bslma::RawDeleterProctor<Tam, bslma::Allocator> dp0(&dam, defaultAllocator_p);
+                                     ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:2098:55: error: expected primary-expression before '>' token
+         bslma::RawDeleterProctor<Tam, bslma::Allocator> dp0(&dam, defaultAllocator_p);
+                                                       ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:2098:57: error: there are no arguments to 'dp0' that depend on a template parameter, so a declaration of 'dp0' must be available [-fpermissive]
+         bslma::RawDeleterProctor<Tam, bslma::Allocator> dp0(&dam, defaultAllocator_p);
+                                                         ^~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:2098:57: note: (if you use '-fpermissive', G++ will accept your code, but allowing the use of an undeclared name is deprecated)
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:2166:54: error: no matching function for call to 'BloombergLP::bslma::TestAllocatorMonitor::TestAllocatorMonitor()'
+             Tam& dam = *new(*defaultAllocator_p) Tam();
+                                                      ^
+In file included from ../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:15:0:
+/bb/bde/lfan77/bde/groups/bsl/bslma/bslma_testallocatormonitor.h:568:1: note: candidate: BloombergLP::bslma::TestAllocatorMonitor::TestAllocatorMonitor(const BloombergLP::bslma::TestAllocator*)
+ TestAllocatorMonitor::TestAllocatorMonitor(const TestAllocator *testAllocator)
+ ^~~~~~~~~~~~~~~~~~~~
+/bb/bde/lfan77/bde/groups/bsl/bslma/bslma_testallocatormonitor.h:568:1: note:   candidate expects 1 argument, 0 provided
+/bb/bde/lfan77/bde/groups/bsl/bslma/bslma_testallocatormonitor.h:460:5: note: candidate: BloombergLP::bslma::TestAllocatorMonitor::TestAllocatorMonitor(const BloombergLP::bslma::TestAllocatorMonitor&)
+     TestAllocatorMonitor(const TestAllocatorMonitor&);             // = delete
+     ^~~~~~~~~~~~~~~~~~~~
+/bb/bde/lfan77/bde/groups/bsl/bslma/bslma_testallocatormonitor.h:460:5: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:2167:20: error: 'RawDeleterProctor' is not a member of 'BloombergLP::bslma'
+             bslma::RawDeleterProctor<Tam, bslma::Allocator> dp1(&dam, defaultAllocator_p);
+                    ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:2167:20: note: suggested alternative: 'NewDeleteAllocator'
+             bslma::RawDeleterProctor<Tam, bslma::Allocator> dp1(&dam, defaultAllocator_p);
+                    ^~~~~~~~~~~~~~~~~
+                    NewDeleteAllocator
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:2167:41: error: expected primary-expression before ',' token
+             bslma::RawDeleterProctor<Tam, bslma::Allocator> dp1(&dam, defaultAllocator_p);
+                                         ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:2167:59: error: expected primary-expression before '>' token
+             bslma::RawDeleterProctor<Tam, bslma::Allocator> dp1(&dam, defaultAllocator_p);
+                                                           ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:2167:61: error: there are no arguments to 'dp1' that depend on a template parameter, so a declaration of 'dp1' must be available [-fpermissive]
+             bslma::RawDeleterProctor<Tam, bslma::Allocator> dp1(&dam, defaultAllocator_p);
+                                                             ^~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:2279:50: error: no matching function for call to 'BloombergLP::bslma::TestAllocatorMonitor::TestAllocatorMonitor()'
+         Tam& dam = *new(*defaultAllocator_p) Tam();
+                                                  ^
+In file included from ../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:15:0:
+/bb/bde/lfan77/bde/groups/bsl/bslma/bslma_testallocatormonitor.h:568:1: note: candidate: BloombergLP::bslma::TestAllocatorMonitor::TestAllocatorMonitor(const BloombergLP::bslma::TestAllocator*)
+ TestAllocatorMonitor::TestAllocatorMonitor(const TestAllocator *testAllocator)
+ ^~~~~~~~~~~~~~~~~~~~
+/bb/bde/lfan77/bde/groups/bsl/bslma/bslma_testallocatormonitor.h:568:1: note:   candidate expects 1 argument, 0 provided
+/bb/bde/lfan77/bde/groups/bsl/bslma/bslma_testallocatormonitor.h:460:5: note: candidate: BloombergLP::bslma::TestAllocatorMonitor::TestAllocatorMonitor(const BloombergLP::bslma::TestAllocatorMonitor&)
+     TestAllocatorMonitor(const TestAllocatorMonitor&);             // = delete
+     ^~~~~~~~~~~~~~~~~~~~
+/bb/bde/lfan77/bde/groups/bsl/bslma/bslma_testallocatormonitor.h:460:5: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:2280:16: error: 'RawDeleterProctor' is not a member of 'BloombergLP::bslma'
+         bslma::RawDeleterProctor<Tam, bslma::Allocator> dp2(&dam, defaultAllocator_p);
+                ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:2280:16: note: suggested alternative: 'NewDeleteAllocator'
+         bslma::RawDeleterProctor<Tam, bslma::Allocator> dp2(&dam, defaultAllocator_p);
+                ^~~~~~~~~~~~~~~~~
+                NewDeleteAllocator
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:2280:37: error: expected primary-expression before ',' token
+         bslma::RawDeleterProctor<Tam, bslma::Allocator> dp2(&dam, defaultAllocator_p);
+                                     ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:2280:55: error: expected primary-expression before '>' token
+         bslma::RawDeleterProctor<Tam, bslma::Allocator> dp2(&dam, defaultAllocator_p);
+                                                       ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:2280:57: error: there are no arguments to 'dp2' that depend on a template parameter, so a declaration of 'dp2' must be available [-fpermissive]
+         bslma::RawDeleterProctor<Tam, bslma::Allocator> dp2(&dam, defaultAllocator_p);
+                                                         ^~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:2474:50: error: no matching function for call to 'BloombergLP::bslma::TestAllocatorMonitor::TestAllocatorMonitor()'
+         Tam& dam = *new(*defaultAllocator_p) Tam();
+                                                  ^
+In file included from ../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:15:0:
+/bb/bde/lfan77/bde/groups/bsl/bslma/bslma_testallocatormonitor.h:568:1: note: candidate: BloombergLP::bslma::TestAllocatorMonitor::TestAllocatorMonitor(const BloombergLP::bslma::TestAllocator*)
+ TestAllocatorMonitor::TestAllocatorMonitor(const TestAllocator *testAllocator)
+ ^~~~~~~~~~~~~~~~~~~~
+/bb/bde/lfan77/bde/groups/bsl/bslma/bslma_testallocatormonitor.h:568:1: note:   candidate expects 1 argument, 0 provided
+/bb/bde/lfan77/bde/groups/bsl/bslma/bslma_testallocatormonitor.h:460:5: note: candidate: BloombergLP::bslma::TestAllocatorMonitor::TestAllocatorMonitor(const BloombergLP::bslma::TestAllocatorMonitor&)
+     TestAllocatorMonitor(const TestAllocatorMonitor&);             // = delete
+     ^~~~~~~~~~~~~~~~~~~~
+/bb/bde/lfan77/bde/groups/bsl/bslma/bslma_testallocatormonitor.h:460:5: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:2475:16: error: 'RawDeleterProctor' is not a member of 'BloombergLP::bslma'
+         bslma::RawDeleterProctor<Tam, bslma::Allocator> dp3(&dam, defaultAllocator_p);
+                ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:2475:16: note: suggested alternative: 'NewDeleteAllocator'
+         bslma::RawDeleterProctor<Tam, bslma::Allocator> dp3(&dam, defaultAllocator_p);
+                ^~~~~~~~~~~~~~~~~
+                NewDeleteAllocator
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:2475:37: error: expected primary-expression before ',' token
+         bslma::RawDeleterProctor<Tam, bslma::Allocator> dp3(&dam, defaultAllocator_p);
+                                     ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:2475:55: error: expected primary-expression before '>' token
+         bslma::RawDeleterProctor<Tam, bslma::Allocator> dp3(&dam, defaultAllocator_p);
+                                                       ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:2475:57: error: there are no arguments to 'dp3' that depend on a template parameter, so a declaration of 'dp3' must be available [-fpermissive]
+         bslma::RawDeleterProctor<Tam, bslma::Allocator> dp3(&dam, defaultAllocator_p);
+                                                         ^~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp: In static member function 'static void TestDriver<TYPE, TRAITS, ALLOC>::testCase17()':
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9199:96: error: no matching function for call to 'AllocatorUseGuard::AllocatorUseGuard()'
+                         AllocatorUseGuard& guardG = *new(*globalAllocator_p) AllocatorUseGuard();
+                                                                                                ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note: candidate: AllocatorUseGuard::AllocatorUseGuard(const BloombergLP::bslma::TestAllocator*)
+     AllocatorUseGuard(const bslma::TestAllocator *allocatorPtr)
+     ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note: candidate: constexpr AllocatorUseGuard::AllocatorUseGuard(const AllocatorUseGuard&)
+ struct AllocatorUseGuard {
+        ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9200:32: error: 'RawDeleterProctor' is not a member of 'BloombergLP::bslma'
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp0(&guardG, globalAllocator_p);
+                                ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9200:32: note: suggested alternative: 'NewDeleteAllocator'
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp0(&guardG, globalAllocator_p);
+                                ^~~~~~~~~~~~~~~~~
+                                NewDeleteAllocator
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9200:67: error: expected primary-expression before ',' token
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp0(&guardG, globalAllocator_p);
+                                                                   ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9200:85: error: expected primary-expression before '>' token
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp0(&guardG, globalAllocator_p);
+                                                                                     ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9200:87: error: there are no arguments to 'dp0' that depend on a template parameter, so a declaration of 'dp0' must be available [-fpermissive]
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp0(&guardG, globalAllocator_p);
+                                                                                       ^~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9202:97: error: no matching function for call to 'AllocatorUseGuard::AllocatorUseGuard()'
+                         AllocatorUseGuard& guardD = *new(*defaultAllocator_p) AllocatorUseGuard();
+                                                                                                 ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note: candidate: AllocatorUseGuard::AllocatorUseGuard(const BloombergLP::bslma::TestAllocator*)
+     AllocatorUseGuard(const bslma::TestAllocator *allocatorPtr)
+     ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note: candidate: constexpr AllocatorUseGuard::AllocatorUseGuard(const AllocatorUseGuard&)
+ struct AllocatorUseGuard {
+        ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9203:32: error: 'RawDeleterProctor' is not a member of 'BloombergLP::bslma'
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp4(&guardD, defaultAllocator_p);
+                                ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9203:32: note: suggested alternative: 'NewDeleteAllocator'
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp4(&guardD, defaultAllocator_p);
+                                ^~~~~~~~~~~~~~~~~
+                                NewDeleteAllocator
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9203:67: error: expected primary-expression before ',' token
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp4(&guardD, defaultAllocator_p);
+                                                                   ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9203:85: error: expected primary-expression before '>' token
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp4(&guardD, defaultAllocator_p);
+                                                                                     ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9203:87: error: there are no arguments to 'dp4' that depend on a template parameter, so a declaration of 'dp4' must be available [-fpermissive]
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp4(&guardD, defaultAllocator_p);
+                                                                                       ^~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9301:96: error: no matching function for call to 'AllocatorUseGuard::AllocatorUseGuard()'
+                         AllocatorUseGuard& guardG = *new(*globalAllocator_p) AllocatorUseGuard();
+                                                                                                ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note: candidate: AllocatorUseGuard::AllocatorUseGuard(const BloombergLP::bslma::TestAllocator*)
+     AllocatorUseGuard(const bslma::TestAllocator *allocatorPtr)
+     ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note: candidate: constexpr AllocatorUseGuard::AllocatorUseGuard(const AllocatorUseGuard&)
+ struct AllocatorUseGuard {
+        ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9302:32: error: 'RawDeleterProctor' is not a member of 'BloombergLP::bslma'
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp1(&guardG, globalAllocator_p);
+                                ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9302:32: note: suggested alternative: 'NewDeleteAllocator'
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp1(&guardG, globalAllocator_p);
+                                ^~~~~~~~~~~~~~~~~
+                                NewDeleteAllocator
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9302:67: error: expected primary-expression before ',' token
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp1(&guardG, globalAllocator_p);
+                                                                   ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9302:85: error: expected primary-expression before '>' token
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp1(&guardG, globalAllocator_p);
+                                                                                     ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9302:87: error: there are no arguments to 'dp1' that depend on a template parameter, so a declaration of 'dp1' must be available [-fpermissive]
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp1(&guardG, globalAllocator_p);
+                                                                                       ^~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9304:97: error: no matching function for call to 'AllocatorUseGuard::AllocatorUseGuard()'
+                         AllocatorUseGuard& guardD = *new(*defaultAllocator_p) AllocatorUseGuard();
+                                                                                                 ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note: candidate: AllocatorUseGuard::AllocatorUseGuard(const BloombergLP::bslma::TestAllocator*)
+     AllocatorUseGuard(const bslma::TestAllocator *allocatorPtr)
+     ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note: candidate: constexpr AllocatorUseGuard::AllocatorUseGuard(const AllocatorUseGuard&)
+ struct AllocatorUseGuard {
+        ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9305:32: error: 'RawDeleterProctor' is not a member of 'BloombergLP::bslma'
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp5(&guardD, defaultAllocator_p);
+                                ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9305:32: note: suggested alternative: 'NewDeleteAllocator'
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp5(&guardD, defaultAllocator_p);
+                                ^~~~~~~~~~~~~~~~~
+                                NewDeleteAllocator
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9305:67: error: expected primary-expression before ',' token
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp5(&guardD, defaultAllocator_p);
+                                                                   ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9305:85: error: expected primary-expression before '>' token
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp5(&guardD, defaultAllocator_p);
+                                                                                     ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9305:87: error: there are no arguments to 'dp5' that depend on a template parameter, so a declaration of 'dp5' must be available [-fpermissive]
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp5(&guardD, defaultAllocator_p);
+                                                                                       ^~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp: In static member function 'static void TestDriver<TYPE, TRAITS, ALLOC>::testCase17Range(const CONTAINER&)':
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9589:96: error: no matching function for call to 'AllocatorUseGuard::AllocatorUseGuard()'
+                         AllocatorUseGuard& guardG = *new(*globalAllocator_p) AllocatorUseGuard();
+                                                                                                ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note: candidate: AllocatorUseGuard::AllocatorUseGuard(const BloombergLP::bslma::TestAllocator*)
+     AllocatorUseGuard(const bslma::TestAllocator *allocatorPtr)
+     ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note: candidate: constexpr AllocatorUseGuard::AllocatorUseGuard(const AllocatorUseGuard&)
+ struct AllocatorUseGuard {
+        ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9590:32: error: 'RawDeleterProctor' is not a member of 'BloombergLP::bslma'
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp2(&guardG, globalAllocator_p);
+                                ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9590:32: note: suggested alternative: 'NewDeleteAllocator'
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp2(&guardG, globalAllocator_p);
+                                ^~~~~~~~~~~~~~~~~
+                                NewDeleteAllocator
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9590:67: error: expected primary-expression before ',' token
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp2(&guardG, globalAllocator_p);
+                                                                   ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9590:85: error: expected primary-expression before '>' token
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp2(&guardG, globalAllocator_p);
+                                                                                     ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9590:87: error: there are no arguments to 'dp2' that depend on a template parameter, so a declaration of 'dp2' must be available [-fpermissive]
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp2(&guardG, globalAllocator_p);
+                                                                                       ^~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9592:97: error: no matching function for call to 'AllocatorUseGuard::AllocatorUseGuard()'
+                         AllocatorUseGuard& guardD = *new(*defaultAllocator_p) AllocatorUseGuard();
+                                                                                                 ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note: candidate: AllocatorUseGuard::AllocatorUseGuard(const BloombergLP::bslma::TestAllocator*)
+     AllocatorUseGuard(const bslma::TestAllocator *allocatorPtr)
+     ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note: candidate: constexpr AllocatorUseGuard::AllocatorUseGuard(const AllocatorUseGuard&)
+ struct AllocatorUseGuard {
+        ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9593:32: error: 'RawDeleterProctor' is not a member of 'BloombergLP::bslma'
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp6(&guardD, defaultAllocator_p);
+                                ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9593:32: note: suggested alternative: 'NewDeleteAllocator'
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp6(&guardD, defaultAllocator_p);
+                                ^~~~~~~~~~~~~~~~~
+                                NewDeleteAllocator
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9593:67: error: expected primary-expression before ',' token
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp6(&guardD, defaultAllocator_p);
+                                                                   ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9593:85: error: expected primary-expression before '>' token
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp6(&guardD, defaultAllocator_p);
+                                                                                     ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9593:87: error: there are no arguments to 'dp6' that depend on a template parameter, so a declaration of 'dp6' must be available [-fpermissive]
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp6(&guardD, defaultAllocator_p);
+                                                                                       ^~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9740:100: error: no matching function for call to 'AllocatorUseGuard::AllocatorUseGuard()'
+                             AllocatorUseGuard& guardG = *new(*globalAllocator_p) AllocatorUseGuard();
+                                                                                                    ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note: candidate: AllocatorUseGuard::AllocatorUseGuard(const BloombergLP::bslma::TestAllocator*)
+     AllocatorUseGuard(const bslma::TestAllocator *allocatorPtr)
+     ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note: candidate: constexpr AllocatorUseGuard::AllocatorUseGuard(const AllocatorUseGuard&)
+ struct AllocatorUseGuard {
+        ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9741:36: error: 'RawDeleterProctor' is not a member of 'BloombergLP::bslma'
+                             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp3(&guardG, globalAllocator_p);
+                                    ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9741:36: note: suggested alternative: 'NewDeleteAllocator'
+                             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp3(&guardG, globalAllocator_p);
+                                    ^~~~~~~~~~~~~~~~~
+                                    NewDeleteAllocator
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9741:71: error: expected primary-expression before ',' token
+                             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp3(&guardG, globalAllocator_p);
+                                                                       ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9741:89: error: expected primary-expression before '>' token
+                             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp3(&guardG, globalAllocator_p);
+                                                                                         ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9741:91: error: there are no arguments to 'dp3' that depend on a template parameter, so a declaration of 'dp3' must be available [-fpermissive]
+                             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp3(&guardG, globalAllocator_p);
+                                                                                           ^~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9743:101: error: no matching function for call to 'AllocatorUseGuard::AllocatorUseGuard()'
+                             AllocatorUseGuard& guardD = *new(*defaultAllocator_p) AllocatorUseGuard();
+                                                                                                     ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note: candidate: AllocatorUseGuard::AllocatorUseGuard(const BloombergLP::bslma::TestAllocator*)
+     AllocatorUseGuard(const bslma::TestAllocator *allocatorPtr)
+     ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note: candidate: constexpr AllocatorUseGuard::AllocatorUseGuard(const AllocatorUseGuard&)
+ struct AllocatorUseGuard {
+        ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9744:36: error: 'RawDeleterProctor' is not a member of 'BloombergLP::bslma'
+                             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp7(&guardD, defaultAllocator_p);
+                                    ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9744:36: note: suggested alternative: 'NewDeleteAllocator'
+                             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp7(&guardD, defaultAllocator_p);
+                                    ^~~~~~~~~~~~~~~~~
+                                    NewDeleteAllocator
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9744:71: error: expected primary-expression before ',' token
+                             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp7(&guardD, defaultAllocator_p);
+                                                                       ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9744:89: error: expected primary-expression before '>' token
+                             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp7(&guardD, defaultAllocator_p);
+                                                                                         ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9744:91: error: there are no arguments to 'dp7' that depend on a template parameter, so a declaration of 'dp7' must be available [-fpermissive]
+                             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp7(&guardD, defaultAllocator_p);
+                                                                                           ^~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9965:92: error: no matching function for call to 'AllocatorUseGuard::AllocatorUseGuard()'
+                     AllocatorUseGuard& guardG = *new(*globalAllocator_p) AllocatorUseGuard();
+                                                                                            ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note: candidate: AllocatorUseGuard::AllocatorUseGuard(const BloombergLP::bslma::TestAllocator*)
+     AllocatorUseGuard(const bslma::TestAllocator *allocatorPtr)
+     ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note: candidate: constexpr AllocatorUseGuard::AllocatorUseGuard(const AllocatorUseGuard&)
+ struct AllocatorUseGuard {
+        ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9966:28: error: 'RawDeleterProctor' is not a member of 'BloombergLP::bslma'
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp4(&guardG, globalAllocator_p);
+                            ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9966:28: note: suggested alternative: 'NewDeleteAllocator'
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp4(&guardG, globalAllocator_p);
+                            ^~~~~~~~~~~~~~~~~
+                            NewDeleteAllocator
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9966:63: error: expected primary-expression before ',' token
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp4(&guardG, globalAllocator_p);
+                                                               ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9966:81: error: expected primary-expression before '>' token
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp4(&guardG, globalAllocator_p);
+                                                                                 ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9966:83: error: there are no arguments to 'dp4' that depend on a template parameter, so a declaration of 'dp4' must be available [-fpermissive]
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp4(&guardG, globalAllocator_p);
+                                                                                   ^~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9968:93: error: no matching function for call to 'AllocatorUseGuard::AllocatorUseGuard()'
+                     AllocatorUseGuard& guardD = *new(*defaultAllocator_p) AllocatorUseGuard();
+                                                                                             ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note: candidate: AllocatorUseGuard::AllocatorUseGuard(const BloombergLP::bslma::TestAllocator*)
+     AllocatorUseGuard(const bslma::TestAllocator *allocatorPtr)
+     ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note: candidate: constexpr AllocatorUseGuard::AllocatorUseGuard(const AllocatorUseGuard&)
+ struct AllocatorUseGuard {
+        ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9969:28: error: 'RawDeleterProctor' is not a member of 'BloombergLP::bslma'
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp8(&guardD, defaultAllocator_p);
+                            ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9969:28: note: suggested alternative: 'NewDeleteAllocator'
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp8(&guardD, defaultAllocator_p);
+                            ^~~~~~~~~~~~~~~~~
+                            NewDeleteAllocator
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9969:63: error: expected primary-expression before ',' token
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp8(&guardD, defaultAllocator_p);
+                                                               ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9969:81: error: expected primary-expression before '>' token
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp8(&guardD, defaultAllocator_p);
+                                                                                 ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9969:83: error: there are no arguments to 'dp8' that depend on a template parameter, so a declaration of 'dp8' must be available [-fpermissive]
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp8(&guardD, defaultAllocator_p);
+                                                                                   ^~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:10074:100: error: no matching function for call to 'AllocatorUseGuard::AllocatorUseGuard()'
+                             AllocatorUseGuard& guardG = *new(*globalAllocator_p) AllocatorUseGuard();
+                                                                                                    ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note: candidate: AllocatorUseGuard::AllocatorUseGuard(const BloombergLP::bslma::TestAllocator*)
+     AllocatorUseGuard(const bslma::TestAllocator *allocatorPtr)
+     ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note: candidate: constexpr AllocatorUseGuard::AllocatorUseGuard(const AllocatorUseGuard&)
+ struct AllocatorUseGuard {
+        ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:10075:36: error: 'RawDeleterProctor' is not a member of 'BloombergLP::bslma'
+                             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp5(&guardG, globalAllocator_p);
+                                    ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:10075:36: note: suggested alternative: 'NewDeleteAllocator'
+                             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp5(&guardG, globalAllocator_p);
+                                    ^~~~~~~~~~~~~~~~~
+                                    NewDeleteAllocator
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:10075:71: error: expected primary-expression before ',' token
+                             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp5(&guardG, globalAllocator_p);
+                                                                       ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:10075:89: error: expected primary-expression before '>' token
+                             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp5(&guardG, globalAllocator_p);
+                                                                                         ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:10075:91: error: there are no arguments to 'dp5' that depend on a template parameter, so a declaration of 'dp5' must be available [-fpermissive]
+                             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp5(&guardG, globalAllocator_p);
+                                                                                           ^~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:10077:101: error: no matching function for call to 'AllocatorUseGuard::AllocatorUseGuard()'
+                             AllocatorUseGuard& guardD = *new(*defaultAllocator_p) AllocatorUseGuard();
+                                                                                                     ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note: candidate: AllocatorUseGuard::AllocatorUseGuard(const BloombergLP::bslma::TestAllocator*)
+     AllocatorUseGuard(const bslma::TestAllocator *allocatorPtr)
+     ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note: candidate: constexpr AllocatorUseGuard::AllocatorUseGuard(const AllocatorUseGuard&)
+ struct AllocatorUseGuard {
+        ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:10078:36: error: 'RawDeleterProctor' is not a member of 'BloombergLP::bslma'
+                             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp9(&guardD, defaultAllocator_p);
+                                    ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:10078:36: note: suggested alternative: 'NewDeleteAllocator'
+                             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp9(&guardD, defaultAllocator_p);
+                                    ^~~~~~~~~~~~~~~~~
+                                    NewDeleteAllocator
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:10078:71: error: expected primary-expression before ',' token
+                             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp9(&guardD, defaultAllocator_p);
+                                                                       ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:10078:89: error: expected primary-expression before '>' token
+                             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp9(&guardD, defaultAllocator_p);
+                                                                                         ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:10078:91: error: there are no arguments to 'dp9' that depend on a template parameter, so a declaration of 'dp9' must be available [-fpermissive]
+                             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp9(&guardD, defaultAllocator_p);
+                                                                                           ^~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp: In static member function 'static void TestDriver<TYPE, TRAITS, ALLOC>::testCase13()':
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:10965:96: error: no matching function for call to 'AllocatorUseGuard::AllocatorUseGuard()'
+                         AllocatorUseGuard& guardG = *new(*globalAllocator_p) AllocatorUseGuard();
+                                                                                                ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note: candidate: AllocatorUseGuard::AllocatorUseGuard(const BloombergLP::bslma::TestAllocator*)
+     AllocatorUseGuard(const bslma::TestAllocator *allocatorPtr)
+     ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note: candidate: constexpr AllocatorUseGuard::AllocatorUseGuard(const AllocatorUseGuard&)
+ struct AllocatorUseGuard {
+        ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:10966:32: error: 'RawDeleterProctor' is not a member of 'BloombergLP::bslma'
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp6(&guardG, globalAllocator_p);
+                                ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:10966:32: note: suggested alternative: 'NewDeleteAllocator'
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp6(&guardG, globalAllocator_p);
+                                ^~~~~~~~~~~~~~~~~
+                                NewDeleteAllocator
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:10966:67: error: expected primary-expression before ',' token
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp6(&guardG, globalAllocator_p);
+                                                                   ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:10966:85: error: expected primary-expression before '>' token
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp6(&guardG, globalAllocator_p);
+                                                                                     ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:10966:87: error: there are no arguments to 'dp6' that depend on a template parameter, so a declaration of 'dp6' must be available [-fpermissive]
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp6(&guardG, globalAllocator_p);
+                                                                                       ^~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:10968:97: error: no matching function for call to 'AllocatorUseGuard::AllocatorUseGuard()'
+                         AllocatorUseGuard& guardD = *new(*defaultAllocator_p) AllocatorUseGuard();
+                                                                                                 ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note: candidate: AllocatorUseGuard::AllocatorUseGuard(const BloombergLP::bslma::TestAllocator*)
+     AllocatorUseGuard(const bslma::TestAllocator *allocatorPtr)
+     ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note: candidate: constexpr AllocatorUseGuard::AllocatorUseGuard(const AllocatorUseGuard&)
+ struct AllocatorUseGuard {
+        ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:10969:32: error: 'RawDeleterProctor' is not a member of 'BloombergLP::bslma'
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp10(&guardD, defaultAllocator_p);
+                                ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:10969:32: note: suggested alternative: 'NewDeleteAllocator'
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp10(&guardD, defaultAllocator_p);
+                                ^~~~~~~~~~~~~~~~~
+                                NewDeleteAllocator
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:10969:67: error: expected primary-expression before ',' token
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp10(&guardD, defaultAllocator_p);
+                                                                   ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:10969:85: error: expected primary-expression before '>' token
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp10(&guardD, defaultAllocator_p);
+                                                                                     ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:10969:87: error: there are no arguments to 'dp10' that depend on a template parameter, so a declaration of 'dp10' must be available [-fpermissive]
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp10(&guardD, defaultAllocator_p);
+                                                                                       ^~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11079:96: error: no matching function for call to 'AllocatorUseGuard::AllocatorUseGuard()'
+                         AllocatorUseGuard& guardG = *new(*globalAllocator_p) AllocatorUseGuard();
+                                                                                                ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note: candidate: AllocatorUseGuard::AllocatorUseGuard(const BloombergLP::bslma::TestAllocator*)
+     AllocatorUseGuard(const bslma::TestAllocator *allocatorPtr)
+     ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note: candidate: constexpr AllocatorUseGuard::AllocatorUseGuard(const AllocatorUseGuard&)
+ struct AllocatorUseGuard {
+        ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11080:32: error: 'RawDeleterProctor' is not a member of 'BloombergLP::bslma'
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp7(&guardG, globalAllocator_p);
+                                ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11080:32: note: suggested alternative: 'NewDeleteAllocator'
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp7(&guardG, globalAllocator_p);
+                                ^~~~~~~~~~~~~~~~~
+                                NewDeleteAllocator
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11080:67: error: expected primary-expression before ',' token
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp7(&guardG, globalAllocator_p);
+                                                                   ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11080:85: error: expected primary-expression before '>' token
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp7(&guardG, globalAllocator_p);
+                                                                                     ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11080:87: error: there are no arguments to 'dp7' that depend on a template parameter, so a declaration of 'dp7' must be available [-fpermissive]
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp7(&guardG, globalAllocator_p);
+                                                                                       ^~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11082:97: error: no matching function for call to 'AllocatorUseGuard::AllocatorUseGuard()'
+                         AllocatorUseGuard& guardD = *new(*defaultAllocator_p) AllocatorUseGuard();
+                                                                                                 ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note: candidate: AllocatorUseGuard::AllocatorUseGuard(const BloombergLP::bslma::TestAllocator*)
+     AllocatorUseGuard(const bslma::TestAllocator *allocatorPtr)
+     ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note: candidate: constexpr AllocatorUseGuard::AllocatorUseGuard(const AllocatorUseGuard&)
+ struct AllocatorUseGuard {
+        ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11083:32: error: 'RawDeleterProctor' is not a member of 'BloombergLP::bslma'
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp11(&guardD, defaultAllocator_p);
+                                ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11083:32: note: suggested alternative: 'NewDeleteAllocator'
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp11(&guardD, defaultAllocator_p);
+                                ^~~~~~~~~~~~~~~~~
+                                NewDeleteAllocator
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11083:67: error: expected primary-expression before ',' token
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp11(&guardD, defaultAllocator_p);
+                                                                   ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11083:85: error: expected primary-expression before '>' token
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp11(&guardD, defaultAllocator_p);
+                                                                                     ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11083:87: error: there are no arguments to 'dp11' that depend on a template parameter, so a declaration of 'dp11' must be available [-fpermissive]
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp11(&guardD, defaultAllocator_p);
+                                                                                       ^~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11139:96: error: no matching function for call to 'AllocatorUseGuard::AllocatorUseGuard()'
+                         AllocatorUseGuard& guardG = *new(*globalAllocator_p) AllocatorUseGuard();
+                                                                                                ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note: candidate: AllocatorUseGuard::AllocatorUseGuard(const BloombergLP::bslma::TestAllocator*)
+     AllocatorUseGuard(const bslma::TestAllocator *allocatorPtr)
+     ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note: candidate: constexpr AllocatorUseGuard::AllocatorUseGuard(const AllocatorUseGuard&)
+ struct AllocatorUseGuard {
+        ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11140:32: error: 'RawDeleterProctor' is not a member of 'BloombergLP::bslma'
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp8(&guardG, globalAllocator_p);
+                                ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11140:32: note: suggested alternative: 'NewDeleteAllocator'
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp8(&guardG, globalAllocator_p);
+                                ^~~~~~~~~~~~~~~~~
+                                NewDeleteAllocator
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11140:67: error: expected primary-expression before ',' token
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp8(&guardG, globalAllocator_p);
+                                                                   ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11140:85: error: expected primary-expression before '>' token
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp8(&guardG, globalAllocator_p);
+                                                                                     ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11140:87: error: there are no arguments to 'dp8' that depend on a template parameter, so a declaration of 'dp8' must be available [-fpermissive]
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp8(&guardG, globalAllocator_p);
+                                                                                       ^~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11142:97: error: no matching function for call to 'AllocatorUseGuard::AllocatorUseGuard()'
+                         AllocatorUseGuard& guardD = *new(*defaultAllocator_p) AllocatorUseGuard();
+                                                                                                 ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note: candidate: AllocatorUseGuard::AllocatorUseGuard(const BloombergLP::bslma::TestAllocator*)
+     AllocatorUseGuard(const bslma::TestAllocator *allocatorPtr)
+     ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note: candidate: constexpr AllocatorUseGuard::AllocatorUseGuard(const AllocatorUseGuard&)
+ struct AllocatorUseGuard {
+        ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11143:32: error: 'RawDeleterProctor' is not a member of 'BloombergLP::bslma'
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp12(&guardD, defaultAllocator_p);
+                                ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11143:32: note: suggested alternative: 'NewDeleteAllocator'
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp12(&guardD, defaultAllocator_p);
+                                ^~~~~~~~~~~~~~~~~
+                                NewDeleteAllocator
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11143:67: error: expected primary-expression before ',' token
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp12(&guardD, defaultAllocator_p);
+                                                                   ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11143:85: error: expected primary-expression before '>' token
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp12(&guardD, defaultAllocator_p);
+                                                                                     ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11143:87: error: there are no arguments to 'dp12' that depend on a template parameter, so a declaration of 'dp12' must be available [-fpermissive]
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp12(&guardD, defaultAllocator_p);
+                                                                                       ^~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp: In static member function 'static void TestDriver<TYPE, TRAITS, ALLOC>::testCase13StrRefData()':
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11509:92: error: no matching function for call to 'AllocatorUseGuard::AllocatorUseGuard()'
+                     AllocatorUseGuard& guardG = *new(*globalAllocator_p) AllocatorUseGuard();
+                                                                                            ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note: candidate: AllocatorUseGuard::AllocatorUseGuard(const BloombergLP::bslma::TestAllocator*)
+     AllocatorUseGuard(const bslma::TestAllocator *allocatorPtr)
+     ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note: candidate: constexpr AllocatorUseGuard::AllocatorUseGuard(const AllocatorUseGuard&)
+ struct AllocatorUseGuard {
+        ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11510:28: error: 'RawDeleterProctor' is not a member of 'BloombergLP::bslma'
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp9(&guardG, globalAllocator_p);
+                            ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11510:28: note: suggested alternative: 'NewDeleteAllocator'
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp9(&guardG, globalAllocator_p);
+                            ^~~~~~~~~~~~~~~~~
+                            NewDeleteAllocator
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11510:63: error: expected primary-expression before ',' token
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp9(&guardG, globalAllocator_p);
+                                                               ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11510:81: error: expected primary-expression before '>' token
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp9(&guardG, globalAllocator_p);
+                                                                                 ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11510:83: error: there are no arguments to 'dp9' that depend on a template parameter, so a declaration of 'dp9' must be available [-fpermissive]
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp9(&guardG, globalAllocator_p);
+                                                                                   ^~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11512:93: error: no matching function for call to 'AllocatorUseGuard::AllocatorUseGuard()'
+                     AllocatorUseGuard& guardD = *new(*defaultAllocator_p) AllocatorUseGuard();
+                                                                                             ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note: candidate: AllocatorUseGuard::AllocatorUseGuard(const BloombergLP::bslma::TestAllocator*)
+     AllocatorUseGuard(const bslma::TestAllocator *allocatorPtr)
+     ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note: candidate: constexpr AllocatorUseGuard::AllocatorUseGuard(const AllocatorUseGuard&)
+ struct AllocatorUseGuard {
+        ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11513:28: error: 'RawDeleterProctor' is not a member of 'BloombergLP::bslma'
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp13(&guardD, defaultAllocator_p);
+                            ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11513:28: note: suggested alternative: 'NewDeleteAllocator'
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp13(&guardD, defaultAllocator_p);
+                            ^~~~~~~~~~~~~~~~~
+                            NewDeleteAllocator
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11513:63: error: expected primary-expression before ',' token
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp13(&guardD, defaultAllocator_p);
+                                                               ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11513:81: error: expected primary-expression before '>' token
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp13(&guardD, defaultAllocator_p);
+                                                                                 ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11513:83: error: there are no arguments to 'dp13' that depend on a template parameter, so a declaration of 'dp13' must be available [-fpermissive]
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp13(&guardD, defaultAllocator_p);
+                                                                                   ^~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp: In static member function 'static void TestDriver<TYPE, TRAITS, ALLOC>::testCase13InputIterator()':
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11652:92: error: no matching function for call to 'AllocatorUseGuard::AllocatorUseGuard()'
+                     AllocatorUseGuard& guardG = *new(*globalAllocator_p) AllocatorUseGuard();
+                                                                                            ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note: candidate: AllocatorUseGuard::AllocatorUseGuard(const BloombergLP::bslma::TestAllocator*)
+     AllocatorUseGuard(const bslma::TestAllocator *allocatorPtr)
+     ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note: candidate: constexpr AllocatorUseGuard::AllocatorUseGuard(const AllocatorUseGuard&)
+ struct AllocatorUseGuard {
+        ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11653:28: error: 'RawDeleterProctor' is not a member of 'BloombergLP::bslma'
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp10(&guardG, globalAllocator_p);
+                            ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11653:28: note: suggested alternative: 'NewDeleteAllocator'
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp10(&guardG, globalAllocator_p);
+                            ^~~~~~~~~~~~~~~~~
+                            NewDeleteAllocator
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11653:63: error: expected primary-expression before ',' token
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp10(&guardG, globalAllocator_p);
+                                                               ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11653:81: error: expected primary-expression before '>' token
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp10(&guardG, globalAllocator_p);
+                                                                                 ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11653:83: error: there are no arguments to 'dp10' that depend on a template parameter, so a declaration of 'dp10' must be available [-fpermissive]
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp10(&guardG, globalAllocator_p);
+                                                                                   ^~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11655:93: error: no matching function for call to 'AllocatorUseGuard::AllocatorUseGuard()'
+                     AllocatorUseGuard& guardD = *new(*defaultAllocator_p) AllocatorUseGuard();
+                                                                                             ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note: candidate: AllocatorUseGuard::AllocatorUseGuard(const BloombergLP::bslma::TestAllocator*)
+     AllocatorUseGuard(const bslma::TestAllocator *allocatorPtr)
+     ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note: candidate: constexpr AllocatorUseGuard::AllocatorUseGuard(const AllocatorUseGuard&)
+ struct AllocatorUseGuard {
+        ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11656:28: error: 'RawDeleterProctor' is not a member of 'BloombergLP::bslma'
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp14(&guardD, defaultAllocator_p);
+                            ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11656:28: note: suggested alternative: 'NewDeleteAllocator'
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp14(&guardD, defaultAllocator_p);
+                            ^~~~~~~~~~~~~~~~~
+                            NewDeleteAllocator
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11656:63: error: expected primary-expression before ',' token
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp14(&guardD, defaultAllocator_p);
+                                                               ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11656:81: error: expected primary-expression before '>' token
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp14(&guardD, defaultAllocator_p);
+                                                                                 ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11656:83: error: there are no arguments to 'dp14' that depend on a template parameter, so a declaration of 'dp14' must be available [-fpermissive]
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp14(&guardD, defaultAllocator_p);
+                                                                                   ^~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp: In static member function 'static void TestDriver<TYPE, TRAITS, ALLOC>::testCase13Range(const CONTAINER&)':
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11812:92: error: no matching function for call to 'AllocatorUseGuard::AllocatorUseGuard()'
+                     AllocatorUseGuard& guardG = *new(*globalAllocator_p) AllocatorUseGuard();
+                                                                                            ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note: candidate: AllocatorUseGuard::AllocatorUseGuard(const BloombergLP::bslma::TestAllocator*)
+     AllocatorUseGuard(const bslma::TestAllocator *allocatorPtr)
+     ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note: candidate: constexpr AllocatorUseGuard::AllocatorUseGuard(const AllocatorUseGuard&)
+ struct AllocatorUseGuard {
+        ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11813:28: error: 'RawDeleterProctor' is not a member of 'BloombergLP::bslma'
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp11(&guardG, globalAllocator_p);
+                            ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11813:28: note: suggested alternative: 'NewDeleteAllocator'
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp11(&guardG, globalAllocator_p);
+                            ^~~~~~~~~~~~~~~~~
+                            NewDeleteAllocator
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11813:63: error: expected primary-expression before ',' token
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp11(&guardG, globalAllocator_p);
+                                                               ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11813:81: error: expected primary-expression before '>' token
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp11(&guardG, globalAllocator_p);
+                                                                                 ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11813:83: error: there are no arguments to 'dp11' that depend on a template parameter, so a declaration of 'dp11' must be available [-fpermissive]
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp11(&guardG, globalAllocator_p);
+                                                                                   ^~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11815:93: error: no matching function for call to 'AllocatorUseGuard::AllocatorUseGuard()'
+                     AllocatorUseGuard& guardD = *new(*defaultAllocator_p) AllocatorUseGuard();
+                                                                                             ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note: candidate: AllocatorUseGuard::AllocatorUseGuard(const BloombergLP::bslma::TestAllocator*)
+     AllocatorUseGuard(const bslma::TestAllocator *allocatorPtr)
+     ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note: candidate: constexpr AllocatorUseGuard::AllocatorUseGuard(const AllocatorUseGuard&)
+ struct AllocatorUseGuard {
+        ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11816:28: error: 'RawDeleterProctor' is not a member of 'BloombergLP::bslma'
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp15(&guardD, defaultAllocator_p);
+                            ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11816:28: note: suggested alternative: 'NewDeleteAllocator'
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp15(&guardD, defaultAllocator_p);
+                            ^~~~~~~~~~~~~~~~~
+                            NewDeleteAllocator
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11816:63: error: expected primary-expression before ',' token
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp15(&guardD, defaultAllocator_p);
+                                                               ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11816:81: error: expected primary-expression before '>' token
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp15(&guardD, defaultAllocator_p);
+                                                                                 ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11816:83: error: there are no arguments to 'dp15' that depend on a template parameter, so a declaration of 'dp15' must be available [-fpermissive]
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp15(&guardD, defaultAllocator_p);
+                                                                                   ^~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp: In static member function 'static void TestDriver<TYPE, TRAITS, ALLOC>::testCase12()':
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12213:92: error: no matching function for call to 'AllocatorUseGuard::AllocatorUseGuard()'
+                     AllocatorUseGuard& guardG = *new(*globalAllocator_p) AllocatorUseGuard();
+                                                                                            ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note: candidate: AllocatorUseGuard::AllocatorUseGuard(const BloombergLP::bslma::TestAllocator*)
+     AllocatorUseGuard(const bslma::TestAllocator *allocatorPtr)
+     ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note: candidate: constexpr AllocatorUseGuard::AllocatorUseGuard(const AllocatorUseGuard&)
+ struct AllocatorUseGuard {
+        ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12214:28: error: 'RawDeleterProctor' is not a member of 'BloombergLP::bslma'
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp12(&guardG, globalAllocator_p);
+                            ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12214:28: note: suggested alternative: 'NewDeleteAllocator'
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp12(&guardG, globalAllocator_p);
+                            ^~~~~~~~~~~~~~~~~
+                            NewDeleteAllocator
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12214:63: error: expected primary-expression before ',' token
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp12(&guardG, globalAllocator_p);
+                                                               ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12214:81: error: expected primary-expression before '>' token
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp12(&guardG, globalAllocator_p);
+                                                                                 ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12214:83: error: there are no arguments to 'dp12' that depend on a template parameter, so a declaration of 'dp12' must be available [-fpermissive]
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp12(&guardG, globalAllocator_p);
+                                                                                   ^~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12216:93: error: no matching function for call to 'AllocatorUseGuard::AllocatorUseGuard()'
+                     AllocatorUseGuard& guardD = *new(*defaultAllocator_p) AllocatorUseGuard();
+                                                                                             ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note: candidate: AllocatorUseGuard::AllocatorUseGuard(const BloombergLP::bslma::TestAllocator*)
+     AllocatorUseGuard(const bslma::TestAllocator *allocatorPtr)
+     ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note: candidate: constexpr AllocatorUseGuard::AllocatorUseGuard(const AllocatorUseGuard&)
+ struct AllocatorUseGuard {
+        ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12217:28: error: 'RawDeleterProctor' is not a member of 'BloombergLP::bslma'
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp16(&guardD, defaultAllocator_p);
+                            ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12217:28: note: suggested alternative: 'NewDeleteAllocator'
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp16(&guardD, defaultAllocator_p);
+                            ^~~~~~~~~~~~~~~~~
+                            NewDeleteAllocator
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12217:63: error: expected primary-expression before ',' token
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp16(&guardD, defaultAllocator_p);
+                                                               ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12217:81: error: expected primary-expression before '>' token
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp16(&guardD, defaultAllocator_p);
+                                                                                 ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12217:83: error: there are no arguments to 'dp16' that depend on a template parameter, so a declaration of 'dp16' must be available [-fpermissive]
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp16(&guardD, defaultAllocator_p);
+                                                                                   ^~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12520:88: error: no matching function for call to 'AllocatorUseGuard::AllocatorUseGuard()'
+                 AllocatorUseGuard& guardG = *new(*globalAllocator_p) AllocatorUseGuard();
+                                                                                        ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note: candidate: AllocatorUseGuard::AllocatorUseGuard(const BloombergLP::bslma::TestAllocator*)
+     AllocatorUseGuard(const bslma::TestAllocator *allocatorPtr)
+     ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note: candidate: constexpr AllocatorUseGuard::AllocatorUseGuard(const AllocatorUseGuard&)
+ struct AllocatorUseGuard {
+        ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12521:24: error: 'RawDeleterProctor' is not a member of 'BloombergLP::bslma'
+                 bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp13(&guardG, globalAllocator_p);
+                        ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12521:24: note: suggested alternative: 'NewDeleteAllocator'
+                 bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp13(&guardG, globalAllocator_p);
+                        ^~~~~~~~~~~~~~~~~
+                        NewDeleteAllocator
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12521:59: error: expected primary-expression before ',' token
+                 bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp13(&guardG, globalAllocator_p);
+                                                           ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12521:77: error: expected primary-expression before '>' token
+                 bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp13(&guardG, globalAllocator_p);
+                                                                             ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12521:79: error: there are no arguments to 'dp13' that depend on a template parameter, so a declaration of 'dp13' must be available [-fpermissive]
+                 bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp13(&guardG, globalAllocator_p);
+                                                                               ^~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12523:89: error: no matching function for call to 'AllocatorUseGuard::AllocatorUseGuard()'
+                 AllocatorUseGuard& guardD = *new(*defaultAllocator_p) AllocatorUseGuard();
+                                                                                         ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note: candidate: AllocatorUseGuard::AllocatorUseGuard(const BloombergLP::bslma::TestAllocator*)
+     AllocatorUseGuard(const bslma::TestAllocator *allocatorPtr)
+     ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note: candidate: constexpr AllocatorUseGuard::AllocatorUseGuard(const AllocatorUseGuard&)
+ struct AllocatorUseGuard {
+        ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12524:24: error: 'RawDeleterProctor' is not a member of 'BloombergLP::bslma'
+                 bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp17(&guardD, defaultAllocator_p);
+                        ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12524:24: note: suggested alternative: 'NewDeleteAllocator'
+                 bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp17(&guardD, defaultAllocator_p);
+                        ^~~~~~~~~~~~~~~~~
+                        NewDeleteAllocator
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12524:59: error: expected primary-expression before ',' token
+                 bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp17(&guardD, defaultAllocator_p);
+                                                           ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12524:77: error: expected primary-expression before '>' token
+                 bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp17(&guardD, defaultAllocator_p);
+                                                                             ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12524:79: error: there are no arguments to 'dp17' that depend on a template parameter, so a declaration of 'dp17' must be available [-fpermissive]
+                 bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp17(&guardD, defaultAllocator_p);
+                                                                               ^~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp: In static member function 'static void TestDriver<TYPE, TRAITS, ALLOC>::testCase12Range(const CONTAINER&)':
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12666:84: error: no matching function for call to 'AllocatorUseGuard::AllocatorUseGuard()'
+             AllocatorUseGuard& guardG = *new(*globalAllocator_p) AllocatorUseGuard();
+                                                                                    ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note: candidate: AllocatorUseGuard::AllocatorUseGuard(const BloombergLP::bslma::TestAllocator*)
+     AllocatorUseGuard(const bslma::TestAllocator *allocatorPtr)
+     ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note: candidate: constexpr AllocatorUseGuard::AllocatorUseGuard(const AllocatorUseGuard&)
+ struct AllocatorUseGuard {
+        ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12667:20: error: 'RawDeleterProctor' is not a member of 'BloombergLP::bslma'
+             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp14(&guardG, globalAllocator_p);
+                    ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12667:20: note: suggested alternative: 'NewDeleteAllocator'
+             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp14(&guardG, globalAllocator_p);
+                    ^~~~~~~~~~~~~~~~~
+                    NewDeleteAllocator
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12667:55: error: expected primary-expression before ',' token
+             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp14(&guardG, globalAllocator_p);
+                                                       ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12667:73: error: expected primary-expression before '>' token
+             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp14(&guardG, globalAllocator_p);
+                                                                         ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12667:75: error: there are no arguments to 'dp14' that depend on a template parameter, so a declaration of 'dp14' must be available [-fpermissive]
+             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp14(&guardG, globalAllocator_p);
+                                                                           ^~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12669:85: error: no matching function for call to 'AllocatorUseGuard::AllocatorUseGuard()'
+             AllocatorUseGuard& guardD = *new(*defaultAllocator_p) AllocatorUseGuard();
+                                                                                     ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note: candidate: AllocatorUseGuard::AllocatorUseGuard(const BloombergLP::bslma::TestAllocator*)
+     AllocatorUseGuard(const bslma::TestAllocator *allocatorPtr)
+     ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:724:5: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note: candidate: constexpr AllocatorUseGuard::AllocatorUseGuard(const AllocatorUseGuard&)
+ struct AllocatorUseGuard {
+        ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:712:8: note:   candidate expects 1 argument, 0 provided
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12670:20: error: 'RawDeleterProctor' is not a member of 'BloombergLP::bslma'
+             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp18(&guardD, defaultAllocator_p);
+                    ^~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12670:20: note: suggested alternative: 'NewDeleteAllocator'
+             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp18(&guardD, defaultAllocator_p);
+                    ^~~~~~~~~~~~~~~~~
+                    NewDeleteAllocator
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12670:55: error: expected primary-expression before ',' token
+             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp18(&guardD, defaultAllocator_p);
+                                                       ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12670:73: error: expected primary-expression before '>' token
+             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp18(&guardD, defaultAllocator_p);
+                                                                         ^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12670:75: error: there are no arguments to 'dp18' that depend on a template parameter, so a declaration of 'dp18' must be available [-fpermissive]
+             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp18(&guardD, defaultAllocator_p);
+                                                                           ^~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp: In instantiation of 'static void TestDriver<TYPE, TRAITS, ALLOC>::testCase33() [with TYPE = char; TRAITS = std::char_traits<char>; ALLOC = bsl::allocator<char>]':
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:18488:30:   required from here
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:2098:60: error: 'dp0' was not declared in this scope
+         bslma::RawDeleterProctor<Tam, bslma::Allocator> dp0(&dam, defaultAllocator_p);
+                                                         ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:2167:64: error: 'dp1' was not declared in this scope
+             bslma::RawDeleterProctor<Tam, bslma::Allocator> dp1(&dam, defaultAllocator_p);
+                                                             ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:2280:60: error: 'dp2' was not declared in this scope
+         bslma::RawDeleterProctor<Tam, bslma::Allocator> dp2(&dam, defaultAllocator_p);
+                                                         ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:2475:60: error: 'dp3' was not declared in this scope
+         bslma::RawDeleterProctor<Tam, bslma::Allocator> dp3(&dam, defaultAllocator_p);
+                                                         ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp: In instantiation of 'static void TestDriver<TYPE, TRAITS, ALLOC>::testCase33() [with TYPE = wchar_t; TRAITS = std::char_traits<wchar_t>; ALLOC = bsl::allocator<wchar_t>]':
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:18489:30:   required from here
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:2098:60: error: 'dp0' was not declared in this scope
+         bslma::RawDeleterProctor<Tam, bslma::Allocator> dp0(&dam, defaultAllocator_p);
+                                                         ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:2167:64: error: 'dp1' was not declared in this scope
+             bslma::RawDeleterProctor<Tam, bslma::Allocator> dp1(&dam, defaultAllocator_p);
+                                                             ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:2280:60: error: 'dp2' was not declared in this scope
+         bslma::RawDeleterProctor<Tam, bslma::Allocator> dp2(&dam, defaultAllocator_p);
+                                                         ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:2475:60: error: 'dp3' was not declared in this scope
+         bslma::RawDeleterProctor<Tam, bslma::Allocator> dp3(&dam, defaultAllocator_p);
+                                                         ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp: In instantiation of 'static void TestDriver<TYPE, TRAITS, ALLOC>::testCase17() [with TYPE = char; TRAITS = std::char_traits<char>; ALLOC = bsl::allocator<char>]':
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:20766:27:   required from here
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9200:90: error: 'dp0' was not declared in this scope
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp0(&guardG, globalAllocator_p);
+                                                                                       ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9203:90: error: 'dp4' was not declared in this scope
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp4(&guardD, defaultAllocator_p);
+                                                                                       ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9302:90: error: 'dp1' was not declared in this scope
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp1(&guardG, globalAllocator_p);
+                                                                                       ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9305:90: error: 'dp5' was not declared in this scope
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp5(&guardD, defaultAllocator_p);
+                                                                                       ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp: In instantiation of 'static void TestDriver<TYPE, TRAITS, ALLOC>::testCase17() [with TYPE = wchar_t; TRAITS = std::char_traits<wchar_t>; ALLOC = bsl::allocator<wchar_t>]':
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:20769:30:   required from here
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9200:90: error: 'dp0' was not declared in this scope
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp0(&guardG, globalAllocator_p);
+                                                                                       ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9203:90: error: 'dp4' was not declared in this scope
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp4(&guardD, defaultAllocator_p);
+                                                                                       ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9302:90: error: 'dp1' was not declared in this scope
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp1(&guardG, globalAllocator_p);
+                                                                                       ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9305:90: error: 'dp5' was not declared in this scope
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp5(&guardD, defaultAllocator_p);
+                                                                                       ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp: In instantiation of 'static void TestDriver<TYPE, TRAITS, ALLOC>::testCase17Range(const CONTAINER&) [with CONTAINER = CharList<char>; TYPE = char; TRAITS = std::char_traits<char>; ALLOC = bsl::allocator<char>]':
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:20776:59:   required from here
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9590:90: error: 'dp2' was not declared in this scope
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp2(&guardG, globalAllocator_p);
+                                                                                       ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9593:90: error: 'dp6' was not declared in this scope
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp6(&guardD, defaultAllocator_p);
+                                                                                       ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9741:94: error: 'dp3' was not declared in this scope
+                             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp3(&guardG, globalAllocator_p);
+                                                                                           ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9744:94: error: 'dp7' was not declared in this scope
+                             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp7(&guardD, defaultAllocator_p);
+                                                                                           ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9966:86: error: 'dp4' was not declared in this scope
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp4(&guardG, globalAllocator_p);
+                                                                                   ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9969:86: error: 'dp8' was not declared in this scope
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp8(&guardD, defaultAllocator_p);
+                                                                                   ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:10075:94: error: 'dp5' was not declared in this scope
+                             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp5(&guardG, globalAllocator_p);
+                                                                                           ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:10078:94: error: 'dp9' was not declared in this scope
+                             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp9(&guardD, defaultAllocator_p);
+                                                                                           ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp: In instantiation of 'static void TestDriver<TYPE, TRAITS, ALLOC>::testCase17Range(const CONTAINER&) [with CONTAINER = CharArray<char>; TYPE = char; TRAITS = std::char_traits<char>; ALLOC = bsl::allocator<char>]':
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:20780:60:   required from here
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9590:90: error: 'dp2' was not declared in this scope
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp2(&guardG, globalAllocator_p);
+                                                                                       ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9593:90: error: 'dp6' was not declared in this scope
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp6(&guardD, defaultAllocator_p);
+                                                                                       ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9741:94: error: 'dp3' was not declared in this scope
+                             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp3(&guardG, globalAllocator_p);
+                                                                                           ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9744:94: error: 'dp7' was not declared in this scope
+                             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp7(&guardD, defaultAllocator_p);
+                                                                                           ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9966:86: error: 'dp4' was not declared in this scope
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp4(&guardG, globalAllocator_p);
+                                                                                   ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9969:86: error: 'dp8' was not declared in this scope
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp8(&guardD, defaultAllocator_p);
+                                                                                   ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:10075:94: error: 'dp5' was not declared in this scope
+                             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp5(&guardG, globalAllocator_p);
+                                                                                           ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:10078:94: error: 'dp9' was not declared in this scope
+                             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp9(&guardD, defaultAllocator_p);
+                                                                                           ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp: In instantiation of 'static void TestDriver<TYPE, TRAITS, ALLOC>::testCase17Range(const CONTAINER&) [with CONTAINER = CharList<wchar_t>; TYPE = wchar_t; TRAITS = std::char_traits<wchar_t>; ALLOC = bsl::allocator<wchar_t>]':
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:20784:65:   required from here
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9590:90: error: 'dp2' was not declared in this scope
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp2(&guardG, globalAllocator_p);
+                                                                                       ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9593:90: error: 'dp6' was not declared in this scope
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp6(&guardD, defaultAllocator_p);
+                                                                                       ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9741:94: error: 'dp3' was not declared in this scope
+                             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp3(&guardG, globalAllocator_p);
+                                                                                           ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9744:94: error: 'dp7' was not declared in this scope
+                             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp7(&guardD, defaultAllocator_p);
+                                                                                           ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9966:86: error: 'dp4' was not declared in this scope
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp4(&guardG, globalAllocator_p);
+                                                                                   ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9969:86: error: 'dp8' was not declared in this scope
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp8(&guardD, defaultAllocator_p);
+                                                                                   ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:10075:94: error: 'dp5' was not declared in this scope
+                             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp5(&guardG, globalAllocator_p);
+                                                                                           ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:10078:94: error: 'dp9' was not declared in this scope
+                             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp9(&guardD, defaultAllocator_p);
+                                                                                           ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp: In instantiation of 'static void TestDriver<TYPE, TRAITS, ALLOC>::testCase17Range(const CONTAINER&) [with CONTAINER = CharArray<wchar_t>; TYPE = wchar_t; TRAITS = std::char_traits<wchar_t>; ALLOC = bsl::allocator<wchar_t>]':
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:20788:66:   required from here
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9590:90: error: 'dp2' was not declared in this scope
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp2(&guardG, globalAllocator_p);
+                                                                                       ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9593:90: error: 'dp6' was not declared in this scope
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp6(&guardD, defaultAllocator_p);
+                                                                                       ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9741:94: error: 'dp3' was not declared in this scope
+                             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp3(&guardG, globalAllocator_p);
+                                                                                           ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9744:94: error: 'dp7' was not declared in this scope
+                             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp7(&guardD, defaultAllocator_p);
+                                                                                           ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9966:86: error: 'dp4' was not declared in this scope
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp4(&guardG, globalAllocator_p);
+                                                                                   ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:9969:86: error: 'dp8' was not declared in this scope
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp8(&guardD, defaultAllocator_p);
+                                                                                   ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:10075:94: error: 'dp5' was not declared in this scope
+                             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp5(&guardG, globalAllocator_p);
+                                                                                           ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:10078:94: error: 'dp9' was not declared in this scope
+                             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp9(&guardD, defaultAllocator_p);
+                                                                                           ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp: In instantiation of 'static void TestDriver<TYPE, TRAITS, ALLOC>::testCase13() [with TYPE = char; TRAITS = std::char_traits<char>; ALLOC = bsl::allocator<char>]':
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:20917:27:   required from here
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:10966:90: error: 'dp6' was not declared in this scope
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp6(&guardG, globalAllocator_p);
+                                                                                       ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:10969:91: error: 'dp10' was not declared in this scope
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp10(&guardD, defaultAllocator_p);
+                                                                                       ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11080:90: error: 'dp7' was not declared in this scope
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp7(&guardG, globalAllocator_p);
+                                                                                       ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11083:91: error: 'dp11' was not declared in this scope
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp11(&guardD, defaultAllocator_p);
+                                                                                       ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11140:90: error: 'dp8' was not declared in this scope
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp8(&guardG, globalAllocator_p);
+                                                                                       ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11143:91: error: 'dp12' was not declared in this scope
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp12(&guardD, defaultAllocator_p);
+                                                                                       ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp: In instantiation of 'static void TestDriver<TYPE, TRAITS, ALLOC>::testCase13() [with TYPE = wchar_t; TRAITS = std::char_traits<wchar_t>; ALLOC = bsl::allocator<wchar_t>]':
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:20920:30:   required from here
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:10966:90: error: 'dp6' was not declared in this scope
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp6(&guardG, globalAllocator_p);
+                                                                                       ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:10969:91: error: 'dp10' was not declared in this scope
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp10(&guardD, defaultAllocator_p);
+                                                                                       ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11080:90: error: 'dp7' was not declared in this scope
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp7(&guardG, globalAllocator_p);
+                                                                                       ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11083:91: error: 'dp11' was not declared in this scope
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp11(&guardD, defaultAllocator_p);
+                                                                                       ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11140:90: error: 'dp8' was not declared in this scope
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp8(&guardG, globalAllocator_p);
+                                                                                       ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11143:91: error: 'dp12' was not declared in this scope
+                         bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp12(&guardD, defaultAllocator_p);
+                                                                                       ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp: In instantiation of 'static void TestDriver<TYPE, TRAITS, ALLOC>::testCase13InputIterator() [with TYPE = char; TRAITS = std::char_traits<char>; ALLOC = bsl::allocator<char>]':
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:20927:27:   required from here
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11653:87: error: 'dp10' was not declared in this scope
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp10(&guardG, globalAllocator_p);
+                                                                                   ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11656:87: error: 'dp14' was not declared in this scope
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp14(&guardD, defaultAllocator_p);
+                                                                                   ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp: In instantiation of 'static void TestDriver<TYPE, TRAITS, ALLOC>::testCase13Range(const CONTAINER&) [with CONTAINER = CharList<char>; TYPE = char; TRAITS = std::char_traits<char>; ALLOC = bsl::allocator<char>]':
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:20931:59:   required from here
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11813:87: error: 'dp11' was not declared in this scope
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp11(&guardG, globalAllocator_p);
+                                                                                   ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11816:87: error: 'dp15' was not declared in this scope
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp15(&guardD, defaultAllocator_p);
+                                                                                   ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp: In instantiation of 'static void TestDriver<TYPE, TRAITS, ALLOC>::testCase13Range(const CONTAINER&) [with CONTAINER = CharArray<char>; TYPE = char; TRAITS = std::char_traits<char>; ALLOC = bsl::allocator<char>]':
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:20935:60:   required from here
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11813:87: error: 'dp11' was not declared in this scope
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp11(&guardG, globalAllocator_p);
+                                                                                   ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11816:87: error: 'dp15' was not declared in this scope
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp15(&guardD, defaultAllocator_p);
+                                                                                   ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp: In instantiation of 'static void TestDriver<TYPE, TRAITS, ALLOC>::testCase13StrRefData() [with TYPE = char; TRAITS = std::char_traits<char>; ALLOC = bsl::allocator<char>]':
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:20939:27:   required from here
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11510:86: error: 'dp9' was not declared in this scope
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp9(&guardG, globalAllocator_p);
+                                                                                   ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11513:87: error: 'dp13' was not declared in this scope
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp13(&guardD, defaultAllocator_p);
+                                                                                   ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp: In instantiation of 'static void TestDriver<TYPE, TRAITS, ALLOC>::testCase13InputIterator() [with TYPE = wchar_t; TRAITS = std::char_traits<wchar_t>; ALLOC = bsl::allocator<wchar_t>]':
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:20943:30:   required from here
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11653:87: error: 'dp10' was not declared in this scope
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp10(&guardG, globalAllocator_p);
+                                                                                   ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11656:87: error: 'dp14' was not declared in this scope
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp14(&guardD, defaultAllocator_p);
+                                                                                   ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp: In instantiation of 'static void TestDriver<TYPE, TRAITS, ALLOC>::testCase13Range(const CONTAINER&) [with CONTAINER = CharList<wchar_t>; TYPE = wchar_t; TRAITS = std::char_traits<wchar_t>; ALLOC = bsl::allocator<wchar_t>]':
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:20947:65:   required from here
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11813:87: error: 'dp11' was not declared in this scope
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp11(&guardG, globalAllocator_p);
+                                                                                   ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11816:87: error: 'dp15' was not declared in this scope
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp15(&guardD, defaultAllocator_p);
+                                                                                   ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp: In instantiation of 'static void TestDriver<TYPE, TRAITS, ALLOC>::testCase13Range(const CONTAINER&) [with CONTAINER = CharArray<wchar_t>; TYPE = wchar_t; TRAITS = std::char_traits<wchar_t>; ALLOC = bsl::allocator<wchar_t>]':
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:20951:66:   required from here
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11813:87: error: 'dp11' was not declared in this scope
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp11(&guardG, globalAllocator_p);
+                                                                                   ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11816:87: error: 'dp15' was not declared in this scope
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp15(&guardD, defaultAllocator_p);
+                                                                                   ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp: In instantiation of 'static void TestDriver<TYPE, TRAITS, ALLOC>::testCase13StrRefData() [with TYPE = wchar_t; TRAITS = std::char_traits<wchar_t>; ALLOC = bsl::allocator<wchar_t>]':
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:20955:30:   required from here
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11510:86: error: 'dp9' was not declared in this scope
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp9(&guardG, globalAllocator_p);
+                                                                                   ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:11513:87: error: 'dp13' was not declared in this scope
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp13(&guardD, defaultAllocator_p);
+                                                                                   ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp: In instantiation of 'static void TestDriver<TYPE, TRAITS, ALLOC>::testCase12() [with TYPE = char; TRAITS = std::char_traits<char>; ALLOC = bsl::allocator<char>]':
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:20991:27:   required from here
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12214:87: error: 'dp12' was not declared in this scope
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp12(&guardG, globalAllocator_p);
+                                                                                   ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12217:87: error: 'dp16' was not declared in this scope
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp16(&guardD, defaultAllocator_p);
+                                                                                   ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12521:83: error: 'dp13' was not declared in this scope
+                 bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp13(&guardG, globalAllocator_p);
+                                                                               ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12524:83: error: 'dp17' was not declared in this scope
+                 bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp17(&guardD, defaultAllocator_p);
+                                                                               ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp: In instantiation of 'static void TestDriver<TYPE, TRAITS, ALLOC>::testCase12() [with TYPE = wchar_t; TRAITS = std::char_traits<wchar_t>; ALLOC = bsl::allocator<wchar_t>]':
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:20994:30:   required from here
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12214:87: error: 'dp12' was not declared in this scope
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp12(&guardG, globalAllocator_p);
+                                                                                   ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12217:87: error: 'dp16' was not declared in this scope
+                     bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp16(&guardD, defaultAllocator_p);
+                                                                                   ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12521:83: error: 'dp13' was not declared in this scope
+                 bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp13(&guardG, globalAllocator_p);
+                                                                               ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12524:83: error: 'dp17' was not declared in this scope
+                 bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp17(&guardD, defaultAllocator_p);
+                                                                               ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp: In instantiation of 'static void TestDriver<TYPE, TRAITS, ALLOC>::testCase12Range(const CONTAINER&) [with CONTAINER = CharList<char>; TYPE = char; TRAITS = std::char_traits<char>; ALLOC = bsl::allocator<char>]':
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:21001:59:   required from here
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12667:79: error: 'dp14' was not declared in this scope
+             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp14(&guardG, globalAllocator_p);
+                                                                           ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12670:79: error: 'dp18' was not declared in this scope
+             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp18(&guardD, defaultAllocator_p);
+                                                                           ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp: In instantiation of 'static void TestDriver<TYPE, TRAITS, ALLOC>::testCase12Range(const CONTAINER&) [with CONTAINER = CharArray<char>; TYPE = char; TRAITS = std::char_traits<char>; ALLOC = bsl::allocator<char>]':
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:21005:60:   required from here
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12667:79: error: 'dp14' was not declared in this scope
+             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp14(&guardG, globalAllocator_p);
+                                                                           ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12670:79: error: 'dp18' was not declared in this scope
+             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp18(&guardD, defaultAllocator_p);
+                                                                           ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp: In instantiation of 'static void TestDriver<TYPE, TRAITS, ALLOC>::testCase12Range(const CONTAINER&) [with CONTAINER = CharList<wchar_t>; TYPE = wchar_t; TRAITS = std::char_traits<wchar_t>; ALLOC = bsl::allocator<wchar_t>]':
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:21009:65:   required from here
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12667:79: error: 'dp14' was not declared in this scope
+             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp14(&guardG, globalAllocator_p);
+                                                                           ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12670:79: error: 'dp18' was not declared in this scope
+             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp18(&guardD, defaultAllocator_p);
+                                                                           ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp: In instantiation of 'static void TestDriver<TYPE, TRAITS, ALLOC>::testCase12Range(const CONTAINER&) [with CONTAINER = CharArray<wchar_t>; TYPE = wchar_t; TRAITS = std::char_traits<wchar_t>; ALLOC = bsl::allocator<wchar_t>]':
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:21013:66:   required from here
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12667:79: error: 'dp14' was not declared in this scope
+             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp14(&guardG, globalAllocator_p);
+                                                                           ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:12670:79: error: 'dp18' was not declared in this scope
+             bslma::RawDeleterProctor<AllocatorUseGuard, bslma::Allocator> dp18(&guardD, defaultAllocator_p);
+                                                                           ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp: In instantiation of 'static void TestDriver<TYPE, TRAITS, ALLOC>::testCase8() [with TYPE = char; TRAITS = std::char_traits<char>; ALLOC = bsl::allocator<char>]':
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:21243:27:   required from here
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:14387:19: warning: array subscript has type 'char' [-Wchar-subscripts]
+             values[s] = g(10, TYPE(s));
+             ~~~~~~^
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp: In instantiation of 'static void TestDriver<TYPE, TRAITS, ALLOC>::testCase8() [with TYPE = wchar_t; TRAITS = std::char_traits<wchar_t>; ALLOC = bsl::allocator<wchar_t>]':
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:21246:30:   required from here
+../../groups/bsl/bslstl/bslstl_lesterstring.t.cpp:14387:19: warning: array subscript has type 'char' [-Wchar-subscripts]
+>>>>>>>>>>
+Build failed
+ -> task in 'bslstl_lesterstring.t' failed with exit status 1 (run with -v to display more information)

@@ -12,8 +12,10 @@ BSLS_IDENT("$Id: $")
 //@CLASSES:
 //  bdlt::DayOfWeek: namespace for day-of-week enumeration (and its operations)
 //
+//@AUTHOR: Bill Chapman (bchapman2)
+//
 //@DESCRIPTION: This component provides a namespace for the 'enum' type
-// 'bdlt_DayOfWeek::Enum', which enumerates the set of days of the week.
+// 'bdlt::DayOfWeek::Enum', which enumerates the set of days of the week.
 //
 ///Enumerators
 ///-----------
@@ -93,8 +95,37 @@ struct DayOfWeek {
         e_FRI,     e_FRIDAY    = e_FRI,
         e_SAT,     e_SATURDAY  = e_SAT
 
+#ifndef BDE_OMIT_INTERNAL_DEPRECATED  // BDE2.22
+      , SUN       = e_SUN
+      , MON       = e_MON
+      , TUE       = e_TUE
+      , WED       = e_WED
+      , THU       = e_THU
+      , FRI       = e_FRI
+      , SAT       = e_SAT
+      , SUNDAY    = e_SUNDAY
+      , MONDAY    = e_MONDAY
+      , TUESDAY   = e_TUESDAY
+      , WEDNESDAY = e_WEDNESDAY
+      , THURSDAY  = e_THURSDAY
+      , FRIDAY    = e_FRIDAY
+      , SATURDAY  = e_SATURDAY
+
+#endif  // BDE_OMIT_INTERNAL_DEPRECATED -- BDE2.22
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+      , BDET_SUN = e_SUN, BDET_SUNDAY    = e_SUN
+      , BDET_MON = e_MON, BDET_MONDAY    = e_MON
+      , BDET_TUE = e_TUE, BDET_TUESDAY   = e_TUE
+      , BDET_WED = e_WED, BDET_WEDNESDAY = e_WED
+      , BDET_THU = e_THU, BDET_THURSDAY  = e_THU
+      , BDET_FRI = e_FRI, BDET_FRIDAY    = e_FRI
+      , BDET_SAT = e_SAT, BDET_SATURDAY  = e_SAT
+#endif // BDE_OPENSOURCE_PUBLICATION -- pending deprecation
     };
 
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+    typedef Enum Day;
+#endif
 
     // CLASS METHODS
     template <class STREAM>
@@ -171,6 +202,15 @@ struct DayOfWeek {
         // being returned that is distinct from the values returned for any
         // valid enumeration.
 
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+
+    static int maxSupportedBdexVersion();
+        // !DEPRECATED!: Use 'maxSupportedBdexVersion(int)' instead.
+        //
+        // Return the most current BDEX streaming version number supported by
+        // this struct.
+
+#endif // BDE_OPENSOURCE_PUBLICATION -- pending deprecation
 };
 
 // FREE OPERATORS
@@ -281,6 +321,15 @@ int DayOfWeek::maxSupportedBdexVersion(int /* versionSelector */)
     return 1;
 }
 
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+
+inline
+int DayOfWeek::maxSupportedBdexVersion()
+{
+    return maxSupportedBdexVersion(0);
+}
+
+#endif // BDE_OPENSOURCE_PUBLICATION -- pending deprecation
 
 }  // close package namespace
 
@@ -316,6 +365,47 @@ int bdlt::maxSupportedBdexVersion(const bdlt::DayOfWeek::Enum *,
     return bdlt::DayOfWeek::maxSupportedBdexVersion(versionSelector);
 }
 
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+
+// BDEX STREAMING SUPPORT
+
+namespace bdex_InStreamFunctions {
+
+template <class STREAM>
+inline
+STREAM& streamIn(STREAM&                stream,
+                 bdlt::DayOfWeek::Enum& variable,
+                 int                    version)
+{
+    return bdlt::DayOfWeek::bdexStreamIn(stream, variable, version);
+}
+
+}  // close namespace bdex_InStreamFunctions
+
+namespace bdex_OutStreamFunctions {
+
+template <class STREAM>
+inline
+STREAM& streamOut(STREAM&                      stream,
+                  const bdlt::DayOfWeek::Enum& value,
+                  int                          version)
+{
+    return bdlt::DayOfWeek::bdexStreamOut(stream, value, version);
+}
+
+}  // close namespace bdex_OutStreamFunctions
+
+namespace bdex_VersionFunctions {
+
+inline
+int maxSupportedVersion(bdlt::DayOfWeek::Enum)
+{
+    return bdlt::DayOfWeek::maxSupportedBdexVersion(0);
+}
+
+}  // close namespace bdex_VersionFunctions
+
+#endif // BDE_OPENSOURCE_PUBLICATION -- pending deprecation
 
 }  // close enterprise namespace
 

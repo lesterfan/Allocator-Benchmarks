@@ -10,25 +10,29 @@ BSLS_IDENT("$Id: $")
 //@PURPOSE: Provide a value-semantic type to represent dates.
 //
 //@CLASSES:
-//  bdlt::Date: value-semantic date type using the proleptic Gregorian calendar
+//  bdlt::Date: value-semantic date type consistent with the Unix calendar
 //
 //@SEE_ALSO: bdlt_dayofweek, bdlt_serialdateimputil
 //
 //@DESCRIPTION: This component defines a value-semantic class, 'bdlt::Date',
-// capable of representing any valid date that is consistent with the proleptic
-// Gregorian calendar restricted to the years 1 through 9999 (inclusive):
+// capable of representing any valid date that is consistent with the Unix
+// (POSIX) calendar restricted to the years 1 through 9999 (inclusive):
 //..
-//  http://en.wikipedia.org/wiki/Proleptic_Gregorian_calendar
+//  http://pubs.opengroup.org/onlinepubs/9699919799/utilities/cal.html
 //..
 // "Actual" (i.e., natural) day and date calculations are supported directly by
 // 'bdlt::Date' and its associated free operators.  Calculations involving
 // business days (or holidays), and day-count conventions (e.g., "ISMA30360"),
 // can be found elsewhere.
 //
+#ifndef BDE_OPENSOURCE_PUBLICATION  // internal code management
+// See 'bdlt_calendar' and the 'bbedc' day-count convention package.
+#endif  // BDE_OPENSOURCE_PUBLICATION -- internal code management
+//
 ///Valid Date Values and Their Representations
 ///-------------------------------------------
 // A 'bdlt::Date' object *always* represents a valid date value as defined by
-// the proleptic Gregorian calendar.  The value of a 'bdlt::Date' object can be
+// the standard Unix calendar.  The value of a 'bdlt::Date' object can be
 // expressed in the interface as either '(year, month, day)', the canonical
 // representation of dates, or '(year, dayOfYear)'.  For example,
 // '(1959, 3, 8)' represents the same valid 'bdlt::Date' value as '(1959, 67)'
@@ -42,21 +46,26 @@ BSLS_IDENT("$Id: $")
 // 'year' is not a leap year, then the representation is not valid unless
 // '1 <= dayOfYear <= 365'.
 //
-// Note that, in a leap year, February has 29 days instead of the usual 28.
-// (Thus, leap years have 366 days instead of the usual 365.)  The proleptic
-// Gregorian calendar retroactively applies the leap year rules instituted by
-// the Gregorian Reformation to *all* years.  In particular, a year in the
-// range '[1 .. 9999]' is a leap year if it is divisible by 4, but *not*
-// divisible by 100, *unless* it is *also* divisible by 400.
-//
-// A '(year, month, day)' triple does *not* represent a valid 'bdlt::Date'
-// value unless '1 <= year <= 9999', '1 <= month <= 12', and '1 <= day <= 31'.
-// Also, when 'month' is 4, 6, 9, or 11 (April, June, September, or November),
-// the representation is not valid unless '1 <= day <= 30', and, when 'month'
-// is 2 (February), unless '1 <= day <= 29'.  Finally, when 'month' is 2 and
-// 'year' is not a leap year, then the representation is not valid unless
-// '1 <= day <= 28'.
-//
+// In a leap year, February has 29 days instead of the usual 28.  (Thus, leap
+// years have 366 days instead of the usual 365.)  Prior to 1752, the Unix
+// calendar follows the convention of the Julian calendar: every year divisible
+// by 4 is a leap year.  After 1752, the Unix calendar follows the (more
+// accurate) Gregorian calendar: a year is leap year if it is divisible by 4,
+// but *not* divisible by 100, *unless* it is *also* divisible by 400.  Note
+// that 1752 is the year that Britain and its empire (including the colonies
+// that later became the United States) switched from the Julian to the
+// Gregorian calendar.  See:
+//..
+//  http://en.wikipedia.org/wiki/Proleptic_Gregorian_calendar
+//  https://en.wikipedia.org/wiki/Calendar_(New_Style)_Act_1750
+//..
+// Moreover, the Unix calendar lacks the dates '[3 .. 13]' in September 1752,
+// days that were dropped to align British dates with those used on the
+// European continent.  Thus:
+//..
+//  assert(++bdlt::Date(1752, 9, 2) ==   bdlt::Date(1752, 9, 14));
+//  assert(  bdlt::Date(1752, 9, 2) == --bdlt::Date(1752, 9, 14));
+//..
 // Note that two 'static' (class) methods:
 //..
 //  bool isValidYearDay(int year, int dayOfYear);
@@ -106,16 +115,30 @@ BSLS_IDENT("$Id: $")
 ///BDEX Compatibility with Legacy POSIX-Based Date
 ///-----------------------------------------------
 // The version 1 format supported by 'bdlt::Date' for BDEX streaming is
-// expressly intended for maintaining some degree of "compatibility" with a
-// legacy date class that uses a (non-proleptic) Gregorian calendar matching
-// the POSIX 'cal' command.  Over the range of dates supported by 'bdlt::Date'
-// ('[0001JAN01 .. 9999DEC31']), the proleptic Gregorian calendar (used by
+// expressly intended for maintaining some degree of "compatibility" with
+// versions of this date class that are built to use the proleptic Gregorian
+// calendar.
+//
+#ifndef BDE_OPENSOURCE_PUBLICATION  // internal code management
+// !WARNING!: Use of the proleptic Gregorian version of this class is
+// *disallowed* in Bloomberg code.
+//
+#endif  // BDE_OPENSOURCE_PUBLICATION -- internal code management
+// Over the range of dates supported by 'bdlt::Date'
+// ('[0001JAN01 .. 9999DEC31]'), the proleptic Gregorian calendar (used by
 // 'bdlt::Date') has two fewer days than 'cal', and some dates that exist in
 // one calendar do not exist in the other; therefore, true compatibility is not
 // possible.  The compatibility guaranteed by BDEX streaming version 1 is such
 // that all dates in the range '[1752SEP14 .. 9999DEC31]', as well as the
 // default value ('0001JAN01'), can be successfully exchanged, via BDEX,
-// between 'bdlt::Date' and the legacy date class.
+// between 'bdlt::Date' classes built to use the POSIX calendar and those built
+// to use the proleptic Gregorian calendar.
+//
+///ISO Standard Text Representation
+///--------------------------------
+// A common standard text representation of a date and time value is described
+// by ISO 8601.  BDE provides the 'bdlt_iso8601util' component for conversion
+// to and from the standard ISO8601 format.
 //
 ///Usage
 ///-----
@@ -177,7 +200,7 @@ BSLS_IDENT("$Id: $")
 //                           assert(  10 == d2.day());
 //..
 // Now, we subtract 'd1' from 'd2', storing the (signed) difference in days
-// (a.k.a. *Actual* difference) in 'daysDiff':
+// (a.k.a. *actual* difference) in 'daysDiff':
 //..
 //  int daysDiff = d2 - d1;  assert(   6 == daysDiff);
 //..
@@ -215,6 +238,10 @@ BSLS_IDENT("$Id: $")
 #include <bslmf_istriviallycopyable.h>
 #endif
 
+#ifndef INCLUDED_BSLH_HASH
+#include <bslh_hash.h>
+#endif
+
 #ifndef INCLUDED_BSLS_ASSERT
 #include <bsls_assert.h>
 #endif
@@ -222,6 +249,7 @@ BSLS_IDENT("$Id: $")
 #ifndef INCLUDED_BSL_IOSFWD
 #include <bsl_iosfwd.h>
 #endif
+
 
 namespace BloombergLP {
 namespace bdlt {
@@ -232,9 +260,9 @@ namespace bdlt {
 
 class Date {
     // This class implements a complex-constrained, value-semantic type for
-    // representing dates according to the proleptic Gregorian calendar.  Each
-    // object of this class *always* represents a *valid* date value in the
-    // range '[0001JAN01 .. 9999DEC31]' inclusive.  The interface of this class
+    // representing dates according to the Unix (POSIX) calendar.  Each object
+    // of this class *always* represents a *valid* date value in the range
+    // '[0001JAN01 .. 9999DEC31]' inclusive.  The interface of this class
     // supports 'Date' values expressed in terms of either year/month/day (the
     // canonical representation) or year/day-of-year (an alternate
     // representation).  See {Valid Date Values and Their Representations} for
@@ -254,6 +282,8 @@ class Date {
     friend Date operator+(int, const Date&);
     friend Date operator-(const Date&, int);
     friend int  operator-(const Date&, const Date&);
+    template <class HASHALG>
+    friend void hashAppend(HASHALG& hashAlg, const Date&);
 
   private:
     // PRIVATE CLASS METHODS
@@ -261,12 +291,37 @@ class Date {
         // Return 'true' if the specified 'serialDate' represents a valid value
         // for a 'Date' object, and 'false' otherwise.  'serialDate' represents
         // a valid 'Date' value if it corresponds to a valid date as defined by
-        // the proleptic Gregorian calendar confined to the year range
-        // '[1 .. 9999]' inclusive, where serial date 1 corresponds to
-        // '0001/01/01' and each successive day has a serial date value that is
-        // 1 greater than that of the previous day.  See {Valid Date Values and
-        // Their Representations} for details.
+        // the Unix (POSIX) calendar confined to the year range '[1 .. 9999]'
+        // inclusive, where serial date 1 corresponds to '0001/01/01' and each
+        // successive day has a serial date value that is 1 greater than that
+        // of the previous day.  See {Valid Date Values and Their
+        // Representations} for details.
 
+#ifndef BDE_OPENSOURCE_PUBLICATION
+    #ifdef BDE_USE_PROLEPTIC_DATES
+    #error 'BDE_USE_PROLEPTIC_DATES' option disallowed for Bloomberg code.
+    #endif
+#endif
+
+#ifdef BDE_USE_PROLEPTIC_DATES
+    static int convertProlepticDateToPosix(int serialDate);
+        // Return the serial date in the POSIX calendar having the same
+        // year-month-day representation as the specified 'serialDate'
+        // represents in the proleptic Gregorian calendar.  The behavior is
+        // undefined if 'Date' is using a proleptic Gregorian representation
+        // and 'serialDate' has a year-month-day representation earlier than
+        // 1752/09/14 that is not 0001/01/01.  Note that {BDEX Compatibility
+        // with Legacy POSIX-Based Date} has further details.
+
+    static int convertPosixDateToProleptic(int serialDate);
+        // Return the serial date in the proleptic Gregorian calendar having
+        // the same year-month-day representation as the specified 'serialDate'
+        // represents in the POSIX calendar.  The behavior is undefined if
+        // 'Date' is using a proleptic Gregorian representation and
+        // 'serialDate' has a year-month-day representation earlier than
+        // 1752/09/14 that is not 0001/01/01.  Note that {BDEX Compatibility
+        // with Legacy POSIX-Based Date} has further details.
+#endif
 
     // PRIVATE CREATORS
     explicit Date(int serialDate);
@@ -280,17 +335,17 @@ class Date {
         // Return 'true' if the specified 'year' and 'dayOfYear' represent a
         // valid value for a 'Date' object, and 'false' otherwise.  'year' and
         // 'dayOfYear' represent a valid 'Date' value if they correspond to a
-        // valid date as defined by the proleptic Gregorian calendar confined
-        // to the year range '[1 .. 9999]' inclusive.  See {Valid Date Values
-        // and Their Representations} for details.
+        // valid date as defined by the Unix (POSIX) calendar confined to the
+        // year range '[1 .. 9999]' inclusive.  See {Valid Date Values and
+        // Their Representations} for details.
 
     static bool isValidYearMonthDay(int year, int month, int day);
         // Return 'true' if the specified 'year', 'month', and 'day' represent
         // a valid value for a 'Date' object, and 'false' otherwise.  'year',
         // 'month', and 'day' represent a valid 'Date' value if they correspond
-        // to a valid date as defined by the proleptic Gregorian calendar
-        // confined to the year range '[1 .. 9999]' inclusive.  See {Valid Date
-        // Values and Their Representations} for details.
+        // to a valid date as defined by the Unix (POSIX) calendar confined to
+        // the year range '[1 .. 9999]' inclusive.  See {Valid Date Values and
+        // Their Representations} for details.
 
                                   // Aspects
 
@@ -406,23 +461,16 @@ class Date {
         // documentation for more information on BDEX streaming of
         // value-semantic types and containers.
 
-    // ATTRIBUTE ACCESSORS
+    // ACCESSORS
     int day() const;
         // Return the day of the month in the range '[1 .. 31]' of this date.
 
-    int dayOfYear() const;
-        // Return the day of the year in the range '[1 .. 366]' of this date.
-
-    int month() const;
-        // Return the month of the year in the range '[1 .. 12]' of this date.
-
-    int year() const;
-        // Return the year in the range '[1 .. 9999]' of this date.
-
-    // ACCESSORS
     DayOfWeek::Enum dayOfWeek() const;
         // Return the day of the week in the range
         // '[DayOfWeek::e_SUN .. DayOfWeek::e_SAT]' of this date.
+
+    int dayOfYear() const;
+        // Return the day of the year in the range '[1 .. 366]' of this date.
 
     void getYearDay(int *year, int *dayOfYear) const;
         // Load, into the specified 'year' and 'dayOfYear', the respective
@@ -432,9 +480,15 @@ class Date {
         // Load, into the specified 'year', 'month', and 'day', the respective
         // 'year', 'month', and 'day' attribute values of this date.
 
+    int month() const;
+        // Return the month of the year in the range '[1 .. 12]' of this date.
+
     MonthOfYear::Enum monthOfYear() const;
         // Return the month of the year in the range
         // '[MonthOfYear::e_JAN .. MonthOfYear::e_DEC]' of this date.
+
+    int year() const;
+        // Return the year in the range '[1 .. 9999]' of this date.
 
                                   // Aspects
 
@@ -466,6 +520,72 @@ class Date {
         // human-readable format is not fully specified, and can change without
         // notice.
 
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+
+    // DEPRECATED METHODS
+    static bool isValid(int year, int dayOfYear);
+        // !DEPRECATED!: Use 'isValidYearDay' instead.
+        //
+        // Return 'true' if the specified 'year' and 'dayOfYear' represent a
+        // valid value for a 'Date' object, and 'false' otherwise.  'year' and
+        // 'dayOfYear' represent a valid 'Date' value if they correspond to a
+        // valid date as defined by the Unix (POSIX) calendar confined to the
+        // year range '[1 .. 9999]' inclusive.  See {Valid Date Values and
+        // Their Representations} for details.
+
+    static bool isValid(int year, int month, int day);
+        // !DEPRECATED!: Use 'isValidYearMonthDay' instead.
+        //
+        // Return 'true' if the specified 'year', 'month', and 'day' represent
+        // a valid value for a 'Date' object, and 'false' otherwise.  'year',
+        // 'month', and 'day' represent a valid 'Date' value if they correspond
+        // to a valid date as defined by the Unix (POSIX) calendar confined to
+        // the year range '[1 .. 9999]' inclusive.  See {Valid Date Values and
+        // Their Representations} for details.
+
+    static int maxSupportedBdexVersion();
+        // !DEPRECATED!: Use 'maxSupportedBdexVersion(int)' instead.
+        //
+        // Return the most current BDEX streaming version number supported by
+        // this class.
+
+#endif  // BDE_OPENSOURCE_PUBLICATION -- pending deprecation
+#ifndef BDE_OMIT_INTERNAL_DEPRECATED  // BDE2.22
+    static int maxSupportedVersion();
+        // !DEPRECATED!: Use 'maxSupportedBdexVersion(int)' instead.
+        //
+        // Return the most current BDEX streaming version number supported by
+        // this class.
+
+    bsl::ostream& streamOut(bsl::ostream& stream) const;
+        // !DEPRECATED!: Use 'print' instead.
+        //
+        // Write the value of this object to the specified output 'stream' in a
+        // single-line format, and return a reference to 'stream'.  If 'stream'
+        // is not valid on entry, this operation has no effect.  Note that this
+        // human-readable format is not fully specified, can change without
+        // notice, and is logically equivalent to:
+        //..
+        //  print(stream, 0, -1);
+        //..
+
+    int validateAndSetYearDay(int year, int dayOfYear);
+        // !DEPRECATED!: Use 'setYearDayIfValid' instead.
+        //
+        // Set this object to have the value represented by the specified
+        // 'year' and 'dayOfYear' if they comprise a valid 'Date' value (see
+        // 'isValidYearDay').  Return 0 on success, and a non-zero value (with
+        // no effect) otherwise.
+
+    int validateAndSetYearMonthDay(int year, int month, int day);
+        // !DEPRECATED!: Use 'setYearMonthDayIfValid' instead.
+        //
+        // Set this object to have the value represented by the specified
+        // 'year', 'month', and 'day' if they comprise a valid 'Date' value
+        // (see 'isValidYearMonthDay').  Return 0 on success, and a non-zero
+        // value (with no effect) otherwise.
+
+#endif // BDE_OMIT_INTERNAL_DEPRECATED -- BDE2.22
 
 };
 
@@ -536,6 +656,13 @@ int operator-(const Date& lhs, const Date& rhs);
     // Return the (signed) number of days between the specified 'lhs' and 'rhs'
     // dates.  Note that if 'lhs < rhs' the result will be negative.
 
+// FREE FUNCTIONS
+template <class HASHALG>
+void hashAppend(HASHALG& hashAlg, const Date& object);
+    // Pass the specified 'object' to the specified 'hashAlg'.  This function
+    // integrates with the 'bslh' modular hashing system and effectively
+    // provides a 'bsl::hash' specialization for 'Date'.
+
 // ============================================================================
 //                              INLINE DEFINITIONS
 // ============================================================================
@@ -550,6 +677,33 @@ bool Date::isValidSerial(int serialDate)
 {
     return SerialDateImpUtil::isValidSerial(serialDate);
 }
+
+
+#ifdef BDE_USE_PROLEPTIC_DATES
+inline
+int Date::convertProlepticDateToPosix(int serialDate)
+{
+    if (1 != serialDate) { // Preserve the default value.
+
+        serialDate += 2;   // Ensure that serial values for 1752SEP14 and later
+                           // dates "align".
+    }
+    return serialDate;
+}
+
+inline
+int Date::convertPosixDateToProleptic(int serialDate)
+{
+    if (serialDate > 3) {
+        serialDate -= 2;  // ensure that serial values for 1752SEP14
+                          // and later dates "align"
+    }
+    else if (serialDate > 0) {
+        serialDate = 1;   // "fuzzy" default value '[1 .. 3]'
+    }
+    return serialDate;
+}
+#endif
 
 // PRIVATE CREATORS
 inline
@@ -592,7 +746,6 @@ Date::Date(int year, int dayOfYear)
 : d_serialDate(SerialDateImpUtil::ydToSerial(year, dayOfYear))
 {
     BSLS_ASSERT_SAFE(isValidYearDay(year, dayOfYear));
-
 }
 
 inline
@@ -600,7 +753,6 @@ Date::Date(int year, int month, int day)
 : d_serialDate(SerialDateImpUtil::ymdToSerial(year, month, day))
 {
     BSLS_ASSERT_SAFE(isValidYearMonthDay(year, month, day));
-
 }
 
 inline
@@ -628,7 +780,6 @@ Date& Date::operator+=(int numDays)
 {
     BSLS_ASSERT_SAFE(Date::isValidSerial(d_serialDate + numDays));
 
-
     d_serialDate += numDays;
     return *this;
 }
@@ -637,7 +788,6 @@ inline
 Date& Date::operator-=(int numDays)
 {
     BSLS_ASSERT_SAFE(Date::isValidSerial(d_serialDate - numDays));
-
 
     d_serialDate -= numDays;
     return *this;
@@ -648,7 +798,6 @@ Date& Date::operator++()
 {
     BSLS_ASSERT_SAFE(*this != Date(9999, 12, 31));
 
-
     ++d_serialDate;
     return *this;
 }
@@ -657,7 +806,6 @@ inline
 Date& Date::operator--()
 {
     BSLS_ASSERT_SAFE(*this != Date(1, 1, 1));
-
 
     --d_serialDate;
     return *this;
@@ -717,20 +865,12 @@ STREAM& Date::bdexStreamIn(STREAM& stream, int version)
 
             stream.getInt24(tmpSerialDate);
 
-            // See {BDEX Compatibility with Legacy POSIX-Based 'Date'} in the
-            // component-level documentation.
-
-            if (tmpSerialDate > 3) {
-                tmpSerialDate -= 2;  // ensure that serial values for 1752SEP14
-                                     // and later dates "align"
-            }
-            else if (tmpSerialDate > 0) {
-                tmpSerialDate = 1;   // "fuzzy" default value '[1 .. 3]'
-            }
+#ifdef BDE_USE_PROLEPTIC_DATES
+            tmpSerialDate = convertPosixDateToProleptic(tmpSerialDate);
+#endif
 
             if (stream && Date::isValidSerial(tmpSerialDate)) {
                 d_serialDate = tmpSerialDate;
-
             }
             else {
                 stream.invalidate();
@@ -745,7 +885,7 @@ STREAM& Date::bdexStreamIn(STREAM& stream, int version)
     return stream;
 }
 
-// ATTRIBUTE ACCESSORS
+// ACCESSORS
 inline
 int Date::day() const
 {
@@ -753,29 +893,16 @@ int Date::day() const
 }
 
 inline
-int Date::dayOfYear() const
-{
-    return SerialDateImpUtil::serialToDayOfYear(d_serialDate);
-}
-
-inline
-int Date::month() const
-{
-    return SerialDateImpUtil::serialToMonth(d_serialDate);
-}
-
-inline
-int Date::year() const
-{
-    return SerialDateImpUtil::serialToYear(d_serialDate);
-}
-
-// ACCESSORS
-inline
 DayOfWeek::Enum Date::dayOfWeek() const
 {
     return static_cast<DayOfWeek::Enum>(
                            SerialDateImpUtil::serialToDayOfWeek(d_serialDate));
+}
+
+inline
+int Date::dayOfYear() const
+{
+    return SerialDateImpUtil::serialToDayOfYear(d_serialDate);
 }
 
 inline
@@ -798,9 +925,21 @@ void Date::getYearMonthDay(int *year, int *month, int *day) const
 }
 
 inline
+int Date::month() const
+{
+    return SerialDateImpUtil::serialToMonth(d_serialDate);
+}
+
+inline
 MonthOfYear::Enum Date::monthOfYear() const
 {
     return static_cast<MonthOfYear::Enum>(month());
+}
+
+inline
+int Date::year() const
+{
+    return SerialDateImpUtil::serialToYear(d_serialDate);
 }
 
                                   // Aspects
@@ -811,18 +950,19 @@ STREAM& Date::bdexStreamOut(STREAM& stream, int version) const
     if (stream) {
         switch (version) { // switch on the schema version
           case 1: {
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+            // Prevent a corrupt date value from escaping the process (whereby
+            // it may contaminate a database, for example).
 
-            // See {BDEX Compatibility with Legacy POSIX-Based 'Date'} in the
-            // component-level documentation.
+            BSLS_ASSERT_OPT(Date::isValidSerial(d_serialDate));
+#endif // BDE_OPENSOURCE_PUBLICATION -- pending deprecation
 
-            if (1 == d_serialDate) {  // preserve default value
-                stream.putInt24(d_serialDate);
-            }
-            else {
-                stream.putInt24(d_serialDate + 2);
-                                      // ensure that serial values for
-                                      // 1752SEP14 and later dates "align"
-            }
+#ifdef BDE_USE_PROLEPTIC_DATES
+            stream.putInt24(convertProlepticDateToPosix(d_serialDate));
+#else
+            stream.putInt24(d_serialDate);
+#endif
+
           } break;
           default: {
             stream.invalidate();  // unrecognized version number
@@ -832,6 +972,54 @@ STREAM& Date::bdexStreamOut(STREAM& stream, int version) const
     return stream;
 }
 
+#ifndef BDE_OPENSOURCE_PUBLICATION  // pending deprecation
+
+// DEPRECATED METHODS
+inline
+bool Date::isValid(int year, int dayOfYear)
+{
+    return isValidYearDay(year, dayOfYear);
+}
+
+inline
+bool Date::isValid(int year, int month, int day)
+{
+    return isValidYearMonthDay(year, month, day);
+}
+
+inline
+int Date::maxSupportedBdexVersion()
+{
+    return maxSupportedBdexVersion(0);
+}
+
+#endif // BDE_OPENSOURCE_PUBLICATION -- pending deprecation
+#ifndef BDE_OMIT_INTERNAL_DEPRECATED  // BDE2.22
+inline
+int Date::maxSupportedVersion()
+{
+    return maxSupportedBdexVersion(0);
+}
+
+inline
+bsl::ostream& Date::streamOut(bsl::ostream& stream) const
+{
+    return print(stream, 0, -1);
+}
+
+inline
+int Date::validateAndSetYearDay(int year, int dayOfYear)
+{
+    return setYearDayIfValid(year, dayOfYear);
+}
+
+inline
+int Date::validateAndSetYearMonthDay(int year, int month, int day)
+{
+    return setYearMonthDayIfValid(year, month, day);
+}
+
+#endif // BDE_OMIT_INTERNAL_DEPRECATED -- BDE2.22
 
 }  // close package namespace
 
@@ -903,7 +1091,6 @@ bdlt::Date bdlt::operator+(const Date& date, int numDays)
 {
     BSLS_ASSERT_SAFE(Date::isValidSerial(date.d_serialDate + numDays));
 
-
     return Date(date.d_serialDate + numDays);
 }
 
@@ -911,7 +1098,6 @@ inline
 bdlt::Date bdlt::operator+(int numDays, const Date& date)
 {
     BSLS_ASSERT_SAFE(Date::isValidSerial(numDays + date.d_serialDate));
-
 
     return Date(numDays + date.d_serialDate);
 }
@@ -921,15 +1107,22 @@ bdlt::Date bdlt::operator-(const Date& date, int numDays)
 {
     BSLS_ASSERT_SAFE(Date::isValidSerial(date.d_serialDate - numDays));
 
-
     return Date(date.d_serialDate - numDays);
 }
 
 inline
 int bdlt::operator-(const Date& lhs, const Date& rhs)
 {
-
     return lhs.d_serialDate - rhs.d_serialDate;
+}
+
+// FREE FUNCTIONS
+template <class HASHALG>
+inline
+void bdlt::hashAppend(HASHALG& hashAlg, const Date& object)
+{
+    using ::BloombergLP::bslh::hashAppend;
+    hashAppend(hashAlg, object.d_serialDate);
 }
 
 }  // close enterprise namespace

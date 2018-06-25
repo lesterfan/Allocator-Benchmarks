@@ -1,7 +1,7 @@
 // bdlt_dateutil.t.cpp                                                -*-C++-*-
 #include <bdlt_dateutil.h>
 
-#include <bdls_testutil.h>
+#include <bslim_testutil.h>
 
 #include <bsls_asserttest.h>
 #include <bsls_stopwatch.h>
@@ -35,6 +35,7 @@ using namespace bsl;
 // [ 2] Date convertFromYYYYMMDDRaw(int yyyymmddValue);
 // [ 4] int convertToYYYYMMDD(const Date& date);
 // [ 1] bool isValidYYYYMMDD(int yyyymmddValue);
+// [17] Date lastDayInMonth(year, month);
 // [10] Date lastDayOfWeekInMonth(year, month, dayOfWeek);
 // [ 5] Date nextDayOfWeek(dayOfWeek, date);
 // [ 6] Date nextDayOfWeekInclusive(dayOfWeek, date);
@@ -42,7 +43,7 @@ using namespace bsl;
 // [ 7] Date previousDayOfWeek(dayOfWeek, date);
 // [ 8] Date previousDayOfWeekInclusive(dayOfWeek, date);
 // ----------------------------------------------------------------------------
-// [17] USAGE EXAMPLE
+// [18] USAGE EXAMPLE
 
 // ============================================================================
 //                     STANDARD BDE ASSERT TEST FUNCTION
@@ -70,24 +71,23 @@ void aSsErT(bool condition, const char *message, int line)
 //               STANDARD BDE TEST DRIVER MACRO ABBREVIATIONS
 // ----------------------------------------------------------------------------
 
-#define ASSERT       BDLS_TESTUTIL_ASSERT
-#define ASSERTV      BDLS_TESTUTIL_ASSERTV
+#define ASSERT       BSLIM_TESTUTIL_ASSERT
+#define ASSERTV      BSLIM_TESTUTIL_ASSERTV
 
-#define LOOP_ASSERT  BDLS_TESTUTIL_LOOP_ASSERT
-#define LOOP0_ASSERT BDLS_TESTUTIL_LOOP0_ASSERT
-#define LOOP1_ASSERT BDLS_TESTUTIL_LOOP1_ASSERT
-#define LOOP2_ASSERT BDLS_TESTUTIL_LOOP2_ASSERT
-#define LOOP3_ASSERT BDLS_TESTUTIL_LOOP3_ASSERT
-#define LOOP4_ASSERT BDLS_TESTUTIL_LOOP4_ASSERT
-#define LOOP5_ASSERT BDLS_TESTUTIL_LOOP5_ASSERT
-#define LOOP6_ASSERT BDLS_TESTUTIL_LOOP6_ASSERT
+#define LOOP_ASSERT  BSLIM_TESTUTIL_LOOP_ASSERT
+#define LOOP0_ASSERT BSLIM_TESTUTIL_LOOP0_ASSERT
+#define LOOP1_ASSERT BSLIM_TESTUTIL_LOOP1_ASSERT
+#define LOOP2_ASSERT BSLIM_TESTUTIL_LOOP2_ASSERT
+#define LOOP3_ASSERT BSLIM_TESTUTIL_LOOP3_ASSERT
+#define LOOP4_ASSERT BSLIM_TESTUTIL_LOOP4_ASSERT
+#define LOOP5_ASSERT BSLIM_TESTUTIL_LOOP5_ASSERT
+#define LOOP6_ASSERT BSLIM_TESTUTIL_LOOP6_ASSERT
 
-#define Q            BDLS_TESTUTIL_Q   // Quote identifier literally.
-#define P            BDLS_TESTUTIL_P   // Print identifier and value.
-#define P_           BDLS_TESTUTIL_P_  // P(X) without '\n'.
-#define T_           BDLS_TESTUTIL_T_  // Print a tab (w/o newline).
-#define L_           BDLS_TESTUTIL_L_  // current Line number
-
+#define Q            BSLIM_TESTUTIL_Q   // Quote identifier literally.
+#define P            BSLIM_TESTUTIL_P   // Print identifier and value.
+#define P_           BSLIM_TESTUTIL_P_  // P(X) without '\n'.
+#define T_           BSLIM_TESTUTIL_T_  // Print a tab (w/o newline).
+#define L_           BSLIM_TESTUTIL_L_  // current Line number
 
 // ============================================================================
 //                  NEGATIVE-TEST MACRO ABBREVIATIONS
@@ -128,10 +128,10 @@ int main(int argc, char *argv[])
     (void)     veryVeryVerbose;
     (void) veryVeryVeryVerbose;
 
-    std::cout << "TEST " << __FILE__ << " CASE " << test << std::endl;
+    bsl::cout << "TEST " << __FILE__ << " CASE " << test << bsl::endl;
 
     switch (test) { case 0:
-      case 17: {
+      case 18: {
         // --------------------------------------------------------------------
         // USAGE EXAMPLE
         //   Extracted from component header file.
@@ -153,11 +153,15 @@ int main(int argc, char *argv[])
                           << "USAGE EXAMPLE" << endl
                           << "=============" << endl;
 
+///Usage
+///-----
+// This section illustrates intended use of this component.
+//
 ///Example 1: Schedule Generation
 /// - - - - - - - - - - - - - - -
-// Suppose that given a starting date in the 'YYYYMMDD' format, we want to
+// Suppose that given a starting date in the "YYYYMMDD" format, we want to
 // generate a schedule for an event that occurs on the same day of the month
-// for 24 months.
+// for 12 months.
 //
 // First, we use the 'bdlt::DateUtil::convertFromYYYYMMDD' function to convert
 // the integer into a 'bdlt::Date':
@@ -168,10 +172,10 @@ int main(int argc, char *argv[])
     int rc = bdlt::DateUtil::convertFromYYYYMMDD(&date, startingDateYYYYMMDD);
     ASSERT(0 == rc);
 //..
-// Now, we use the 'addMonthsEom' function to generate the schedule.  Note
-// that 'addMonthsEom' adjusts the resulting date to be the last day of the
-// month if the original date is the last day of the month, while
-// 'addMonthsNoEom' does not make this adjustment.
+// Now, we use the 'addMonthsEom' function to generate the schedule.  Note that
+// 'addMonthsEom' adjusts the resulting date to be the last day of the month if
+// the original date is the last day of the month, while 'addMonthsNoEom' does
+// not make this adjustment.
 //..
     bsl::vector<bdlt::Date> schedule;
     schedule.push_back(date);
@@ -183,11 +187,10 @@ int main(int argc, char *argv[])
 // Finally, we print the generated schedule to the console and observe the
 // output:
 //..
-    if (veryVerbose) {
-        bsl::copy(schedule.begin(),
-                  schedule.end(),
-                  bsl::ostream_iterator<bdlt::Date>(bsl::cout, "\n"));
-    }
+if (veryVerbose)
+    bsl::copy(schedule.begin(),
+              schedule.end(),
+              bsl::ostream_iterator<bdlt::Date>(bsl::cout, "\n"));
 
     // Expected output on the console:
     //
@@ -207,6 +210,83 @@ int main(int argc, char *argv[])
 // Notice that the dates have been adjusted to the end of the month.  If we had
 // used 'addMonthsNoEom' instead of 'addMonthsEom', this adjustment would not
 // have occurred.
+      } break;
+      case 17: {
+        // --------------------------------------------------------------------
+        // TESTING 'lastDayInMonth'
+        //
+        // Concerns:
+        //: 1 The function returns the last day in 'month' and 'year'.
+        //:
+        //: 2 QoI: Asserted precondition violations are detected when enabled.
+        //
+        // Plan:
+        //: 1 Using the table-driven approach, define a representative set of
+        //:   valid inputs.  Verify that the function returns the correct
+        //:   value.  Note that we do not need to do a very exhaustive test,
+        //:   because most of the work is handled by the already tested
+        //:   function 'bdlt::SerialDateImpUtil::lastDayOfMonth'.  (C-1)
+        //:
+        //: 2 Verify that, in appropriate build modes, defensive checks are
+        //:   triggered for invalid attribute values, but not triggered for
+        //:   adjacent valid ones (using the 'BSLS_ASSERTTEST_*' macros).
+        //:   (C-2)
+        //
+        // Testing:
+        //   Date lastDayInMonth(year, month);
+        // --------------------------------------------------------------------
+
+        if (verbose) cout << endl
+                          << "TESTING 'lastDayInMonth'" << endl
+                          << "========================" << endl;
+
+        static const struct {
+            int                   d_line;   // source line number
+            int                   d_year;   // year
+            int                   d_month;  // month
+            bdlt::Date            d_exp;    // expected result
+        } DATA[] = {
+            //LN  YEAR  MONTH     EXP
+            //--  ----  -----  -----------------------
+            { L_, 1900,     2, bdlt::Date(1900, 2, 28) },
+            { L_, 1999,     1, bdlt::Date(1999, 1, 31) },
+            { L_, 2000,     1, bdlt::Date(2000, 1, 31) },
+            { L_, 2000,     2, bdlt::Date(2000, 2, 29) },
+            { L_, 2001,     4, bdlt::Date(2001, 4, 30) },
+            { L_, 2003,     2, bdlt::Date(2003, 2, 28) },
+            { L_, 2004,     2, bdlt::Date(2004, 2, 29) }
+        };
+
+        const int NUM_DATA = sizeof DATA / sizeof *DATA;
+
+        for (int i = 0; i < NUM_DATA; ++i) {
+            const int        LINE  = DATA[i].d_line;
+            const int        YEAR  = DATA[i].d_year;
+            const int        MONTH = DATA[i].d_month;
+            const bdlt::Date EXP   = DATA[i].d_exp;
+
+            if (veryVerbose) {
+                T_ P_(LINE) P_(YEAR) P_(MONTH) P(EXP);
+            }
+
+            const bdlt::Date result = Util::lastDayInMonth(YEAR, MONTH);
+            ASSERTV(LINE, EXP, result, EXP == result);
+        }
+
+        {
+            // Test assertions
+            bsls::AssertFailureHandlerGuard hG(
+                                             bsls::AssertTest::failTestDriver);
+
+            ASSERT_SAFE_PASS(Util::lastDayInMonth(    1,  1));
+            ASSERT_SAFE_PASS(Util::lastDayInMonth( 9999,  1));
+            ASSERT_SAFE_FAIL(Util::lastDayInMonth(    0,  1));
+            ASSERT_SAFE_FAIL(Util::lastDayInMonth(10000,  1));
+
+            ASSERT_SAFE_PASS(Util::lastDayInMonth(    1, 12));
+            ASSERT_SAFE_FAIL(Util::lastDayInMonth(    1,  0));
+            ASSERT_SAFE_FAIL(Util::lastDayInMonth(    1, 13));
+        }
       } break;
       case 16: {
         // --------------------------------------------------------------------
@@ -765,7 +845,6 @@ int main(int argc, char *argv[])
                           << "TESTING 'addMonthsNoEom'" << endl
                           << "========================" << endl;
 
-
         static const struct {
             int        d_line;       // source line number
             bdlt::Date d_original;   // original date
@@ -986,26 +1065,30 @@ int main(int argc, char *argv[])
         //   correct offset is added.
         //
         // Concerns:
-        //: 1 The function correctly returns the 1st - 4th occurrence of the
+        //: 1 The function correctly returns the 'n'th occurrence of the
         //:   'dayOfWeek' in 'month' and 'year'.
         //:
         //: 2 If a 5th occurrence of the 'dayOfWeek' doesn't exist within
         //:   'month' and 'year', the first 'dayOfWeek' of the next month is
         //:   returned.
         //:
-        //: 3 QoI: Asserted precondition violations are detected when enabled.
+        //: 3 If a -5th occurrence of the 'dayOfWeek' doesn't exist within
+        //:   'month' and 'year', the last 'dayOfWeek' of the previous month is
+        //:   returned.
+        //:
+        //: 4 QoI: Asserted precondition violations are detected when enabled.
         //
         // Plan:
         //: 1 Using the table-driven approach, define a representative set of
         //:   valid inputs, including 'n' from 1 to 5.  Note that we do not
         //:   need to do a very exhaustive test, because most of the work is
         //:   handled by the already tested function 'nextDayOfWeekInclusive'.
-        //:   (C-1..2)
+        //:   (C-1..3)
         //:
         //: 2 Verify that, in appropriate build modes, defensive checks are
         //:   triggered for invalid attribute values, but not triggered for
         //:   adjacent valid ones (using the 'BSLS_ASSERTTEST_*' macros).
-        //:   (C-3)
+        //:   (C-4)
         //
         // Testing:
         //   Date nthDayOfWeekInMonth(year, month, dayOfWeek, n);
@@ -1025,47 +1108,82 @@ int main(int argc, char *argv[])
         } DATA[] = {
             //LINE   YEAR  MONTH  DOW      N  EXP
             //----   ----  -----  ---      -  ---
-            { L_,    2000,     1,  e_SUN,  1,  bdlt::Date(2000, 1,  2) },
-            { L_,    2000,     1,  e_SUN,  2,  bdlt::Date(2000, 1,  9) },
-            { L_,    2000,     1,  e_SUN,  3,  bdlt::Date(2000, 1, 16) },
-            { L_,    2000,     1,  e_SUN,  4,  bdlt::Date(2000, 1, 23) },
-            { L_,    2000,     1,  e_SUN,  5,  bdlt::Date(2000, 1, 30) },
+            { L_,    2000,     1,  e_SUN, -5,  bdlt::Date(2000,  1,  2) },
+            { L_,    2000,     1,  e_SUN, -4,  bdlt::Date(2000,  1,  9) },
+            { L_,    2000,     1,  e_SUN, -3,  bdlt::Date(2000,  1, 16) },
+            { L_,    2000,     1,  e_SUN, -2,  bdlt::Date(2000,  1, 23) },
+            { L_,    2000,     1,  e_SUN, -1,  bdlt::Date(2000,  1, 30) },
+            { L_,    2000,     1,  e_SUN,  1,  bdlt::Date(2000,  1,  2) },
+            { L_,    2000,     1,  e_SUN,  2,  bdlt::Date(2000,  1,  9) },
+            { L_,    2000,     1,  e_SUN,  3,  bdlt::Date(2000,  1, 16) },
+            { L_,    2000,     1,  e_SUN,  4,  bdlt::Date(2000,  1, 23) },
+            { L_,    2000,     1,  e_SUN,  5,  bdlt::Date(2000,  1, 30) },
 
-            { L_,    2000,     1,  e_MON,  1,  bdlt::Date(2000, 1,  3) },
-            { L_,    2000,     1,  e_MON,  2,  bdlt::Date(2000, 1, 10) },
-            { L_,    2000,     1,  e_MON,  3,  bdlt::Date(2000, 1, 17) },
-            { L_,    2000,     1,  e_MON,  4,  bdlt::Date(2000, 1, 24) },
-            { L_,    2000,     1,  e_MON,  5,  bdlt::Date(2000, 1, 31) },
+            { L_,    2000,     1,  e_MON, -5,  bdlt::Date(2000,  1,  3) },
+            { L_,    2000,     1,  e_MON, -4,  bdlt::Date(2000,  1, 10) },
+            { L_,    2000,     1,  e_MON, -3,  bdlt::Date(2000,  1, 17) },
+            { L_,    2000,     1,  e_MON, -2,  bdlt::Date(2000,  1, 24) },
+            { L_,    2000,     1,  e_MON, -1,  bdlt::Date(2000,  1, 31) },
+            { L_,    2000,     1,  e_MON,  1,  bdlt::Date(2000,  1,  3) },
+            { L_,    2000,     1,  e_MON,  2,  bdlt::Date(2000,  1, 10) },
+            { L_,    2000,     1,  e_MON,  3,  bdlt::Date(2000,  1, 17) },
+            { L_,    2000,     1,  e_MON,  4,  bdlt::Date(2000,  1, 24) },
+            { L_,    2000,     1,  e_MON,  5,  bdlt::Date(2000,  1, 31) },
 
-            { L_,    2000,     1,  e_TUE,  1,  bdlt::Date(2000, 1,  4) },
-            { L_,    2000,     1,  e_TUE,  2,  bdlt::Date(2000, 1, 11) },
-            { L_,    2000,     1,  e_TUE,  3,  bdlt::Date(2000, 1, 18) },
-            { L_,    2000,     1,  e_TUE,  4,  bdlt::Date(2000, 1, 25) },
-            { L_,    2000,     1,  e_TUE,  5,  bdlt::Date(2000, 2,  1) },
+            { L_,    2000,     1,  e_TUE, -5,  bdlt::Date(1999, 12, 28) },
+            { L_,    2000,     1,  e_TUE, -4,  bdlt::Date(2000,  1,  4) },
+            { L_,    2000,     1,  e_TUE, -3,  bdlt::Date(2000,  1, 11) },
+            { L_,    2000,     1,  e_TUE, -2,  bdlt::Date(2000,  1, 18) },
+            { L_,    2000,     1,  e_TUE, -1,  bdlt::Date(2000,  1, 25) },
+            { L_,    2000,     1,  e_TUE,  1,  bdlt::Date(2000,  1,  4) },
+            { L_,    2000,     1,  e_TUE,  2,  bdlt::Date(2000,  1, 11) },
+            { L_,    2000,     1,  e_TUE,  3,  bdlt::Date(2000,  1, 18) },
+            { L_,    2000,     1,  e_TUE,  4,  bdlt::Date(2000,  1, 25) },
+            { L_,    2000,     1,  e_TUE,  5,  bdlt::Date(2000,  2,  1) },
 
-            { L_,    2000,     1,  e_WED,  1,  bdlt::Date(2000, 1,  5) },
-            { L_,    2000,     1,  e_WED,  2,  bdlt::Date(2000, 1, 12) },
-            { L_,    2000,     1,  e_WED,  3,  bdlt::Date(2000, 1, 19) },
-            { L_,    2000,     1,  e_WED,  4,  bdlt::Date(2000, 1, 26) },
-            { L_,    2000,     1,  e_WED,  5,  bdlt::Date(2000, 2,  2) },
+            { L_,    2000,     1,  e_WED, -5,  bdlt::Date(1999, 12, 29) },
+            { L_,    2000,     1,  e_WED, -4,  bdlt::Date(2000,  1,  5) },
+            { L_,    2000,     1,  e_WED, -3,  bdlt::Date(2000,  1, 12) },
+            { L_,    2000,     1,  e_WED, -2,  bdlt::Date(2000,  1, 19) },
+            { L_,    2000,     1,  e_WED, -1,  bdlt::Date(2000,  1, 26) },
+            { L_,    2000,     1,  e_WED,  1,  bdlt::Date(2000,  1,  5) },
+            { L_,    2000,     1,  e_WED,  2,  bdlt::Date(2000,  1, 12) },
+            { L_,    2000,     1,  e_WED,  3,  bdlt::Date(2000,  1, 19) },
+            { L_,    2000,     1,  e_WED,  4,  bdlt::Date(2000,  1, 26) },
+            { L_,    2000,     1,  e_WED,  5,  bdlt::Date(2000,  2,  2) },
 
-            { L_,    2000,     1,  e_THU,  1,  bdlt::Date(2000, 1,  6) },
-            { L_,    2000,     1,  e_THU,  2,  bdlt::Date(2000, 1, 13) },
-            { L_,    2000,     1,  e_THU,  3,  bdlt::Date(2000, 1, 20) },
-            { L_,    2000,     1,  e_THU,  4,  bdlt::Date(2000, 1, 27) },
-            { L_,    2000,     1,  e_THU,  5,  bdlt::Date(2000, 2,  3) },
+            { L_,    2000,     1,  e_THU, -5,  bdlt::Date(1999, 12, 30) },
+            { L_,    2000,     1,  e_THU, -4,  bdlt::Date(2000,  1,  6) },
+            { L_,    2000,     1,  e_THU, -3,  bdlt::Date(2000,  1, 13) },
+            { L_,    2000,     1,  e_THU, -2,  bdlt::Date(2000,  1, 20) },
+            { L_,    2000,     1,  e_THU, -1,  bdlt::Date(2000,  1, 27) },
+            { L_,    2000,     1,  e_THU,  1,  bdlt::Date(2000,  1,  6) },
+            { L_,    2000,     1,  e_THU,  2,  bdlt::Date(2000,  1, 13) },
+            { L_,    2000,     1,  e_THU,  3,  bdlt::Date(2000,  1, 20) },
+            { L_,    2000,     1,  e_THU,  4,  bdlt::Date(2000,  1, 27) },
+            { L_,    2000,     1,  e_THU,  5,  bdlt::Date(2000,  2,  3) },
 
-            { L_,    2000,     1,  e_FRI,  1,  bdlt::Date(2000, 1,  7) },
-            { L_,    2000,     1,  e_FRI,  2,  bdlt::Date(2000, 1, 14) },
-            { L_,    2000,     1,  e_FRI,  3,  bdlt::Date(2000, 1, 21) },
-            { L_,    2000,     1,  e_FRI,  4,  bdlt::Date(2000, 1, 28) },
-            { L_,    2000,     1,  e_FRI,  5,  bdlt::Date(2000, 2,  4) },
+            { L_,    2000,     1,  e_FRI, -5,  bdlt::Date(1999, 12, 31) },
+            { L_,    2000,     1,  e_FRI, -4,  bdlt::Date(2000,  1,  7) },
+            { L_,    2000,     1,  e_FRI, -3,  bdlt::Date(2000,  1, 14) },
+            { L_,    2000,     1,  e_FRI, -2,  bdlt::Date(2000,  1, 21) },
+            { L_,    2000,     1,  e_FRI, -1,  bdlt::Date(2000,  1, 28) },
+            { L_,    2000,     1,  e_FRI,  1,  bdlt::Date(2000,  1,  7) },
+            { L_,    2000,     1,  e_FRI,  2,  bdlt::Date(2000,  1, 14) },
+            { L_,    2000,     1,  e_FRI,  3,  bdlt::Date(2000,  1, 21) },
+            { L_,    2000,     1,  e_FRI,  4,  bdlt::Date(2000,  1, 28) },
+            { L_,    2000,     1,  e_FRI,  5,  bdlt::Date(2000,  2,  4) },
 
-            { L_,    2000,     1,  e_SAT,  1,  bdlt::Date(2000, 1,  1) },
-            { L_,    2000,     1,  e_SAT,  2,  bdlt::Date(2000, 1,  8) },
-            { L_,    2000,     1,  e_SAT,  3,  bdlt::Date(2000, 1, 15) },
-            { L_,    2000,     1,  e_SAT,  4,  bdlt::Date(2000, 1, 22) },
-            { L_,    2000,     1,  e_SAT,  5,  bdlt::Date(2000, 1, 29) }
+            { L_,    2000,     1,  e_SAT, -5,  bdlt::Date(2000,  1,  1) },
+            { L_,    2000,     1,  e_SAT, -4,  bdlt::Date(2000,  1,  8) },
+            { L_,    2000,     1,  e_SAT, -3,  bdlt::Date(2000,  1, 15) },
+            { L_,    2000,     1,  e_SAT, -2,  bdlt::Date(2000,  1, 22) },
+            { L_,    2000,     1,  e_SAT, -1,  bdlt::Date(2000,  1, 29) },
+            { L_,    2000,     1,  e_SAT,  1,  bdlt::Date(2000,  1,  1) },
+            { L_,    2000,     1,  e_SAT,  2,  bdlt::Date(2000,  1,  8) },
+            { L_,    2000,     1,  e_SAT,  3,  bdlt::Date(2000,  1, 15) },
+            { L_,    2000,     1,  e_SAT,  4,  bdlt::Date(2000,  1, 22) },
+            { L_,    2000,     1,  e_SAT,  5,  bdlt::Date(2000,  1, 29) }
         };
 
         const int NUM_DATA = sizeof DATA / sizeof *DATA;
@@ -1101,9 +1219,13 @@ int main(int argc, char *argv[])
             ASSERT_SAFE_FAIL(Util::nthDayOfWeekInMonth(    1,  0, e_SUN, 1));
             ASSERT_SAFE_FAIL(Util::nthDayOfWeekInMonth(    1, 13, e_SUN, 1));
 
-            ASSERT_SAFE_PASS(Util::nthDayOfWeekInMonth(    1,  1, e_SUN, 5));
-            ASSERT_SAFE_FAIL(Util::nthDayOfWeekInMonth(    1,  1, e_SUN, 0));
-            ASSERT_SAFE_FAIL(Util::nthDayOfWeekInMonth(    1,  1, e_SUN, 6));
+            ASSERT_SAFE_FAIL(Util::nthDayOfWeekInMonth(    1,  1, e_SUN, -6));
+            ASSERT_SAFE_PASS(Util::nthDayOfWeekInMonth(    1,  1, e_SUN, -5));
+            ASSERT_SAFE_PASS(Util::nthDayOfWeekInMonth(    1,  1, e_SUN, -1));
+            ASSERT_SAFE_FAIL(Util::nthDayOfWeekInMonth(    1,  1, e_SUN,  0));
+            ASSERT_SAFE_PASS(Util::nthDayOfWeekInMonth(    1,  1, e_SUN,  1));
+            ASSERT_SAFE_PASS(Util::nthDayOfWeekInMonth(    1,  1, e_SUN,  5));
+            ASSERT_SAFE_FAIL(Util::nthDayOfWeekInMonth(    1,  1, e_SUN,  6));
         }
       } break;
       case 8: {
@@ -1608,7 +1730,7 @@ int main(int argc, char *argv[])
         //
         // Concerns:
         //: 1 The function applies the correct formula to convert a 'Date'
-        //:   to an integral value in the 'YYYYMMDD' format.
+        //:   to an integral value in the "YYYYMMDD" format.
         //
         // Plan:
         //: 1 Use the table-driven approach to define a representative set of
@@ -1629,11 +1751,10 @@ int main(int argc, char *argv[])
                           << "TESTING 'convertToYYYYMMDD'" << endl
                           << "===========================" << endl;
 
-
         static const struct {
             int        d_lineNum;   // source line number
             bdlt::Date d_date;      // date value
-            int        d_expected;  // expected result ('YYYYMMDD' format)
+            int        d_expected;  // expected result ("YYYYMMDD" format)
         } DATA[] = {
             //LINE DATE                       EXP
             //---- ----                       ---
@@ -1763,7 +1884,7 @@ int main(int argc, char *argv[])
 
         static const struct {
             int        d_lineNum;        // source line number
-            int        d_yyyymmddValue;  // date value ('YYYYMMDD' format)
+            int        d_yyyymmddValue;  // date value ("YYYYMMDD" format)
             bdlt::Date d_exp;            // expected result
 
         } DATA[] = {
@@ -1830,7 +1951,7 @@ int main(int argc, char *argv[])
 
         static const struct {
             int  d_lineNum;        // source line number
-            int  d_yyyymmddValue;  // date value ('YYYYMMDD' format)
+            int  d_yyyymmddValue;  // date value ("YYYYMMDD" format)
             bool d_exp;            // expected result
 
         } DATA[] = {
@@ -1891,7 +2012,7 @@ int main(int argc, char *argv[])
 }
 
 // ----------------------------------------------------------------------------
-// Copyright 2014 Bloomberg Finance L.P.
+// Copyright 2016 Bloomberg Finance L.P.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
