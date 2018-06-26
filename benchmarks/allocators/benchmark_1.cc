@@ -20,6 +20,8 @@
 #include <string>
 #include <unordered_set>
 
+#include <bslma_allocator_database.h>
+
 #include "benchmark_common.h"
 
 // Debugging
@@ -718,6 +720,8 @@ void run_nested_loop(void(*func)(unsigned long long, size_t), std::string header
 
 int main(int argc, char *argv[]) {
 	std::cout << "Started" << std::endl;
+    
+    std::cout << "Lester says hello!\n";
 
 	std::cout << std::endl << "Generating random numbers" << std::endl;
 	fill_random();

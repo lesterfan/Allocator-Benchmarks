@@ -20,7 +20,7 @@ LTO =
 DEBUG =
 PARALLEL = 
 
-BSLSRC = ../..
+BSLSRC = /bb/bde/lfan77/bde
 BSL = $(BSLSRC)/groups/bsl
 BDL = $(BSLSRC)/groups/bdl
 
@@ -66,6 +66,11 @@ CXXFLAGS_BDE = $(DEBUG) $(OPTIM) $(LTO) $(DEFS) $(STDLIB)
 CXXFLAGS_LOCAL = $(CXXFLAGS_BDE) -std=c++11 $(INCLUDES) $(CXXFLAGS)
 LDFLAGS_LOCAL = $(LIBS) $(LDFLAGS)
 
+
+# (These were down below)
+# Changed : $(BDEWAF) configure $(WAFCONFIGARGS) && \
+# Changed : $(BDEWAF) build -v \
+
 bde-tag: Makefile
 	( \
 	cd $(BSLSRC) && \
@@ -74,9 +79,7 @@ bde-tag: Makefile
 	export AR='$(AR)' && \
 	export RANLIB='$(RANLIB)' && \
 	export CFLAGS='$(CFLAGS_BDE)' && \
-	export CXXFLAGS='$(CXXFLAGS_BDE)' && \
-	$(BDEWAF) configure $(WAFCONFIGARGS) && \
-	$(BDEWAF) build -v \
+	export CXXFLAGS='$(CXXFLAGS_BDE)' \
 	)
 	touch bde-tag
 
