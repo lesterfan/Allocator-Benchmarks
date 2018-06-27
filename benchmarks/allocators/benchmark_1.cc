@@ -1,5 +1,5 @@
 //#define DEBUG
-//#define DEBUG_V4
+#define DEBUG_V1
 
 #include <iostream>
 #include <iomanip>
@@ -287,13 +287,12 @@ struct process_DS11 {
 	void operator() (DS11 *ds11, size_t elements) {
 		escape(ds11);
 		for (size_t i = 0; i < elements; i++) {
-			typename DS11::value_type inner(ds11->get_allocator());
+            typename DS11::value_type inner(ds11->get_allocator());
 			inner.reserve(1 << 7);
 			for (size_t j = 0; j < (1 << 7); j++)
 			{
 				inner.emplace((int)j);
 			}
-
 			auto pair = ds11->emplace(std::move(inner)); // Pair of iterator to element and success
 		}
 		clobber();

@@ -337,7 +337,7 @@ namespace BloombergLP {
         void AllocatorDatabase::add_sequence(const void* address, size_t length, void* allocator, bool debug) {
 
             // if (allocator == AllocatorDatabase::instance()->d_impl->d_global_allocator) return;
-            int ret = AllocatorDatabase::instance()->d_impl->addNode(allocator, address, (char*)address + length - 1);
+            int ret = AllocatorDatabase::instance()->d_impl->addNode(allocator, address, (const char*)address + length - 1);
 
             if (AllocatorDatabase::instance()->d_debug) {
                 std::cout << "Ran : add_sequence(" << address << ", " << length << ", " << allocator << "); ret = " << ret << "\n";
