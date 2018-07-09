@@ -2,7 +2,7 @@
 //#define DEBUG
 //#define DEBUG_V1
 //#define DEBUG_V2
-//#define DEBUG_V3
+#define DEBUG_V3
 //#define DEBUG_V4
 
 #include <iostream>
@@ -25,7 +25,9 @@
 // Changed : #include <vector>
 #include <bslstl_lestervector.h>
 
-#include <list>
+// Changed : #include <list>
+#include <bslstl_lesterlist.h>
+#include <bslstl_allocator.h>
 
 #include "lester_benchmark_common.h"
 
@@ -46,15 +48,23 @@ int AF_RF_PRODUCT = 2560;
 template<typename ALLOC>
 class AllocSubsystem {
 public:
-	ALLOC d_alloc;
-	std::list<int, alloc_adaptor<int, ALLOC> > d_list;
-	AllocSubsystem() : d_alloc(), d_list(&d_alloc) {}
+    ALLOC d_alloc;
+	bsl::list<int> d_list;
+	AllocSubsystem() : d_alloc() {
+        d_list = *new(d_alloc) bsl::list<int>();
+    }
+
+    ~AllocSubsystem(){
+        d_list.~list<int>();
+        d_alloc.deallocate(&d_list);
+    }
 };
 
 class DefaultSubsystem {
 public:
-	std::list<int> d_list;
-	DefaultSubsystem() : d_list() {}
+    bsl::list<int> d_list;
+	DefaultSubsystem() : d_list() {
+    }
 };
 
 // Convenience typedefs
@@ -74,6 +84,9 @@ double access_lists(VECTOR *vec, int af, int rf) {
 	for (size_t r = 0; r < rf; r++)	{
 		for (size_t i = 0; i < vec->size(); i++) {
 			for (size_t a = 0; a < af; a++) {
+#ifdef DEBUG_V3
+                std::cout << (*vec)[i]->d_list.size() << std::endl;
+#endif
 				for (auto it = (*vec)[i]->d_list.begin(); it != (*vec)[i]->d_list.end(); ++it) {
 					(*it)++; // Increment int to cause loop to have some effect
 				}

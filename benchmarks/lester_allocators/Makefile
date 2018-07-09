@@ -1,0 +1,99 @@
+# You may need to set the following variables:
+#
+# CXX    - path to C++ compiler
+# CC     - path to C compiler
+# AR     - path to suitable 'ar' tool
+# RANLIB - path to suitable 'ranlib' tool
+# BDEWAF - path to 'waf' in BDE Tools (https://github.com/bloomberg/bde-tools)
+#
+# They may be overridden on the command line, e.g. for gcc 5.1 on 4 cores:
+# $ make CXX=g++ CC=gcc BDEWAF=$HOME/bde-tools/bin/waf STDLIB= PARALLEL=-j4
+
+CXX = /opt/bb/bin/g++ #g++
+CC = /opt/bb/bin/gcc #gcc
+AR = /usr/bin/ar  #llvm-ar-3.6
+RANLIB = /usr/bin/ranlib #llvm-ranlib-3.6
+BDEWAF = /bb/bde/bbshr/bde-oss-tools/bin/waf #waf
+
+OPTIM = -O3 -DBSLS_ASSERT_LEVEL_NONE
+LTO =
+DEBUG =
+PARALLEL = 
+
+BSLSRC = /bb/bde/lfan77/bde
+BSL = $(BSLSRC)/groups/bsl
+BDL = $(BSLSRC)/groups/bdl
+
+# Changed : BSLINC = $(INST)/include/bsl
+# Changed : BDLINC = $(INST)/include/bdl
+
+BSLINC = /bb/bde/lfan77/install/bb/bde/lfan77/install/unix-linux-x86_64-2.6.32-gcc-7.3.0-opt_exc_mt_64_cpp11/include
+BDLINC = /bb/bde/lfan77/install/bb/bde/lfan77/install/unix-linux-x86_64-2.6.32-gcc-7.3.0-opt_exc_mt_64_cpp11/include
+
+# Changed : BSLLIB = $(BSLSRC)/build/groups/bsl
+# Changed : BDLLIB = $(BSLSRC)/build/groups/bdl
+
+BSLLIB = /bb/bde/lfan77/install/bb/bde/lfan77/install/unix-linux-x86_64-2.6.32-gcc-7.3.0-opt_exc_mt_64_cpp11/lib64/opt_exc_mt
+BDLLIB = /bb/bde/lfan77/install/bb/bde/lfan77/install/unix-linux-x86_64-2.6.32-gcc-7.3.0-opt_exc_mt_64_cpp11/lib64/opt_exc_mt
+
+# comment this out for gcc-5:
+# STDLIB = -stdlib=libc++ # TODO: Clang
+# If libc++ was built from source (not installed from a system package),
+# then libc++abi may not have been linked into libc++. In this situation, the
+# linker must be explicitly told to include it in the link, by uncommenting
+# the line below.
+#STDLIBABI = -lc++abi
+
+INCLUDES = \
+   -I$(BSL)/bsls -I$(BSL)/bslma -I$(BSL)/bslscm -I$(BSL)/bslh \
+   -I$(BSL)/bsl+bslhdrs -I$(BSL)/bslstl -I$(BSL)/bslmf -I$(BSL)/bslalg \
+   -I$(BDL)/bdlscm -I$(BDL)/bdlma
+
+DEFS = -D_REENTRANT -D_POSIX_PTHREAD_SEMANTICS -DBSLS_IDENT_OFF
+WAFCONFIGARGS = \
+    --abi-bits=64 --cpp-std=11 --build-type release \
+#    --assert-level=none $(PARALLEL) 
+
+LIBS = \
+   -Wl,-Bstatic \
+   -L$(BDLLIB) -lbdl -L$(BSLLIB) -lbsl \
+   -Wl,-Bdynamic \
+   $(STDLIBABI) \
+   -lpthread
+
+CFLAGS_BDE = $(DEBUG) $(OPTIM) $(LTO) $(DEFS) $(CFLAGS) -std=c99
+CXXFLAGS_BDE = $(DEBUG) $(OPTIM) $(LTO) $(DEFS) $(STDLIB)
+CXXFLAGS_LOCAL = $(CXXFLAGS_BDE) -std=c++11 $(INCLUDES) $(CXXFLAGS)
+LDFLAGS_LOCAL = $(LIBS) $(LDFLAGS)
+
+
+# (These were down below)
+# Changed : $(BDEWAF) configure $(WAFCONFIGARGS) && \
+# Changed : $(BDEWAF) build -v \
+
+bde-tag: Makefile
+	( \
+	cd $(BSLSRC) && \
+	export CC='$(CC)' && \
+	export CXX='$(CXX)' && \
+	export AR='$(AR)' && \
+	export RANLIB='$(RANLIB)' && \
+	export CFLAGS='$(CFLAGS_BDE)' && \
+	export CXXFLAGS='$(CXXFLAGS_BDE)' \
+	)
+	touch bde-tag
+
+lester_benchmark_1: lester_benchmark_1.cc lester_benchmark_common.h bde-tag
+	$(CXX) -o $@ $(CXXFLAGS_LOCAL) $< $(LDFLAGS_LOCAL)
+
+lester_benchmark_2: lester_benchmark_2.cc lester_benchmark_common.h bde-tag
+	$(CXX) -o $@ $(CXXFLAGS_LOCAL) $< $(LDFLAGS_LOCAL)
+
+lester_benchmark_3: lester_benchmark_3.cc lester_benchmark_common.h bde-tag
+	$(CXX) -o $@ $(CXXFLAGS_LOCAL) $< $(LDFLAGS_LOCAL)
+
+lester_benchmark_4: lester_benchmark_4.cc lester_benchmark_common.h bde-tag
+	$(CXX) -o $@ $(CXXFLAGS_LOCAL) $< $(LDFLAGS_LOCAL)
+
+lester_benchmark_5: lester_benchmark_5.cc lester_benchmark_common.h bde-tag
+	$(CXX) -o $@ $(CXXFLAGS_LOCAL) $< $(LDFLAGS_LOCAL)

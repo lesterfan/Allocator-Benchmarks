@@ -1,0 +1,154 @@
+#include <iostream>
+#include <iomanip>
+#include <memory>
+#include <random>
+#include <iterator>
+#include <functional>
+#include <ctime>
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <memory.h>
+
+#include <bsl_memory.h>
+#include <bslma_newdeleteallocator.h>
+#include <bdlma_bufferedsequentialallocator.h>
+#include <bdlma_multipoolallocator.h>
+
+// Debugging
+#include <typeinfo>
+#include <assert.h>
+
+using namespace BloombergLP;
+
+// Chandler Carruth's Optimizer-Defeating Magic
+// Source: https://www.youtube.com/watch?v=nXaxk27zwlk
+inline
+void escape(void* p)
+{
+	asm volatile("" : : "g"(p) : "memory");
+}
+
+inline
+void clobber()
+{
+	asm volatile("" : : : "memory");
+}
+
+// TODO will this hashing algorithm cause issues? Maybe just a singleton counter?
+size_t hash_value = 0;
+template <typename T>
+struct hash {
+	typedef std::size_t result_type;
+	typedef T argument_type;
+	result_type operator()(T const& obj) const {
+#ifdef DEBUG_V4
+		std::cout << "Hashing " << typeid(T).name() << " to value " << hash_value << std::endl;
+#endif
+		return hash_value++;
+	}
+};
+
+template <typename T>
+struct equal {
+	bool operator()(T const& t, T const& u) const
+	{
+#ifdef DEBUG_V4
+		std::cout << "Comparing " << typeid(T).name() << std::endl;
+#endif
+		return &t == &u;
+	}
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ---------------------------------------- KEEP THE ALLOC ADAPTERS HERE FOR NOW -------------------------------------
+
+template <typename T, typename ALLOC>
+struct alloc_adaptor {
+	typedef T value_type;
+	typedef T * pointer;
+	typedef const T * const_pointer;
+	typedef T& reference;
+	typedef T const& const_reference;
+	typedef size_t size_type;
+	typedef ptrdiff_t difference_type;
+	ALLOC* alloc;
+	alloc_adaptor() : alloc(nullptr) {
+#ifdef DEBUG_V4
+		std::cout << "Default constructing allocator for for " << typeid(T).name() << std::endl;
+#endif
+	}
+	alloc_adaptor(ALLOC* allo) : alloc(allo) {
+#ifdef DEBUG_V4
+		std::cout << "Constructing allocator for " << typeid(T).name() << " from " << typeid(ALLOC).name() << std::endl;
+#endif
+	}
+	template <typename T2>
+	alloc_adaptor(alloc_adaptor<T2, ALLOC> other) : alloc(other.alloc) {
+#ifdef DEBUG_V4
+		std::cout << "Constructing allocator for " << typeid(T).name() << " from  allocator " << typeid(ALLOC).name() << " for type " << typeid(T2).name() << std::endl;
+#endif
+	}
+	T* allocate(size_t sz) {
+		//char volatile* p = (char*)alloc->allocate(sz * sizeof(T));
+		//*p = '\0';																					// TODO: Is this the "writing a null byte" part
+		//return (T*)p;
+#ifdef DEBUG_V4
+		std::cout << "Allocating " << sz * sizeof(T) << " bytes for "  << sz << " " << typeid(T).name() << std::endl;
+#endif
+		return (T*)alloc->allocate(sz * sizeof(T));
+	}
+	void deallocate(void* p, size_t) {
+#ifdef DEBUG_V4
+		std::cout << "Deallocating" << std::endl;
+#endif
+		alloc->deallocate(p); }
+
+	// TODO: Validate that these do not have unintended consequences
+	template<typename OTHER>
+	struct rebind
+	{
+		typedef alloc_adaptor<OTHER, ALLOC> other;
+	};
+
+	template<typename OTHER, typename... Args>
+	void construct(OTHER * object, Args &&... args)
+	{
+#ifdef DEBUG_V4
+		std::cout << "Constructing object of type " << typeid(OTHER).name() << std::endl;
+#endif
+		new (object) OTHER(std::forward<Args>(args)...);
+	}
+
+	template<typename OTHER>
+	void destroy(OTHER * object)
+	{
+#ifdef DEBUG_V4
+		std::cout << "Destroying object of type " << typeid(OTHER).name() << std::endl;
+#endif
+		object->~OTHER();
+	}
+};
+
+template< typename BASE>
+struct alloc_adaptors {
+	typedef alloc_adaptor<BASE, BloombergLP::bslma::NewDeleteAllocator> newdel;
+	typedef alloc_adaptor<BASE, BloombergLP::bdlma::BufferedSequentialAllocator> monotonic;
+	typedef alloc_adaptor<BASE, BloombergLP::bdlma::MultipoolAllocator> multipool;
+	typedef bsl::allocator<BASE> polymorphic;
+};
+

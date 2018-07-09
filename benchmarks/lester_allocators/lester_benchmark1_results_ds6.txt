@@ -1,0 +1,7 @@
+Started
+Lester says hello!
+
+Generating random numbers
+**DS6**
+Itr=2097152 Elems=64 
+AS2
