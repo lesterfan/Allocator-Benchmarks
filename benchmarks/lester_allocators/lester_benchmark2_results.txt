@@ -1,0 +1,1616 @@
+Started
+Problem Size 2^21 Without Allocators (Table 16) -ve shuffle
+S=21 G: 21 S: -21 af: 256 sf: -5 rf: 10
+Total number of lists (k) = 2^0 (aka 1)
+Total number of elements per sub system (S) = 2^21 (aka 2097152)
+Created vector with 1 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+622.02 G: 21 S: -21 af: 128 sf: -5 rf: 20
+Total number of lists (k) = 2^0 (aka 1)
+Total number of elements per sub system (S) = 2^21 (aka 2097152)
+Created vector with 1 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+624.36 G: 21 S: -21 af: 64 sf: -5 rf: 40
+Total number of lists (k) = 2^0 (aka 1)
+Total number of elements per sub system (S) = 2^21 (aka 2097152)
+Created vector with 1 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+648.32 G: 21 S: -21 af: 32 sf: -5 rf: 80
+Total number of lists (k) = 2^0 (aka 1)
+Total number of elements per sub system (S) = 2^21 (aka 2097152)
+Created vector with 1 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+636.85 G: 21 S: -21 af: 16 sf: -5 rf: 160
+Total number of lists (k) = 2^0 (aka 1)
+Total number of elements per sub system (S) = 2^21 (aka 2097152)
+Created vector with 1 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+640.61 G: 21 S: -21 af: 8 sf: -5 rf: 320
+Total number of lists (k) = 2^0 (aka 1)
+Total number of elements per sub system (S) = 2^21 (aka 2097152)
+Created vector with 1 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+632.03 G: 21 S: -21 af: 4 sf: -5 rf: 640
+Total number of lists (k) = 2^0 (aka 1)
+Total number of elements per sub system (S) = 2^21 (aka 2097152)
+Created vector with 1 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+631.12 G: 21 S: -21 af: 2 sf: -5 rf: 1280
+Total number of lists (k) = 2^0 (aka 1)
+Total number of elements per sub system (S) = 2^21 (aka 2097152)
+Created vector with 1 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+633.61 G: 21 S: -21 af: 1 sf: -5 rf: 2560
+Total number of lists (k) = 2^0 (aka 1)
+Total number of elements per sub system (S) = 2^21 (aka 2097152)
+Created vector with 1 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+645.77 
+S=20 G: 21 S: -20 af: 256 sf: -5 rf: 10
+Total number of lists (k) = 2^1 (aka 2)
+Total number of elements per sub system (S) = 2^20 (aka 1048576)
+Created vector with 2 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+587.1 G: 21 S: -20 af: 128 sf: -5 rf: 20
+Total number of lists (k) = 2^1 (aka 2)
+Total number of elements per sub system (S) = 2^20 (aka 1048576)
+Created vector with 2 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+610.45 G: 21 S: -20 af: 64 sf: -5 rf: 40
+Total number of lists (k) = 2^1 (aka 2)
+Total number of elements per sub system (S) = 2^20 (aka 1048576)
+Created vector with 2 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+577.05 G: 21 S: -20 af: 32 sf: -5 rf: 80
+Total number of lists (k) = 2^1 (aka 2)
+Total number of elements per sub system (S) = 2^20 (aka 1048576)
+Created vector with 2 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+595.19 G: 21 S: -20 af: 16 sf: -5 rf: 160
+Total number of lists (k) = 2^1 (aka 2)
+Total number of elements per sub system (S) = 2^20 (aka 1048576)
+Created vector with 2 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+598.95 G: 21 S: -20 af: 8 sf: -5 rf: 320
+Total number of lists (k) = 2^1 (aka 2)
+Total number of elements per sub system (S) = 2^20 (aka 1048576)
+Created vector with 2 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+593.82 G: 21 S: -20 af: 4 sf: -5 rf: 640
+Total number of lists (k) = 2^1 (aka 2)
+Total number of elements per sub system (S) = 2^20 (aka 1048576)
+Created vector with 2 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+599.97 G: 21 S: -20 af: 2 sf: -5 rf: 1280
+Total number of lists (k) = 2^1 (aka 2)
+Total number of elements per sub system (S) = 2^20 (aka 1048576)
+Created vector with 2 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+608.82 G: 21 S: -20 af: 1 sf: -5 rf: 2560
+Total number of lists (k) = 2^1 (aka 2)
+Total number of elements per sub system (S) = 2^20 (aka 1048576)
+Created vector with 2 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+596.82 
+S=19 G: 21 S: -19 af: 256 sf: -5 rf: 10
+Total number of lists (k) = 2^2 (aka 4)
+Total number of elements per sub system (S) = 2^19 (aka 524288)
+Created vector with 4 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+528.54 G: 21 S: -19 af: 128 sf: -5 rf: 20
+Total number of lists (k) = 2^2 (aka 4)
+Total number of elements per sub system (S) = 2^19 (aka 524288)
+Created vector with 4 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+515.69 G: 21 S: -19 af: 64 sf: -5 rf: 40
+Total number of lists (k) = 2^2 (aka 4)
+Total number of elements per sub system (S) = 2^19 (aka 524288)
+Created vector with 4 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+521.11 G: 21 S: -19 af: 32 sf: -5 rf: 80
+Total number of lists (k) = 2^2 (aka 4)
+Total number of elements per sub system (S) = 2^19 (aka 524288)
+Created vector with 4 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+518.49 G: 21 S: -19 af: 16 sf: -5 rf: 160
+Total number of lists (k) = 2^2 (aka 4)
+Total number of elements per sub system (S) = 2^19 (aka 524288)
+Created vector with 4 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+529.68 G: 21 S: -19 af: 8 sf: -5 rf: 320
+Total number of lists (k) = 2^2 (aka 4)
+Total number of elements per sub system (S) = 2^19 (aka 524288)
+Created vector with 4 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+540.59 G: 21 S: -19 af: 4 sf: -5 rf: 640
+Total number of lists (k) = 2^2 (aka 4)
+Total number of elements per sub system (S) = 2^19 (aka 524288)
+Created vector with 4 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+542.84 G: 21 S: -19 af: 2 sf: -5 rf: 1280
+Total number of lists (k) = 2^2 (aka 4)
+Total number of elements per sub system (S) = 2^19 (aka 524288)
+Created vector with 4 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+551.35 G: 21 S: -19 af: 1 sf: -5 rf: 2560
+Total number of lists (k) = 2^2 (aka 4)
+Total number of elements per sub system (S) = 2^19 (aka 524288)
+Created vector with 4 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+559.6 
+S=18 G: 21 S: -18 af: 256 sf: -5 rf: 10
+Total number of lists (k) = 2^3 (aka 8)
+Total number of elements per sub system (S) = 2^18 (aka 262144)
+Created vector with 8 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+204.85 G: 21 S: -18 af: 128 sf: -5 rf: 20
+Total number of lists (k) = 2^3 (aka 8)
+Total number of elements per sub system (S) = 2^18 (aka 262144)
+Created vector with 8 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+192.93 G: 21 S: -18 af: 64 sf: -5 rf: 40
+Total number of lists (k) = 2^3 (aka 8)
+Total number of elements per sub system (S) = 2^18 (aka 262144)
+Created vector with 8 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+183.83 G: 21 S: -18 af: 32 sf: -5 rf: 80
+Total number of lists (k) = 2^3 (aka 8)
+Total number of elements per sub system (S) = 2^18 (aka 262144)
+Created vector with 8 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+202.7 G: 21 S: -18 af: 16 sf: -5 rf: 160
+Total number of lists (k) = 2^3 (aka 8)
+Total number of elements per sub system (S) = 2^18 (aka 262144)
+Created vector with 8 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+226.12 G: 21 S: -18 af: 8 sf: -5 rf: 320
+Total number of lists (k) = 2^3 (aka 8)
+Total number of elements per sub system (S) = 2^18 (aka 262144)
+Created vector with 8 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+236.74 G: 21 S: -18 af: 4 sf: -5 rf: 640
+Total number of lists (k) = 2^3 (aka 8)
+Total number of elements per sub system (S) = 2^18 (aka 262144)
+Created vector with 8 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+324.92 G: 21 S: -18 af: 2 sf: -5 rf: 1280
+Total number of lists (k) = 2^3 (aka 8)
+Total number of elements per sub system (S) = 2^18 (aka 262144)
+Created vector with 8 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+479.93 G: 21 S: -18 af: 1 sf: -5 rf: 2560
+Total number of lists (k) = 2^3 (aka 8)
+Total number of elements per sub system (S) = 2^18 (aka 262144)
+Created vector with 8 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+516.77 
+S=17 G: 21 S: -17 af: 256 sf: -5 rf: 10
+Total number of lists (k) = 2^4 (aka 16)
+Total number of elements per sub system (S) = 2^17 (aka 131072)
+Created vector with 16 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+120.11 G: 21 S: -17 af: 128 sf: -5 rf: 20
+Total number of lists (k) = 2^4 (aka 16)
+Total number of elements per sub system (S) = 2^17 (aka 131072)
+Created vector with 16 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+125.26 G: 21 S: -17 af: 64 sf: -5 rf: 40
+Total number of lists (k) = 2^4 (aka 16)
+Total number of elements per sub system (S) = 2^17 (aka 131072)
+Created vector with 16 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+128.67 G: 21 S: -17 af: 32 sf: -5 rf: 80
+Total number of lists (k) = 2^4 (aka 16)
+Total number of elements per sub system (S) = 2^17 (aka 131072)
+Created vector with 16 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+124.75 G: 21 S: -17 af: 16 sf: -5 rf: 160
+Total number of lists (k) = 2^4 (aka 16)
+Total number of elements per sub system (S) = 2^17 (aka 131072)
+Created vector with 16 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+144.64 G: 21 S: -17 af: 8 sf: -5 rf: 320
+Total number of lists (k) = 2^4 (aka 16)
+Total number of elements per sub system (S) = 2^17 (aka 131072)
+Created vector with 16 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+178.41 G: 21 S: -17 af: 4 sf: -5 rf: 640
+Total number of lists (k) = 2^4 (aka 16)
+Total number of elements per sub system (S) = 2^17 (aka 131072)
+Created vector with 16 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+233.36 G: 21 S: -17 af: 2 sf: -5 rf: 1280
+Total number of lists (k) = 2^4 (aka 16)
+Total number of elements per sub system (S) = 2^17 (aka 131072)
+Created vector with 16 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+338.93 G: 21 S: -17 af: 1 sf: -5 rf: 2560
+Total number of lists (k) = 2^4 (aka 16)
+Total number of elements per sub system (S) = 2^17 (aka 131072)
+Created vector with 16 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+548.17 
+S=16 G: 21 S: -16 af: 256 sf: -5 rf: 10
+Total number of lists (k) = 2^5 (aka 32)
+Total number of elements per sub system (S) = 2^16 (aka 65536)
+Created vector with 32 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+125.32 G: 21 S: -16 af: 128 sf: -5 rf: 20
+Total number of lists (k) = 2^5 (aka 32)
+Total number of elements per sub system (S) = 2^16 (aka 65536)
+Created vector with 32 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+116.09 G: 21 S: -16 af: 64 sf: -5 rf: 40
+Total number of lists (k) = 2^5 (aka 32)
+Total number of elements per sub system (S) = 2^16 (aka 65536)
+Created vector with 32 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+128.36 G: 21 S: -16 af: 32 sf: -5 rf: 80
+Total number of lists (k) = 2^5 (aka 32)
+Total number of elements per sub system (S) = 2^16 (aka 65536)
+Created vector with 32 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+140.14 G: 21 S: -16 af: 16 sf: -5 rf: 160
+Total number of lists (k) = 2^5 (aka 32)
+Total number of elements per sub system (S) = 2^16 (aka 65536)
+Created vector with 32 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+135.78 G: 21 S: -16 af: 8 sf: -5 rf: 320
+Total number of lists (k) = 2^5 (aka 32)
+Total number of elements per sub system (S) = 2^16 (aka 65536)
+Created vector with 32 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+174.85 G: 21 S: -16 af: 4 sf: -5 rf: 640
+Total number of lists (k) = 2^5 (aka 32)
+Total number of elements per sub system (S) = 2^16 (aka 65536)
+Created vector with 32 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+230.73 G: 21 S: -16 af: 2 sf: -5 rf: 1280
+Total number of lists (k) = 2^5 (aka 32)
+Total number of elements per sub system (S) = 2^16 (aka 65536)
+Created vector with 32 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+333.54 G: 21 S: -16 af: 1 sf: -5 rf: 2560
+Total number of lists (k) = 2^5 (aka 32)
+Total number of elements per sub system (S) = 2^16 (aka 65536)
+Created vector with 32 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+548.77 
+S=15 G: 21 S: -15 af: 256 sf: -5 rf: 10
+Total number of lists (k) = 2^6 (aka 64)
+Total number of elements per sub system (S) = 2^15 (aka 32768)
+Created vector with 64 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+125.31 G: 21 S: -15 af: 128 sf: -5 rf: 20
+Total number of lists (k) = 2^6 (aka 64)
+Total number of elements per sub system (S) = 2^15 (aka 32768)
+Created vector with 64 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+131.39 G: 21 S: -15 af: 64 sf: -5 rf: 40
+Total number of lists (k) = 2^6 (aka 64)
+Total number of elements per sub system (S) = 2^15 (aka 32768)
+Created vector with 64 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+123.04 G: 21 S: -15 af: 32 sf: -5 rf: 80
+Total number of lists (k) = 2^6 (aka 64)
+Total number of elements per sub system (S) = 2^15 (aka 32768)
+Created vector with 64 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+135.96 G: 21 S: -15 af: 16 sf: -5 rf: 160
+Total number of lists (k) = 2^6 (aka 64)
+Total number of elements per sub system (S) = 2^15 (aka 32768)
+Created vector with 64 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+138.92 G: 21 S: -15 af: 8 sf: -5 rf: 320
+Total number of lists (k) = 2^6 (aka 64)
+Total number of elements per sub system (S) = 2^15 (aka 32768)
+Created vector with 64 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+177.4 G: 21 S: -15 af: 4 sf: -5 rf: 640
+Total number of lists (k) = 2^6 (aka 64)
+Total number of elements per sub system (S) = 2^15 (aka 32768)
+Created vector with 64 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+235.34 G: 21 S: -15 af: 2 sf: -5 rf: 1280
+Total number of lists (k) = 2^6 (aka 64)
+Total number of elements per sub system (S) = 2^15 (aka 32768)
+Created vector with 64 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+337.92 G: 21 S: -15 af: 1 sf: -5 rf: 2560
+Total number of lists (k) = 2^6 (aka 64)
+Total number of elements per sub system (S) = 2^15 (aka 32768)
+Created vector with 64 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+555.43 
+S=14 G: 21 S: -14 af: 256 sf: -5 rf: 10
+Total number of lists (k) = 2^7 (aka 128)
+Total number of elements per sub system (S) = 2^14 (aka 16384)
+Created vector with 128 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+118.34 G: 21 S: -14 af: 128 sf: -5 rf: 20
+Total number of lists (k) = 2^7 (aka 128)
+Total number of elements per sub system (S) = 2^14 (aka 16384)
+Created vector with 128 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+119.73 G: 21 S: -14 af: 64 sf: -5 rf: 40
+Total number of lists (k) = 2^7 (aka 128)
+Total number of elements per sub system (S) = 2^14 (aka 16384)
+Created vector with 128 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+129.54 G: 21 S: -14 af: 32 sf: -5 rf: 80
+Total number of lists (k) = 2^7 (aka 128)
+Total number of elements per sub system (S) = 2^14 (aka 16384)
+Created vector with 128 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+126.05 G: 21 S: -14 af: 16 sf: -5 rf: 160
+Total number of lists (k) = 2^7 (aka 128)
+Total number of elements per sub system (S) = 2^14 (aka 16384)
+Created vector with 128 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+146.46 G: 21 S: -14 af: 8 sf: -5 rf: 320
+Total number of lists (k) = 2^7 (aka 128)
+Total number of elements per sub system (S) = 2^14 (aka 16384)
+Created vector with 128 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+166.47 G: 21 S: -14 af: 4 sf: -5 rf: 640
+Total number of lists (k) = 2^7 (aka 128)
+Total number of elements per sub system (S) = 2^14 (aka 16384)
+Created vector with 128 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+234.41 G: 21 S: -14 af: 2 sf: -5 rf: 1280
+Total number of lists (k) = 2^7 (aka 128)
+Total number of elements per sub system (S) = 2^14 (aka 16384)
+Created vector with 128 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+342.83 G: 21 S: -14 af: 1 sf: -5 rf: 2560
+Total number of lists (k) = 2^7 (aka 128)
+Total number of elements per sub system (S) = 2^14 (aka 16384)
+Created vector with 128 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+559.9 
+S=13 G: 21 S: -13 af: 256 sf: -5 rf: 10
+Total number of lists (k) = 2^8 (aka 256)
+Total number of elements per sub system (S) = 2^13 (aka 8192)
+Created vector with 256 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+114.98 G: 21 S: -13 af: 128 sf: -5 rf: 20
+Total number of lists (k) = 2^8 (aka 256)
+Total number of elements per sub system (S) = 2^13 (aka 8192)
+Created vector with 256 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+120.23 G: 21 S: -13 af: 64 sf: -5 rf: 40
+Total number of lists (k) = 2^8 (aka 256)
+Total number of elements per sub system (S) = 2^13 (aka 8192)
+Created vector with 256 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+108.88 G: 21 S: -13 af: 32 sf: -5 rf: 80
+Total number of lists (k) = 2^8 (aka 256)
+Total number of elements per sub system (S) = 2^13 (aka 8192)
+Created vector with 256 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+132.57 G: 21 S: -13 af: 16 sf: -5 rf: 160
+Total number of lists (k) = 2^8 (aka 256)
+Total number of elements per sub system (S) = 2^13 (aka 8192)
+Created vector with 256 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+139.51 G: 21 S: -13 af: 8 sf: -5 rf: 320
+Total number of lists (k) = 2^8 (aka 256)
+Total number of elements per sub system (S) = 2^13 (aka 8192)
+Created vector with 256 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+172.34 G: 21 S: -13 af: 4 sf: -5 rf: 640
+Total number of lists (k) = 2^8 (aka 256)
+Total number of elements per sub system (S) = 2^13 (aka 8192)
+Created vector with 256 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+233.85 G: 21 S: -13 af: 2 sf: -5 rf: 1280
+Total number of lists (k) = 2^8 (aka 256)
+Total number of elements per sub system (S) = 2^13 (aka 8192)
+Created vector with 256 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+345.62 G: 21 S: -13 af: 1 sf: -5 rf: 2560
+Total number of lists (k) = 2^8 (aka 256)
+Total number of elements per sub system (S) = 2^13 (aka 8192)
+Created vector with 256 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+553.32 
+S=12 G: 21 S: -12 af: 256 sf: -5 rf: 10
+Total number of lists (k) = 2^9 (aka 512)
+Total number of elements per sub system (S) = 2^12 (aka 4096)
+Created vector with 512 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+93.26 G: 21 S: -12 af: 128 sf: -5 rf: 20
+Total number of lists (k) = 2^9 (aka 512)
+Total number of elements per sub system (S) = 2^12 (aka 4096)
+Created vector with 512 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+109.74 G: 21 S: -12 af: 64 sf: -5 rf: 40
+Total number of lists (k) = 2^9 (aka 512)
+Total number of elements per sub system (S) = 2^12 (aka 4096)
+Created vector with 512 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+113.46 G: 21 S: -12 af: 32 sf: -5 rf: 80
+Total number of lists (k) = 2^9 (aka 512)
+Total number of elements per sub system (S) = 2^12 (aka 4096)
+Created vector with 512 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+116.8 G: 21 S: -12 af: 16 sf: -5 rf: 160
+Total number of lists (k) = 2^9 (aka 512)
+Total number of elements per sub system (S) = 2^12 (aka 4096)
+Created vector with 512 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+136.69 G: 21 S: -12 af: 8 sf: -5 rf: 320
+Total number of lists (k) = 2^9 (aka 512)
+Total number of elements per sub system (S) = 2^12 (aka 4096)
+Created vector with 512 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+161.76 G: 21 S: -12 af: 4 sf: -5 rf: 640
+Total number of lists (k) = 2^9 (aka 512)
+Total number of elements per sub system (S) = 2^12 (aka 4096)
+Created vector with 512 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+220.4 G: 21 S: -12 af: 2 sf: -5 rf: 1280
+Total number of lists (k) = 2^9 (aka 512)
+Total number of elements per sub system (S) = 2^12 (aka 4096)
+Created vector with 512 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+341.52 G: 21 S: -12 af: 1 sf: -5 rf: 2560
+Total number of lists (k) = 2^9 (aka 512)
+Total number of elements per sub system (S) = 2^12 (aka 4096)
+Created vector with 512 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+569.05 
+S=11 G: 21 S: -11 af: 256 sf: -5 rf: 10
+Total number of lists (k) = 2^10 (aka 1024)
+Total number of elements per sub system (S) = 2^11 (aka 2048)
+Created vector with 1024 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+75.41 G: 21 S: -11 af: 128 sf: -5 rf: 20
+Total number of lists (k) = 2^10 (aka 1024)
+Total number of elements per sub system (S) = 2^11 (aka 2048)
+Created vector with 1024 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+67.63 G: 21 S: -11 af: 64 sf: -5 rf: 40
+Total number of lists (k) = 2^10 (aka 1024)
+Total number of elements per sub system (S) = 2^11 (aka 2048)
+Created vector with 1024 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+81.61 G: 21 S: -11 af: 32 sf: -5 rf: 80
+Total number of lists (k) = 2^10 (aka 1024)
+Total number of elements per sub system (S) = 2^11 (aka 2048)
+Created vector with 1024 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+92.36 G: 21 S: -11 af: 16 sf: -5 rf: 160
+Total number of lists (k) = 2^10 (aka 1024)
+Total number of elements per sub system (S) = 2^11 (aka 2048)
+Created vector with 1024 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+104.13 G: 21 S: -11 af: 8 sf: -5 rf: 320
+Total number of lists (k) = 2^10 (aka 1024)
+Total number of elements per sub system (S) = 2^11 (aka 2048)
+Created vector with 1024 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+134.63 G: 21 S: -11 af: 4 sf: -5 rf: 640
+Total number of lists (k) = 2^10 (aka 1024)
+Total number of elements per sub system (S) = 2^11 (aka 2048)
+Created vector with 1024 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+200.41 G: 21 S: -11 af: 2 sf: -5 rf: 1280
+Total number of lists (k) = 2^10 (aka 1024)
+Total number of elements per sub system (S) = 2^11 (aka 2048)
+Created vector with 1024 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+327.96 G: 21 S: -11 af: 1 sf: -5 rf: 2560
+Total number of lists (k) = 2^10 (aka 1024)
+Total number of elements per sub system (S) = 2^11 (aka 2048)
+Created vector with 1024 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+558.81 
+S=10 G: 21 S: -10 af: 256 sf: -5 rf: 10
+Total number of lists (k) = 2^11 (aka 2048)
+Total number of elements per sub system (S) = 2^10 (aka 1024)
+Created vector with 2048 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+46.44 G: 21 S: -10 af: 128 sf: -5 rf: 20
+Total number of lists (k) = 2^11 (aka 2048)
+Total number of elements per sub system (S) = 2^10 (aka 1024)
+Created vector with 2048 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+48.35 G: 21 S: -10 af: 64 sf: -5 rf: 40
+Total number of lists (k) = 2^11 (aka 2048)
+Total number of elements per sub system (S) = 2^10 (aka 1024)
+Created vector with 2048 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+49.77 G: 21 S: -10 af: 32 sf: -5 rf: 80
+Total number of lists (k) = 2^11 (aka 2048)
+Total number of elements per sub system (S) = 2^10 (aka 1024)
+Created vector with 2048 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+60.52 G: 21 S: -10 af: 16 sf: -5 rf: 160
+Total number of lists (k) = 2^11 (aka 2048)
+Total number of elements per sub system (S) = 2^10 (aka 1024)
+Created vector with 2048 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+76.4 G: 21 S: -10 af: 8 sf: -5 rf: 320
+Total number of lists (k) = 2^11 (aka 2048)
+Total number of elements per sub system (S) = 2^10 (aka 1024)
+Created vector with 2048 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+103.69 G: 21 S: -10 af: 4 sf: -5 rf: 640
+Total number of lists (k) = 2^11 (aka 2048)
+Total number of elements per sub system (S) = 2^10 (aka 1024)
+Created vector with 2048 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+175.68 G: 21 S: -10 af: 2 sf: -5 rf: 1280
+Total number of lists (k) = 2^11 (aka 2048)
+Total number of elements per sub system (S) = 2^10 (aka 1024)
+Created vector with 2048 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+302.18 G: 21 S: -10 af: 1 sf: -5 rf: 2560
+Total number of lists (k) = 2^11 (aka 2048)
+Total number of elements per sub system (S) = 2^10 (aka 1024)
+Created vector with 2048 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+558.56 
+S=9 G: 21 S: -9 af: 256 sf: -5 rf: 10
+Total number of lists (k) = 2^12 (aka 4096)
+Total number of elements per sub system (S) = 2^9 (aka 512)
+Created vector with 4096 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+41.9 G: 21 S: -9 af: 128 sf: -5 rf: 20
+Total number of lists (k) = 2^12 (aka 4096)
+Total number of elements per sub system (S) = 2^9 (aka 512)
+Created vector with 4096 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+38 G: 21 S: -9 af: 64 sf: -5 rf: 40
+Total number of lists (k) = 2^12 (aka 4096)
+Total number of elements per sub system (S) = 2^9 (aka 512)
+Created vector with 4096 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+44.88 G: 21 S: -9 af: 32 sf: -5 rf: 80
+Total number of lists (k) = 2^12 (aka 4096)
+Total number of elements per sub system (S) = 2^9 (aka 512)
+Created vector with 4096 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+56.81 G: 21 S: -9 af: 16 sf: -5 rf: 160
+Total number of lists (k) = 2^12 (aka 4096)
+Total number of elements per sub system (S) = 2^9 (aka 512)
+Created vector with 4096 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+66.68 G: 21 S: -9 af: 8 sf: -5 rf: 320
+Total number of lists (k) = 2^12 (aka 4096)
+Total number of elements per sub system (S) = 2^9 (aka 512)
+Created vector with 4096 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+95.42 G: 21 S: -9 af: 4 sf: -5 rf: 640
+Total number of lists (k) = 2^12 (aka 4096)
+Total number of elements per sub system (S) = 2^9 (aka 512)
+Created vector with 4096 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+167.23 G: 21 S: -9 af: 2 sf: -5 rf: 1280
+Total number of lists (k) = 2^12 (aka 4096)
+Total number of elements per sub system (S) = 2^9 (aka 512)
+Created vector with 4096 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+307.95 G: 21 S: -9 af: 1 sf: -5 rf: 2560
+Total number of lists (k) = 2^12 (aka 4096)
+Total number of elements per sub system (S) = 2^9 (aka 512)
+Created vector with 4096 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+572.9 
+S=8 G: 21 S: -8 af: 256 sf: -5 rf: 10
+Total number of lists (k) = 2^13 (aka 8192)
+Total number of elements per sub system (S) = 2^8 (aka 256)
+Created vector with 8192 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+24.24 G: 21 S: -8 af: 128 sf: -5 rf: 20
+Total number of lists (k) = 2^13 (aka 8192)
+Total number of elements per sub system (S) = 2^8 (aka 256)
+Created vector with 8192 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+24.41 G: 21 S: -8 af: 64 sf: -5 rf: 40
+Total number of lists (k) = 2^13 (aka 8192)
+Total number of elements per sub system (S) = 2^8 (aka 256)
+Created vector with 8192 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+31.54 G: 21 S: -8 af: 32 sf: -5 rf: 80
+Total number of lists (k) = 2^13 (aka 8192)
+Total number of elements per sub system (S) = 2^8 (aka 256)
+Created vector with 8192 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+38.97 G: 21 S: -8 af: 16 sf: -5 rf: 160
+Total number of lists (k) = 2^13 (aka 8192)
+Total number of elements per sub system (S) = 2^8 (aka 256)
+Created vector with 8192 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+56.23 G: 21 S: -8 af: 8 sf: -5 rf: 320
+Total number of lists (k) = 2^13 (aka 8192)
+Total number of elements per sub system (S) = 2^8 (aka 256)
+Created vector with 8192 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+90.65 G: 21 S: -8 af: 4 sf: -5 rf: 640
+Total number of lists (k) = 2^13 (aka 8192)
+Total number of elements per sub system (S) = 2^8 (aka 256)
+Created vector with 8192 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+159.41 G: 21 S: -8 af: 2 sf: -5 rf: 1280
+Total number of lists (k) = 2^13 (aka 8192)
+Total number of elements per sub system (S) = 2^8 (aka 256)
+Created vector with 8192 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+296.58 G: 21 S: -8 af: 1 sf: -5 rf: 2560
+Total number of lists (k) = 2^13 (aka 8192)
+Total number of elements per sub system (S) = 2^8 (aka 256)
+Created vector with 8192 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+568.77 
+S=7 G: 21 S: -7 af: 256 sf: -5 rf: 10
+Total number of lists (k) = 2^14 (aka 16384)
+Total number of elements per sub system (S) = 2^7 (aka 128)
+Created vector with 16384 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+23.92 G: 21 S: -7 af: 128 sf: -5 rf: 20
+Total number of lists (k) = 2^14 (aka 16384)
+Total number of elements per sub system (S) = 2^7 (aka 128)
+Created vector with 16384 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+26.65 G: 21 S: -7 af: 64 sf: -5 rf: 40
+Total number of lists (k) = 2^14 (aka 16384)
+Total number of elements per sub system (S) = 2^7 (aka 128)
+Created vector with 16384 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+27.08 G: 21 S: -7 af: 32 sf: -5 rf: 80
+Total number of lists (k) = 2^14 (aka 16384)
+Total number of elements per sub system (S) = 2^7 (aka 128)
+Created vector with 16384 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+34.55 G: 21 S: -7 af: 16 sf: -5 rf: 160
+Total number of lists (k) = 2^14 (aka 16384)
+Total number of elements per sub system (S) = 2^7 (aka 128)
+Created vector with 16384 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+54.76 G: 21 S: -7 af: 8 sf: -5 rf: 320
+Total number of lists (k) = 2^14 (aka 16384)
+Total number of elements per sub system (S) = 2^7 (aka 128)
+Created vector with 16384 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+92.99 G: 21 S: -7 af: 4 sf: -5 rf: 640
+Total number of lists (k) = 2^14 (aka 16384)
+Total number of elements per sub system (S) = 2^7 (aka 128)
+Created vector with 16384 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+169.26 G: 21 S: -7 af: 2 sf: -5 rf: 1280
+Total number of lists (k) = 2^14 (aka 16384)
+Total number of elements per sub system (S) = 2^7 (aka 128)
+Created vector with 16384 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+316.87 G: 21 S: -7 af: 1 sf: -5 rf: 2560
+Total number of lists (k) = 2^14 (aka 16384)
+Total number of elements per sub system (S) = 2^7 (aka 128)
+Created vector with 16384 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+620.31 
+S=6 G: 21 S: -6 af: 256 sf: -5 rf: 10
+Total number of lists (k) = 2^15 (aka 32768)
+Total number of elements per sub system (S) = 2^6 (aka 64)
+Created vector with 32768 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+24.14 G: 21 S: -6 af: 128 sf: -5 rf: 20
+Total number of lists (k) = 2^15 (aka 32768)
+Total number of elements per sub system (S) = 2^6 (aka 64)
+Created vector with 32768 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+19.95 G: 21 S: -6 af: 64 sf: -5 rf: 40
+Total number of lists (k) = 2^15 (aka 32768)
+Total number of elements per sub system (S) = 2^6 (aka 64)
+Created vector with 32768 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+27.73 G: 21 S: -6 af: 32 sf: -5 rf: 80
+Total number of lists (k) = 2^15 (aka 32768)
+Total number of elements per sub system (S) = 2^6 (aka 64)
+Created vector with 32768 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+33.84 G: 21 S: -6 af: 16 sf: -5 rf: 160
+Total number of lists (k) = 2^15 (aka 32768)
+Total number of elements per sub system (S) = 2^6 (aka 64)
+Created vector with 32768 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+53.1 G: 21 S: -6 af: 8 sf: -5 rf: 320
+Total number of lists (k) = 2^15 (aka 32768)
+Total number of elements per sub system (S) = 2^6 (aka 64)
+Created vector with 32768 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+92.33 G: 21 S: -6 af: 4 sf: -5 rf: 640
+Total number of lists (k) = 2^15 (aka 32768)
+Total number of elements per sub system (S) = 2^6 (aka 64)
+Created vector with 32768 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+177.5 G: 21 S: -6 af: 2 sf: -5 rf: 1280
+Total number of lists (k) = 2^15 (aka 32768)
+Total number of elements per sub system (S) = 2^6 (aka 64)
+Created vector with 32768 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+331.57 G: 21 S: -6 af: 1 sf: -5 rf: 2560
+Total number of lists (k) = 2^15 (aka 32768)
+Total number of elements per sub system (S) = 2^6 (aka 64)
+Created vector with 32768 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+634.87 
+S=5 G: 21 S: -5 af: 256 sf: -5 rf: 10
+Total number of lists (k) = 2^16 (aka 65536)
+Total number of elements per sub system (S) = 2^5 (aka 32)
+Created vector with 65536 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+15.46 G: 21 S: -5 af: 128 sf: -5 rf: 20
+Total number of lists (k) = 2^16 (aka 65536)
+Total number of elements per sub system (S) = 2^5 (aka 32)
+Created vector with 65536 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+19.84 G: 21 S: -5 af: 64 sf: -5 rf: 40
+Total number of lists (k) = 2^16 (aka 65536)
+Total number of elements per sub system (S) = 2^5 (aka 32)
+Created vector with 65536 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+26.2 G: 21 S: -5 af: 32 sf: -5 rf: 80
+Total number of lists (k) = 2^16 (aka 65536)
+Total number of elements per sub system (S) = 2^5 (aka 32)
+Created vector with 65536 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+39.64 G: 21 S: -5 af: 16 sf: -5 rf: 160
+Total number of lists (k) = 2^16 (aka 65536)
+Total number of elements per sub system (S) = 2^5 (aka 32)
+Created vector with 65536 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+55.78 G: 21 S: -5 af: 8 sf: -5 rf: 320
+Total number of lists (k) = 2^16 (aka 65536)
+Total number of elements per sub system (S) = 2^5 (aka 32)
+Created vector with 65536 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+102.1 G: 21 S: -5 af: 4 sf: -5 rf: 640
+Total number of lists (k) = 2^16 (aka 65536)
+Total number of elements per sub system (S) = 2^5 (aka 32)
+Created vector with 65536 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+182.36 G: 21 S: -5 af: 2 sf: -5 rf: 1280
+Total number of lists (k) = 2^16 (aka 65536)
+Total number of elements per sub system (S) = 2^5 (aka 32)
+Created vector with 65536 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+357.52 G: 21 S: -5 af: 1 sf: -5 rf: 2560
+Total number of lists (k) = 2^16 (aka 65536)
+Total number of elements per sub system (S) = 2^5 (aka 32)
+Created vector with 65536 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+629.12 
+S=4 G: 21 S: -4 af: 256 sf: -5 rf: 10
+Total number of lists (k) = 2^17 (aka 131072)
+Total number of elements per sub system (S) = 2^4 (aka 16)
+Created vector with 131072 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+13.79 G: 21 S: -4 af: 128 sf: -5 rf: 20
+Total number of lists (k) = 2^17 (aka 131072)
+Total number of elements per sub system (S) = 2^4 (aka 16)
+Created vector with 131072 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+22.39 G: 21 S: -4 af: 64 sf: -5 rf: 40
+Total number of lists (k) = 2^17 (aka 131072)
+Total number of elements per sub system (S) = 2^4 (aka 16)
+Created vector with 131072 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+21.19 G: 21 S: -4 af: 32 sf: -5 rf: 80
+Total number of lists (k) = 2^17 (aka 131072)
+Total number of elements per sub system (S) = 2^4 (aka 16)
+Created vector with 131072 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+36.08 G: 21 S: -4 af: 16 sf: -5 rf: 160
+Total number of lists (k) = 2^17 (aka 131072)
+Total number of elements per sub system (S) = 2^4 (aka 16)
+Created vector with 131072 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+59.39 G: 21 S: -4 af: 8 sf: -5 rf: 320
+Total number of lists (k) = 2^17 (aka 131072)
+Total number of elements per sub system (S) = 2^4 (aka 16)
+Created vector with 131072 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+106.07 G: 21 S: -4 af: 4 sf: -5 rf: 640
+Total number of lists (k) = 2^17 (aka 131072)
+Total number of elements per sub system (S) = 2^4 (aka 16)
+Created vector with 131072 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+194.52 G: 21 S: -4 af: 2 sf: -5 rf: 1280
+Total number of lists (k) = 2^17 (aka 131072)
+Total number of elements per sub system (S) = 2^4 (aka 16)
+Created vector with 131072 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+412.65 G: 21 S: -4 af: 1 sf: -5 rf: 2560
+Total number of lists (k) = 2^17 (aka 131072)
+Total number of elements per sub system (S) = 2^4 (aka 16)
+Created vector with 131072 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+693.73 
+S=3 G: 21 S: -3 af: 256 sf: -5 rf: 10
+Total number of lists (k) = 2^18 (aka 262144)
+Total number of elements per sub system (S) = 2^3 (aka 8)
+Created vector with 262144 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+13.27 G: 21 S: -3 af: 128 sf: -5 rf: 20
+Total number of lists (k) = 2^18 (aka 262144)
+Total number of elements per sub system (S) = 2^3 (aka 8)
+Created vector with 262144 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+15.8 G: 21 S: -3 af: 64 sf: -5 rf: 40
+Total number of lists (k) = 2^18 (aka 262144)
+Total number of elements per sub system (S) = 2^3 (aka 8)
+Created vector with 262144 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+28.58 G: 21 S: -3 af: 32 sf: -5 rf: 80
+Total number of lists (k) = 2^18 (aka 262144)
+Total number of elements per sub system (S) = 2^3 (aka 8)
+Created vector with 262144 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+39.3 G: 21 S: -3 af: 16 sf: -5 rf: 160
+Total number of lists (k) = 2^18 (aka 262144)
+Total number of elements per sub system (S) = 2^3 (aka 8)
+Created vector with 262144 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+65.37 G: 21 S: -3 af: 8 sf: -5 rf: 320
+Total number of lists (k) = 2^18 (aka 262144)
+Total number of elements per sub system (S) = 2^3 (aka 8)
+Created vector with 262144 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+115.01 G: 21 S: -3 af: 4 sf: -5 rf: 640
+Total number of lists (k) = 2^18 (aka 262144)
+Total number of elements per sub system (S) = 2^3 (aka 8)
+Created vector with 262144 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+208.32 G: 21 S: -3 af: 2 sf: -5 rf: 1280
+Total number of lists (k) = 2^18 (aka 262144)
+Total number of elements per sub system (S) = 2^3 (aka 8)
+Created vector with 262144 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+448.56 G: 21 S: -3 af: 1 sf: -5 rf: 2560
+Total number of lists (k) = 2^18 (aka 262144)
+Total number of elements per sub system (S) = 2^3 (aka 8)
+Created vector with 262144 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+761.78 
+S=2 G: 21 S: -2 af: 256 sf: -5 rf: 10
+Total number of lists (k) = 2^19 (aka 524288)
+Total number of elements per sub system (S) = 2^2 (aka 4)
+Created vector with 524288 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+11.69 G: 21 S: -2 af: 128 sf: -5 rf: 20
+Total number of lists (k) = 2^19 (aka 524288)
+Total number of elements per sub system (S) = 2^2 (aka 4)
+Created vector with 524288 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+16.22 G: 21 S: -2 af: 64 sf: -5 rf: 40
+Total number of lists (k) = 2^19 (aka 524288)
+Total number of elements per sub system (S) = 2^2 (aka 4)
+Created vector with 524288 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+26.2 G: 21 S: -2 af: 32 sf: -5 rf: 80
+Total number of lists (k) = 2^19 (aka 524288)
+Total number of elements per sub system (S) = 2^2 (aka 4)
+Created vector with 524288 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+39.33 G: 21 S: -2 af: 16 sf: -5 rf: 160
+Total number of lists (k) = 2^19 (aka 524288)
+Total number of elements per sub system (S) = 2^2 (aka 4)
+Created vector with 524288 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+71.27 G: 21 S: -2 af: 8 sf: -5 rf: 320
+Total number of lists (k) = 2^19 (aka 524288)
+Total number of elements per sub system (S) = 2^2 (aka 4)
+Created vector with 524288 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+133.89 G: 21 S: -2 af: 4 sf: -5 rf: 640
+Total number of lists (k) = 2^19 (aka 524288)
+Total number of elements per sub system (S) = 2^2 (aka 4)
+Created vector with 524288 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+239.78 G: 21 S: -2 af: 2 sf: -5 rf: 1280
+Total number of lists (k) = 2^19 (aka 524288)
+Total number of elements per sub system (S) = 2^2 (aka 4)
+Created vector with 524288 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+501.14 G: 21 S: -2 af: 1 sf: -5 rf: 2560
+Total number of lists (k) = 2^19 (aka 524288)
+Total number of elements per sub system (S) = 2^2 (aka 4)
+Created vector with 524288 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+996.17 
+S=1 G: 21 S: -1 af: 256 sf: -5 rf: 10
+Total number of lists (k) = 2^20 (aka 1048576)
+Total number of elements per sub system (S) = 2^1 (aka 2)
+Created vector with 1048576 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+16.26 G: 21 S: -1 af: 128 sf: -5 rf: 20
+Total number of lists (k) = 2^20 (aka 1048576)
+Total number of elements per sub system (S) = 2^1 (aka 2)
+Created vector with 1048576 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+20.07 G: 21 S: -1 af: 64 sf: -5 rf: 40
+Total number of lists (k) = 2^20 (aka 1048576)
+Total number of elements per sub system (S) = 2^1 (aka 2)
+Created vector with 1048576 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+33.78 G: 21 S: -1 af: 32 sf: -5 rf: 80
+Total number of lists (k) = 2^20 (aka 1048576)
+Total number of elements per sub system (S) = 2^1 (aka 2)
+Created vector with 1048576 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+55.28 G: 21 S: -1 af: 16 sf: -5 rf: 160
+Total number of lists (k) = 2^20 (aka 1048576)
+Total number of elements per sub system (S) = 2^1 (aka 2)
+Created vector with 1048576 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+98.69 G: 21 S: -1 af: 8 sf: -5 rf: 320
+Total number of lists (k) = 2^20 (aka 1048576)
+Total number of elements per sub system (S) = 2^1 (aka 2)
+Created vector with 1048576 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+166.16 G: 21 S: -1 af: 4 sf: -5 rf: 640
+Total number of lists (k) = 2^20 (aka 1048576)
+Total number of elements per sub system (S) = 2^1 (aka 2)
+Created vector with 1048576 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+276.44 G: 21 S: -1 af: 2 sf: -5 rf: 1280
+Total number of lists (k) = 2^20 (aka 1048576)
+Total number of elements per sub system (S) = 2^1 (aka 2)
+Created vector with 1048576 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+775.56 G: 21 S: -1 af: 1 sf: -5 rf: 2560
+Total number of lists (k) = 2^20 (aka 1048576)
+Total number of elements per sub system (S) = 2^1 (aka 2)
+Created vector with 1048576 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+1611.37 
+S=0 G: 21 S: 0 af: 256 sf: -5 rf: 10
+Total number of lists (k) = 2^21 (aka 2097152)
+Total number of elements per sub system (S) = 2^0 (aka 1)
+Created vector with 2097152 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+25.01 G: 21 S: 0 af: 128 sf: -5 rf: 20
+Total number of lists (k) = 2^21 (aka 2097152)
+Total number of elements per sub system (S) = 2^0 (aka 1)
+Created vector with 2097152 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+27.37 G: 21 S: 0 af: 64 sf: -5 rf: 40
+Total number of lists (k) = 2^21 (aka 2097152)
+Total number of elements per sub system (S) = 2^0 (aka 1)
+Created vector with 2097152 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+41.93 G: 21 S: 0 af: 32 sf: -5 rf: 80
+Total number of lists (k) = 2^21 (aka 2097152)
+Total number of elements per sub system (S) = 2^0 (aka 1)
+Created vector with 2097152 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+70.87 G: 21 S: 0 af: 16 sf: -5 rf: 160
+Total number of lists (k) = 2^21 (aka 2097152)
+Total number of elements per sub system (S) = 2^0 (aka 1)
+Created vector with 2097152 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+124.51 G: 21 S: 0 af: 8 sf: -5 rf: 320
+Total number of lists (k) = 2^21 (aka 2097152)
+Total number of elements per sub system (S) = 2^0 (aka 1)
+Created vector with 2097152 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+150.46 G: 21 S: 0 af: 4 sf: -5 rf: 640
+Total number of lists (k) = 2^21 (aka 2097152)
+Total number of elements per sub system (S) = 2^0 (aka 1)
+Created vector with 2097152 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+342.64 G: 21 S: 0 af: 2 sf: -5 rf: 1280
+Total number of lists (k) = 2^21 (aka 2097152)
+Total number of elements per sub system (S) = 2^0 (aka 1)
+Created vector with 2097152 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+1035.16 G: 21 S: 0 af: 1 sf: -5 rf: 2560
+Total number of lists (k) = 2^21 (aka 2097152)
+Total number of elements per sub system (S) = 2^0 (aka 1)
+Created vector with 2097152 elements
+Accessing Lists
+Finished accessing Lists
+Shuffling data AFTER accessing - doing nothing since shuffle is not timed
+Done running combination
+1601.91 
+Problem Size 2^21 Without Allocators (Table 16) +ve shuffle
+S=21 G: 21 S: 21 af: 256 sf: 5 rf: 10
+Total number of lists (k) = 2^0 (aka 1)
+Total number of elements per sub system (S) = 2^21 (aka 2097152)
+Created vector with 1 elements
+Shuffling data BEFORE accessing
+Shuffling data 5 times
+Accessing Lists
