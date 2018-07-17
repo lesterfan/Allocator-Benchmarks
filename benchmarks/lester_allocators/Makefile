@@ -30,11 +30,17 @@ BDL = $(BSLSRC)/groups/bdl
 BSLINC = /bb/bde/lfan77/install/bb/bde/lfan77/install/unix-linux-x86_64-2.6.32-gcc-7.3.0-opt_exc_mt_64_cpp11/include
 BDLINC = /bb/bde/lfan77/install/bb/bde/lfan77/install/unix-linux-x86_64-2.6.32-gcc-7.3.0-opt_exc_mt_64_cpp11/include
 
+# BSLINC = /bb/bde/lfan77/install_hella_old/bb/bde/lfan77/install_hella_old/unix-linux-x86_64-2.6.32-gcc-7.3.0-opt_exc_mt_64_cpp11/include
+# BDLINC = /bb/bde/lfan77/install_hella_old/bb/bde/lfan77/install_hella_old/unix-linux-x86_64-2.6.32-gcc-7.3.0-opt_exc_mt_64_cpp11/include
+
 # Changed : BSLLIB = $(BSLSRC)/build/groups/bsl
 # Changed : BDLLIB = $(BSLSRC)/build/groups/bdl
 
 BSLLIB = /bb/bde/lfan77/install/bb/bde/lfan77/install/unix-linux-x86_64-2.6.32-gcc-7.3.0-opt_exc_mt_64_cpp11/lib64/opt_exc_mt
 BDLLIB = /bb/bde/lfan77/install/bb/bde/lfan77/install/unix-linux-x86_64-2.6.32-gcc-7.3.0-opt_exc_mt_64_cpp11/lib64/opt_exc_mt
+
+# BSLLIB = /bb/bde/lfan77/install_hella_old/bb/bde/lfan77/install_hella_old/unix-linux-x86_64-2.6.32-gcc-7.3.0-opt_exc_mt_64_cpp11/lib64/opt_exc_mt 
+# BDLLIB = /bb/bde/lfan77/install_hella_old/bb/bde/lfan77/install_hella_old/unix-linux-x86_64-2.6.32-gcc-7.3.0-opt_exc_mt_64_cpp11/lib64/opt_exc_mt
 
 # comment this out for gcc-5:
 # STDLIB = -stdlib=libc++ # TODO: Clang

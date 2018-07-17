@@ -27,14 +27,19 @@ BDL = $(BSLSRC)/groups/bdl
 # Changed : BSLINC = $(INST)/include/bsl
 # Changed : BDLINC = $(INST)/include/bdl
 
-BSLINC = /bb/bde/lfan77/install/unix-linux-x86_64-2.6.32-gcc-7.3.0-opt_exc_mt_64_cpp11/include
-BDLINC = /bb/bde/lfan77/install/unix-linux-x86_64-2.6.32-gcc-7.3.0-opt_exc_mt_64_cpp11/include
+# BSLINC = /bb/bde/lfan77/install/unix-linux-x86_64-2.6.32-gcc-7.3.0-opt_exc_mt_64_cpp11/include
+# BDLINC = /bb/bde/lfan77/install/unix-linux-x86_64-2.6.32-gcc-7.3.0-opt_exc_mt_64_cpp11/include
+BSLINC = /bb/bde/lfan77/install_old/bb/bde/lfan77/install_old/unix-linux-x86_64-2.6.32-gcc-7.3.0-opt_exc_mt_64_cpp11/include
+BDLINC = /bb/bde/lfan77/install_old/bb/bde/lfan77/install_old/unix-linux-x86_64-2.6.32-gcc-7.3.0-opt_exc_mt_64_cpp11/include
 
 # Changed : BSLLIB = $(BSLSRC)/build/groups/bsl
 # Changed : BDLLIB = $(BSLSRC)/build/groups/bdl
 
-BSLLIB = /bb/bde/lfan77/install/unix-linux-x86_64-2.6.32-gcc-7.3.0-opt_exc_mt_64_cpp11/lib
-BDLLIB = /bb/bde/lfan77/install/unix-linux-x86_64-2.6.32-gcc-7.3.0-opt_exc_mt_64_cpp11/lib
+# BSLLIB = /bb/bde/lfan77/install/unix-linux-x86_64-2.6.32-gcc-7.3.0-opt_exc_mt_64_cpp11/lib
+# BDLLIB = /bb/bde/lfan77/install/unix-linux-x86_64-2.6.32-gcc-7.3.0-opt_exc_mt_64_cpp11/lib
+BSLLIB = /bb/bde/lfan77/install_old/bb/bde/lfan77/install_old/unix-linux-x86_64-2.6.32-gcc-7.3.0-opt_exc_mt_64_cpp11/lib64/opt_exc_mt
+BDLLIB = /bb/bde/lfan77/install_old/bb/bde/lfan77/install_old/unix-linux-x86_64-2.6.32-gcc-7.3.0-opt_exc_mt_64_cpp11/lib64/opt_exc_mt
+
 
 # comment this out for gcc-5:
 # STDLIB = -stdlib=libc++ # TODO: Clang

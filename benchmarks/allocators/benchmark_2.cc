@@ -2,7 +2,7 @@
 //#define DEBUG
 //#define DEBUG_V1
 //#define DEBUG_V2
-//#define DEBUG_V3
+#define DEBUG_V3
 //#define DEBUG_V4
 
 #include <iostream>

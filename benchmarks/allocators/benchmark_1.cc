@@ -16,8 +16,8 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-#include <vector>
-#include <string>
+#include <bslstl_vector.h>
+#include <bslstl_string.h>
 #include <unordered_set>
 
 #include <bslma_allocator_database.h>
@@ -71,14 +71,14 @@ struct string {
 };
 
 struct containers {
-	typedef std::vector<int> DS1;
-	typedef std::vector<std::string> DS2;
+	typedef bsl::vector<int> DS1;
+	typedef bsl::vector<bsl::string> DS2;
 	typedef std::unordered_set<int, hash<int>, equal<int>> DS3;
-	typedef std::unordered_set<std::string, hash<std::string>, equal<std::string>> DS4;
-	typedef std::vector<DS1> DS5;
-	typedef std::vector<DS2> DS6;
-	typedef std::vector<DS3> DS7;
-	typedef std::vector<DS4> DS8;
+	typedef std::unordered_set<bsl::string, hash<bsl::string>, equal<bsl::string>> DS4;
+	typedef bsl::vector<DS1> DS5;
+	typedef bsl::vector<DS2> DS6;
+	typedef bsl::vector<DS3> DS7;
+	typedef bsl::vector<DS4> DS8;
 	typedef std::unordered_set<DS1, hash<DS1>, equal<DS1>> DS9;
 	typedef std::unordered_set<DS2, hash<DS2>, equal<DS2>> DS10;
 	typedef std::unordered_set<DS3, hash<DS3>, equal<DS3>> DS11;
@@ -88,21 +88,21 @@ struct containers {
 
 struct alloc_containers {
 	template<typename ALLOC>
-	using DS1 = std::vector<int, ALLOC>;
+	using DS1 = bsl::vector<int, ALLOC>;
 	template<typename STRING, typename ALLOC>
-	using DS2 = std::vector<STRING, ALLOC>;
+	using DS2 = bsl::vector<STRING, ALLOC>;
 	template<typename ALLOC>
 	using DS3 = std::unordered_set<int, hash<int>, equal<int>, ALLOC>;
 	template<typename STRING, typename ALLOC>
 	using DS4 = std::unordered_set<STRING, hash<STRING>, equal<STRING>, ALLOC>;
 	template<typename ALLOC, typename INNER_ALLOC>
-	using DS5 = std::vector<DS1<INNER_ALLOC>, ALLOC>;
+	using DS5 = bsl::vector<DS1<INNER_ALLOC>, ALLOC>;
 	template<typename STRING, typename ALLOC, typename INNER_ALLOC>
-	using DS6 = std::vector<DS2<STRING, INNER_ALLOC>, ALLOC>;
+	using DS6 = bsl::vector<DS2<STRING, INNER_ALLOC>, ALLOC>;
 	template<typename ALLOC, typename INNER_ALLOC>
-	using DS7 = std::vector<DS3<INNER_ALLOC>, ALLOC>;
+	using DS7 = bsl::vector<DS3<INNER_ALLOC>, ALLOC>;
 	template<typename STRING, typename ALLOC, typename INNER_ALLOC>
-	using DS8 = std::vector<DS4<STRING, INNER_ALLOC>, ALLOC>;
+	using DS8 = bsl::vector<DS4<STRING, INNER_ALLOC>, ALLOC>;
 	template<typename ALLOC, typename INNER_ALLOC>
 	using DS9 = std::unordered_set<DS1<INNER_ALLOC>, hash<DS1<INNER_ALLOC>>, equal<DS1<INNER_ALLOC>>, ALLOC>;
 	template<typename STRING, typename ALLOC, typename INNER_ALLOC>
@@ -156,6 +156,7 @@ struct process_DS2 {
 	}
 };
 
+#if 0
 template<typename DS3>
 struct process_DS3 {
 	void operator() (DS3 *ds3, size_t elements) {
@@ -177,6 +178,7 @@ struct process_DS4 {
 		clobber();
 	}
 };
+#endif // 0
 
 template<typename DS5>
 struct process_DS5 {
@@ -212,6 +214,7 @@ struct process_DS6 {
 	}
 };
 
+#if 0
 template<typename DS7>
 struct process_DS7 {
 	void operator() (DS7 *ds7, size_t elements) {
@@ -316,6 +319,7 @@ struct process_DS12 {
 		clobber();
 	}
 };
+#endif // 0
 
 
 template<typename GLOBAL_CONT, typename MONO_CONT, typename MULTI_CONT, typename POLY_CONT, template<typename CONT> class PROCESSER>
@@ -680,7 +684,7 @@ static void run_base_allocations(unsigned long long iterations, size_t elements)
 	std::cout << std::endl;
 }
 
-void run_base_loop(void(*func)(unsigned long long, size_t), std::string header) {
+void run_base_loop(void(*func)(unsigned long long, size_t), bsl::string header) {
 	std::cout << header << std::endl;
 #ifdef DEBUG
 	short max_element_exponent = 16;
@@ -698,7 +702,7 @@ void run_base_loop(void(*func)(unsigned long long, size_t), std::string header) 
 	}
 }
 
-void run_nested_loop(void(*func)(unsigned long long, size_t), std::string header) {
+void run_nested_loop(void(*func)(unsigned long long, size_t), bsl::string header) {
 	std::cout << header << std::endl;
 #ifdef DEBUG
 	short max_element_exponent = 16;
@@ -725,6 +729,7 @@ int main(int argc, char *argv[]) {
 	std::cout << std::endl << "Generating random numbers" << std::endl;
 	fill_random();
 
+
 	run_base_loop(&run_base_allocations<typename containers::DS1,
 		typename combined_containers::DS1_mono,
 		typename combined_containers::DS1_multi,
@@ -735,6 +740,8 @@ int main(int argc, char *argv[]) {
 		typename combined_containers::DS2_multi,
 		typename combined_containers::DS2_poly,
 		process_DS2>, "**DS2**");
+
+#if 0
 	run_base_loop(&run_base_allocations<typename containers::DS3,
 		typename combined_containers::DS3_mono,
 		typename combined_containers::DS3_multi,
@@ -745,6 +752,7 @@ int main(int argc, char *argv[]) {
 		typename combined_containers::DS4_multi,
 		typename combined_containers::DS4_poly,
 		process_DS4>, "**DS4**");
+#endif // 0 
 	run_nested_loop(&run_base_allocations<typename containers::DS5,
 		typename alloc_containers::DS5<alloc_adaptors<combined_containers::DS1_mono>::monotonic, alloc_adaptors<int>::monotonic>,
 		typename alloc_containers::DS5<alloc_adaptors<combined_containers::DS1_multi>::multipool, alloc_adaptors<int>::multipool>,
@@ -755,6 +763,8 @@ int main(int argc, char *argv[]) {
 		typename alloc_containers::DS6<string::multipool, alloc_adaptors<combined_containers::DS2_multi>::multipool, alloc_adaptors<string::multipool>::multipool>,
 		typename alloc_containers::DS6<string::polymorphic, alloc_adaptors<combined_containers::DS2_poly>::polymorphic, alloc_adaptors<string::polymorphic>::polymorphic>,
 		process_DS6>, "**DS6**");
+
+#if 0
 	run_nested_loop(&run_base_allocations<typename containers::DS7,
 		typename alloc_containers::DS7<alloc_adaptors<combined_containers::DS3_mono>::monotonic, alloc_adaptors<int>::monotonic>,
 		typename alloc_containers::DS7<alloc_adaptors<combined_containers::DS3_multi>::multipool, alloc_adaptors<int>::multipool>,
@@ -785,6 +795,7 @@ int main(int argc, char *argv[]) {
 		typename alloc_containers::DS12<string::multipool, alloc_adaptors<combined_containers::DS4_multi>::multipool, alloc_adaptors<string::multipool>::multipool>,
 		typename alloc_containers::DS12<string::polymorphic, alloc_adaptors<combined_containers::DS4_poly>::polymorphic, alloc_adaptors<string::polymorphic>::polymorphic>,
 		process_DS12>, "**DS12**");
+#endif // 0
 
 	std::cout << "Done" << std::endl;
 }

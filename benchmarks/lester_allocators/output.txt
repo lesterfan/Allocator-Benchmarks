@@ -1,7 +1,0 @@
-Started
-Problem Size 2^21 Without Allocators (Table 16) -ve shuffle
-S=21 G: 21 S: -21 af: 256 sf: -5 rf: 10
-Total number of lists (k) = 2^0 (aka 1)
-Total number of elements per sub system (S) = 2^21 (aka 2097152)
-Created vector with 1 elements
-Accessing Lists
