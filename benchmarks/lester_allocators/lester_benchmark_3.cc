@@ -169,6 +169,9 @@ void run_row(size_t T, size_t A, size_t S) {
 			default:
 				break;
 			}
+
+            BloombergLP::bslma::AllocatorDatabase::printTimes();
+
 			exit(0);
 		}
 		else {
@@ -199,6 +202,10 @@ void run_table(size_t T) {
 	run_row(T, 20, 13);
 	run_row(T, 20, 14);
 	run_row(T, 20, 15);
+
+    std::cout << "Time spent on lookup = " << BloombergLP::bslma::AllocatorDatabase::instance()->d_lookup_time.count() << "ns" << std::endl;
+    std::cout << "Time spent on add_sequence = " << BloombergLP::bslma::AllocatorDatabase::instance()->d_add_time.count() << "ns" << std::endl;
+    std::cout << "Time spent on delete_sequence = " << BloombergLP::bslma::AllocatorDatabase::instance()->d_delete_time.count() << "ns" << std::endl;
 }
 
 int main(int argc, char *argv[]) {

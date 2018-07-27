@@ -2,7 +2,7 @@
 //#define DEBUG
 //#define DEBUG_V1
 //#define DEBUG_V2
-#define DEBUG_V3
+//#define DEBUG_V3
 //#define DEBUG_V4
 
 #include <iostream>
@@ -22,8 +22,8 @@
 #include <sys/resource.h>
 #include <math.h>
 
-#include <vector>
-#include <list>
+#include <bslstl_vector.h>
+#include <bslstl_list.h>
 
 #include "benchmark_common.h"
 
@@ -45,14 +45,23 @@ template<typename ALLOC>
 class AllocSubsystem {
 public:
 	ALLOC d_alloc;
-	std::list<int, alloc_adaptor<int, ALLOC> > d_list;
-	AllocSubsystem() : d_alloc(), d_list(&d_alloc) {}
+	// bsl::list<int, alloc_adaptor<int, ALLOC> > d_list;
+    bsl::list<int>* d_list;
+	// AllocSubsystem() : d_alloc(), d_list(&d_alloc) {}
+    AllocSubsystem() : d_alloc(){
+        d_list = new(d_alloc) bsl::list<int>(&d_alloc);
+    }
+
 };
 
 class DefaultSubsystem {
 public:
-	std::list<int> d_list;
-	DefaultSubsystem() : d_list() {}
+	bsl::list<int>* d_list;
+	DefaultSubsystem(){
+        // static bsl::list<int> static_list;
+        // d_list = &static_list;
+        d_list = new bsl::list<int>();
+    }
 };
 
 // Convenience typedefs
@@ -72,7 +81,7 @@ double access_lists(VECTOR *vec, int af, int rf) {
 	for (size_t r = 0; r < rf; r++)	{
 		for (size_t i = 0; i < vec->size(); i++) {
 			for (size_t a = 0; a < af; a++) {
-				for (auto it = (*vec)[i]->d_list.begin(); it != (*vec)[i]->d_list.end(); ++it) {
+				for (auto it = (*vec)[i]->d_list->begin(); it != (*vec)[i]->d_list->end(); ++it) {
 					(*it)++; // Increment int to cause loop to have some effect
 				}
 				clobber();
@@ -107,21 +116,21 @@ void shuffle_vector(VECTOR &vec, int sf, size_t list_length)
 #endif // DEBUG_V4
 				size_t pos = position_distribution(generator);
 
-				if (vec[subsystem_idx]->d_list.size() > 0) { // TODO: not quite what is in the paper
+				if (vec[subsystem_idx]->d_list->size() > 0) { // TODO: not quite what is in the paper
 #ifdef DEBUG_V4
 					std::cout << "Grabbing front element of list at " << subsystem_idx << std::endl;
 #endif // DEBUG_V4
-					int popped = vec[subsystem_idx]->d_list.front();
+					int popped = vec[subsystem_idx]->d_list->front();
 
 #ifdef DEBUG_V4
 					std::cout << "Emplacing " << popped << " into list at " << pos << std::endl;
 #endif // DEBUG_V4
-					vec[pos]->d_list.emplace_back(popped);
+					vec[pos]->d_list->emplace_back(popped);
 
 #ifdef DEBUG_V4
-					std::cout << "Popping from front of list at " << subsystem_idx << " with " << vec[subsystem_idx]->d_list.size() << " elements" << std::endl;
+					std::cout << "Popping from front of list at " << subsystem_idx << " with " << vec[subsystem_idx]->d_list->size() << " elements" << std::endl;
 #endif // DEBUG_V4
-					vec[subsystem_idx]->d_list.pop_front();
+					vec[subsystem_idx]->d_list->pop_front();
 				}
 
 #ifdef DEBUG_V4
@@ -152,7 +161,7 @@ double run_combination(int G, int S, int af, int sf, int rf) {
 	std::cout << "Total number of elements per sub system (S) = 2^" << S << " (aka " << expanded_S << ")" << std::endl;
 #endif // DEBUG_V3
 
-	std::vector<SUBSYS *> vec;
+	bsl::vector<SUBSYS *> vec;
 
 	// Create data under test
 	vec.reserve(expanded_k);
@@ -161,7 +170,7 @@ double run_combination(int G, int S, int af, int sf, int rf) {
 
 		for (size_t j = 0; j < expanded_S; j++)
 		{
-			vec.back()->d_list.emplace_back((int)j);
+			vec.back()->d_list->emplace_back((int)j);
 		}
 	}
 
@@ -245,18 +254,25 @@ int main(int argc, char *argv[]) {
 
 	std::cout << "Started" << std::endl;
 
+#if 0
 	std::cout << "Problem Size 2^21 Without Allocators (Table 16) -ve shuffle" << std::endl;
-	generate_table(21, 0, -1);
+	// generate_table(21, 0, -1);
+    generate_table(15, 0, -1);
 
 	std::cout << "Problem Size 2^21 Without Allocators (Table 16) +ve shuffle" << std::endl;
-	generate_table(21, 0, 1);
+	// generate_table(21, 0, 1);
+    generate_table(15, 0, -1);
+#endif // 0
 
 	std::cout << "Problem Size 2^21 With Allocators (Table 18) -ve shuffle" << std::endl;
 	generate_table(21, 7, -1);
+	// generate_table(15, 7, -1);
 
 	std::cout << "Problem Size 2^21 With Allocators (Table 18) +ve shuffle" << std::endl;
 	generate_table(21, 7, 1);
+	// generate_table(15, 7, 1);
 
+#if 0
 	std::cout << "Problem Size 2^25 Without Allocators (Table 17) -ve shuffle" << std::endl;
 	generate_table(25, 0, -1);
 
@@ -268,6 +284,7 @@ int main(int argc, char *argv[]) {
 
 	std::cout << "Problem Size 2^25 With Allocators (Table 19) +ve shuffle" << std::endl;
 	generate_table(25, 7, 1);
+#endif // 0
 
 	std::cout << "Done" << std::endl;
 }

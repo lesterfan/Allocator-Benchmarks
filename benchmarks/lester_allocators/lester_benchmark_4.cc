@@ -157,6 +157,9 @@ void run_row(size_t N, size_t S, size_t W, size_t repeat = 1) {
 				default:
 					break;
 				}
+                
+                BloombergLP::bslma::AllocatorDatabase::printTimes();
+
 				exit(0);
 			}
 		}
