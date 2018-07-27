@@ -59,8 +59,7 @@ class DefaultSubsystem {
 public:
     bsl::list<int>* d_list;
 	DefaultSubsystem() {
-        static bsl::list<int> static_list;
-        d_list = &static_list;
+        d_list = new bsl::list<int>();
     }
 };
 
@@ -233,6 +232,9 @@ void generate_table(int G, int alloc_num, int shuffle_sign) {
 					}
 				}
 				std::cout << result << " " << std::flush;
+
+                // BloombergLP::bslma::AllocatorDatabase::printTimes();
+
 				exit(0);
 			}
 			else {
@@ -266,9 +268,11 @@ int main(int argc, char *argv[]) {
 
 	std::cout << "Problem Size 2^21 With Allocators (Table 18) -ve shuffle" << std::endl;
 	generate_table(15, 7, -1);
+    // generate_table(21, 7, -1);
 
 	std::cout << "Problem Size 2^21 With Allocators (Table 18) +ve shuffle" << std::endl;
 	generate_table(15, 7, 1);
+    // generate_table(21, 7, 1);
 
 	// Changed : std::cout << "Problem Size 2^25 Without Allocators (Table 17) -ve shuffle" << std::endl;
 	// Changed : generate_table(25, 0, -1);

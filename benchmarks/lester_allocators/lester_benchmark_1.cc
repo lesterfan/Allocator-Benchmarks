@@ -124,6 +124,8 @@ static void run_base_allocations(unsigned long long iterations, size_t elements)
 		}
 	}
 
+
+
 #ifdef DEBUG_V1
 	std::cout << std::endl << "AS5" << std::endl;
 #endif
@@ -146,6 +148,10 @@ static void run_base_allocations(unsigned long long iterations, size_t elements)
 			}
 			c_end = std::clock();
 			std::cout << (c_end - c_start) * 1.0 / CLOCKS_PER_SEC << " ";
+
+
+            BloombergLP::bslma::AllocatorDatabase::printTimes();
+
 			exit(0);
 		}
 		else {
@@ -174,6 +180,9 @@ static void run_base_allocations(unsigned long long iterations, size_t elements)
 			}
 			c_end = std::clock();
 			std::cout << (c_end - c_start) * 1.0 / CLOCKS_PER_SEC << " ";
+
+            BloombergLP::bslma::AllocatorDatabase::printTimes();
+
 			exit(0);
 		}
 		else {
@@ -203,6 +212,9 @@ static void run_base_allocations(unsigned long long iterations, size_t elements)
 			}
 			c_end = std::clock();
 			std::cout << (c_end - c_start) * 1.0 / CLOCKS_PER_SEC << " ";
+
+            BloombergLP::bslma::AllocatorDatabase::printTimes();
+
 			exit(0);
 		}
 		else {
@@ -232,6 +244,10 @@ static void run_base_allocations(unsigned long long iterations, size_t elements)
 			}
 			c_end = std::clock();
 			std::cout << (c_end - c_start) * 1.0 / CLOCKS_PER_SEC << " ";
+
+
+            BloombergLP::bslma::AllocatorDatabase::printTimes();
+
 			exit(0);
 		}
 		else {
@@ -262,6 +278,9 @@ static void run_base_allocations(unsigned long long iterations, size_t elements)
 			}
 			c_end = std::clock();
 			std::cout << (c_end - c_start) * 1.0 / CLOCKS_PER_SEC << " ";
+
+            BloombergLP::bslma::AllocatorDatabase::printTimes();
+
 			exit(0);
 		}
 		else {
@@ -291,6 +310,9 @@ static void run_base_allocations(unsigned long long iterations, size_t elements)
 			}
 			c_end = std::clock();
 			std::cout << (c_end - c_start) * 1.0 / CLOCKS_PER_SEC << " ";
+
+            BloombergLP::bslma::AllocatorDatabase::printTimes();
+
 			exit(0);
 		}
 		else {
@@ -304,11 +326,11 @@ static void run_base_allocations(unsigned long long iterations, size_t elements)
 void run_base_loop(void(*func)(unsigned long long, size_t), std::string header) {
 	std::cout << header << std::endl;
 #ifdef DEBUG
-	short max_element_exponent = 16;
-	short max_element_iteration_product_exponent = 23;
+	short max_element_exponent = 18;
+	short max_element_iteration_product_exponent = 18;
 #else
 	short max_element_exponent = 16;
-	short max_element_iteration_product_exponent = 27;
+	short max_element_iteration_product_exponent = 20;
 #endif // DEBUG
 
 
@@ -317,6 +339,8 @@ void run_base_loop(void(*func)(unsigned long long, size_t), std::string header) 
 		std::cout << "Itr=" << iterations << " Elems=" << elements << " " << std::flush;
 		func(iterations, elements);
 	}
+
+
 }
 
 void run_nested_loop(void(*func)(unsigned long long, size_t), std::string header) {
@@ -415,7 +439,6 @@ int main(int argc, char *argv[]) {
 	std::cout << std::endl << "Generating random numbers" << std::endl;
 	fill_random();
 
-#if 0
 	run_base_loop(&run_base_allocations<typename containers::DS1,
 		typename containers::DS1,
 		typename containers::DS1,
@@ -433,13 +456,14 @@ int main(int argc, char *argv[]) {
 		typename containers::DS5,
 		typename containers::DS5,
 		process_DS5>, "**DS5**");
-#endif // 0
 
+#if 0
 	run_base_loop(&run_base_allocations<typename containers::DS6,
 		typename containers::DS6,
 		typename containers::DS6,
 		typename containers::DS6,
 		process_DS6>, "**DS6**");
+#endif // 0
 
 
 	std::cout << "Done" << std::endl;
